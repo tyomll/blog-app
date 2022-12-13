@@ -1,0 +1,26 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(207, 207, 207);
+  height: 50px;
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    font-size: 22px;
+
+
+    .navRight {
+      display: flex;
+      gap: 50px;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.block{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    background-color: rgba(238, 238, 238, 0.74);
+    border-radius: 20px;
+    height: 500px;
+    img{
+        width: 500px;
+    }
+}
