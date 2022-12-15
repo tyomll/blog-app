@@ -1,0 +1,54 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    position: relative;
+    width: 500px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    input {
+      width: 100%;
+      height: 100%;
+      padding: 10px 10px 10px 25px;
+      font-size: 18px;
+      border-radius: 30px;
+      outline: none;
+      border: none;
+      background-color: #f1f2f4;
+
+      &::placeholder {
+        color: rgba(128, 128, 128, 0.752);
+      }
+    }
+    span {
+      position: absolute;
+      color: black;
+      right: 150px;
+      background-color: rgba(0, 0, 0, 0.086);
+      padding: 1px 6px 1px 6px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    button {
+      position: absolute;
+      right: 0;
+      height: 100%;
+      width: 130px;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+      border: none;
+      background-image: linear-gradient(305deg, #fe9344, #fecd20);
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        background-image: linear-gradient(305deg, #f9a466, #f5d560);
+      }
+    }
+  }
+}

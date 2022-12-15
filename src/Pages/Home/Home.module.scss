@@ -1,4 +1,8 @@
-.root{
-    margin: 0 auto;
-    width: 90%;
+.root {
+  margin-top: 50px;
+  min-height: calc(100vh - 150px);
+  .main {
+    display: flex;
+    margin-top: 30px;
+  }
 }

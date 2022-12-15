@@ -21,36 +21,41 @@ export type BlogType = {
   image: string;
   title: string;
   text: string;
+  category: string;
   comments: BlogCommentsType[];
 };
 
 interface BlogSliceState {
   items: BlogType[];
   status: Status;
+  category: string;
 }
 
 const initialState: BlogSliceState = {
   items: [],
   status: Status.LOADING,
+  category: 'all',
 };
 
 export const fetchBlogs = createAsyncThunk(
   "pizza/fetchBlogsStatus",
   async () => {
     const { data } = await axios.get(
-      `https://63943e2a4df9248ead9ce21b.mockapi.io/Blogs`
+      `https://639b67c631877e43d68bac36.mockapi.io/blogs`
     );
 
     return data;
   }
 );
-
 const blogSlice = createSlice({
   name: "blog",
   initialState,
   reducers: {
     setItems(state, action: PayloadAction<BlogType[]>) {
       state.items = action.payload;
+    },
+    setCategory(state, action: PayloadAction<string>) {
+      state.category = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -69,6 +74,6 @@ const blogSlice = createSlice({
   },
 });
 
-export const { setItems } = blogSlice.actions;
+export const { setItems, setCategory } = blogSlice.actions;
 
 export default blogSlice.reducer;

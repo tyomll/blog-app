@@ -2,25 +2,58 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(207, 207, 207);
-  height: 50px;
-
+  background-color: #ffffff;
+  height: 100px;
+  box-shadow: 1px 1px 12px 0 rgb(0 0 0 / 8%);
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 90%;
     font-size: 22px;
+    a {
+      transition: 0.3s;
+      text-decoration: none;
+      color: rgb(33, 33, 33);
 
+      &:hover {
+        color: rgb(121, 120, 120);
+      }
+    }
+    .logo {
+      a {
+        font-size: 40px;
+        transition: 2s;
+        text-decoration: none;
+      }
+    }
 
-    .navRight {
+    .navLinks {
       display: flex;
       gap: 50px;
     }
+    .loginLinks {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      a {
+        font-weight: 700;
+      }
+      .register {
+        background-image: linear-gradient(305deg, #fe9344, #fecd20);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        border-width: 0;
+        border-radius: 25px;
+        padding: 12px 29px;
+        -webkit-box-align: center;
+        transition: 2s;
 
-    a {
-      text-decoration: none;
-      color: black;
+        &:hover {
+          background-image: linear-gradient(305deg, #f89a57, #eec73a);
+        }
+      }
     }
   }
 }
