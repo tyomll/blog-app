@@ -1,5 +1,6 @@
-import React from 'react';
-import styles from './BlogBlock.module.scss';
+import React from "react";
+import styles from "./BlogBlock.module.scss";
+import { Link } from "react-router-dom";
 
 interface BlogBlockProps {
   id: string;
@@ -9,7 +10,14 @@ interface BlogBlockProps {
   image: string;
   category: string;
 }
-const BlogBlock: React.FC<BlogBlockProps> = ({ title, author, text, image, category }) => {
+const BlogBlock: React.FC<BlogBlockProps> = ({
+  id,
+  title,
+  author,
+  text,
+  image,
+  category,
+}) => {
   return (
     <div className={styles.block}>
       <img src={image} />
@@ -20,8 +28,10 @@ const BlogBlock: React.FC<BlogBlockProps> = ({ title, author, text, image, categ
         </a>
         <span className={styles.category}>{category}</span>
         <h1>{title}</h1>
-        <p>{text.substring(0, 150) + '...'}</p>
-        <button>Read More</button>
+        <p>{text.substring(0, 150) + "..."}</p>
+        <Link to = {`/blog/${id}`}>
+          <button>Read More</button>
+        </Link>
       </div>
     </div>
   );

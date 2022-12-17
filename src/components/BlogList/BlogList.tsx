@@ -14,6 +14,7 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   const dispatch = useDispatch<AppDispatch>();
   const category = useSelector((state: RootState) => state.blogs.category);
   const [loading, setLoading] = React.useState(true);
+  
   async function getBlogs() {
     setLoading(true);
     await dispatch(fetchBlogs());
