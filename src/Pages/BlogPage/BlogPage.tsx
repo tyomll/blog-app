@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchPostById } from "../../../redux/blogByIdSlice/slice";
-import { AppDispatch, RootState } from "../../../redux/store";
+import { fetchPostById } from "../../redux/blogByIdSlice/slice";
+import { AppDispatch, RootState } from "../../redux/store";
 import s from "./BlogPage.module.scss";
 
 const BlogPage: React.FC = () => {
@@ -18,6 +18,7 @@ const BlogPage: React.FC = () => {
   useEffect(() => {
     getPostById();
   }, []);
+
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -32,6 +33,7 @@ const BlogPage: React.FC = () => {
           </a>
           <span className={s.category}>{post.category}</span>
           <p>{post.text}</p>
+
         </div>
       </div>
       <div className={s.commentsWrapper}>

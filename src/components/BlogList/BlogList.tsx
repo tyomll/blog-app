@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBlogs } from '../../redux/blogSlice/slice';
+import { fetchPosts } from '../../redux/postsSlice/slice';
 import { AppDispatch, RootState } from '../../redux/store';
 import BlogBlock from '../BlogBlock/BlogBlock';
 import BlogBlockSkeleton from '../BlogBlock/Skeleton/BlogBlockSkeleton';
@@ -10,14 +10,14 @@ interface BlogListProps {
   searchValue: string;
 }
 const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
-  const blogs = useSelector((state: RootState) => state.blogs.items);
+  const blogs = useSelector((state: RootState) => state.posts.items);
   const dispatch = useDispatch<AppDispatch>();
-  const category = useSelector((state: RootState) => state.blogs.category);
+  const category = useSelector((state: RootState) => state.posts.category);
   const [loading, setLoading] = React.useState(true);
   
   async function getBlogs() {
     setLoading(true);
-    await dispatch(fetchBlogs());
+    await dispatch(fetchPosts());
     setLoading(false);
   }
   React.useEffect(() => {

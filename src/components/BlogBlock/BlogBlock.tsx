@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./BlogBlock.module.scss";
+import s from "./BlogBlock.module.scss";
 import { Link } from "react-router-dom";
 
 interface BlogBlockProps {
@@ -19,17 +19,15 @@ const BlogBlock: React.FC<BlogBlockProps> = ({
   category,
 }) => {
   return (
-    <div className={styles.block}>
+    <div className={s.block}>
       <img src={image} />
-      <div className={styles.texts}>
-        <a>
-          <span>Author: </span>
-          {author}
-        </a>
-        <span className={styles.category}>{category}</span>
+      <div className={s.texts}>
+        <span>Author: </span>
+        <Link to={`/users/${id}`}>{author}</Link>
+        <span className={s.category}>{category}</span>
         <h1>{title}</h1>
         <p>{text.substring(0, 150) + "..."}</p>
-        <Link to = {`/blog/${id}`}>
+        <Link to={`/blog/${id}`}>
           <button>Read More</button>
         </Link>
       </div>

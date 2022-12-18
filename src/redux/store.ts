@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import blogs from './blogSlice/slice'
+import posts from './postsSlice/slice'
 import post from './blogByIdSlice/slice'
+import user from './userByIdSlice/slice'
+
 export const store = configureStore({
   reducer: {
-    blogs,
+    posts,
     post,
+    user,
   },
 });
 

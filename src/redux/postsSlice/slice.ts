@@ -7,7 +7,7 @@ enum Status {
   ERROR = "error",
 }
 
-type BlogCommentsType = {
+type PostCommentsType = {
   comments: {
     id: string;
     author: string;
@@ -15,29 +15,29 @@ type BlogCommentsType = {
   };
 };
 
-export type BlogType = {
+export type PostType = {
   id: string;
   author: string;
   image: string;
   title: string;
   text: string;
   category: string;
-  comments: BlogCommentsType[];
+  comments: PostCommentsType[];
 };
 
-interface BlogSliceState {
-  items: BlogType[];
+interface PostsSliceStateType {
+  items: PostType[];
   status: Status;
   category: string;
 }
 
-const initialState: BlogSliceState = {
+const initialState: PostsSliceStateType = {
   items: [],
   status: Status.LOADING,
   category: 'all',
 };
 
-export const fetchBlogs = createAsyncThunk(
+export const fetchPosts = createAsyncThunk(
   "pizza/fetchBlogsStatus",
   async () => {
     const { data } = await axios.get(
@@ -47,11 +47,11 @@ export const fetchBlogs = createAsyncThunk(
     return data;
   }
 );
-const blogSlice = createSlice({
+const postsSlice = createSlice({
   name: "blog",
   initialState,
   reducers: {
-    setItems(state, action: PayloadAction<BlogType[]>) {
+    setItems(state, action: PayloadAction<PostType[]>) {
       state.items = action.payload;
     },
     setCategory(state, action: PayloadAction<string>) {
@@ -59,21 +59,21 @@ const blogSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchBlogs.pending, (state) => {
+    builder.addCase(fetchPosts.pending, (state) => {
       state.status = Status.LOADING;
       state.items = [];
     });
-    builder.addCase(fetchBlogs.fulfilled, (state, action) => {
+    builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.items = action.payload;
       state.status = Status.SUCCESS;
     });
-    builder.addCase(fetchBlogs.rejected, (state) => {
+    builder.addCase(fetchPosts.rejected, (state) => {
       state.status = Status.ERROR;
       state.items = [];
     });
   },
 });
 
-export const { setItems, setCategory } = blogSlice.actions;
+export const { setItems, setCategory } = postsSlice.actions;
 
-export default blogSlice.reducer;
+export default postsSlice.reducer;

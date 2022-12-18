@@ -44,7 +44,7 @@ export const fetchPostById = createAsyncThunk(
   }
 );
 
-const blogSlice = createSlice({
+const blogByIdSlice = createSlice({
   name: "postById",
   initialState,
   reducers: {
@@ -60,6 +60,6 @@ const blogSlice = createSlice({
   },
 });
 
-export const { setItem } = blogSlice.actions;
+export const { setItem } = blogByIdSlice.actions;
 
-export default blogSlice.reducer;
+export default blogByIdSlice.reducer;
