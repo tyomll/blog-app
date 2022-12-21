@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import BlogBlock from "../../components/BlogBlock/BlogBlock";
-import { fetchPosts } from "../../redux/postsSlice/slice";
-import { AppDispatch, RootState } from "../../redux/store";
-import { fetchUserById, setItem } from "../../redux/userByIdSlice/slice";
-import { PostType } from "../../redux/postsSlice/slice";
-import s from "./UserPage.module.scss";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import BlogBlock from '../../components/BlogBlock/BlogBlock';
+import { fetchPosts } from '../../redux/postsSlice/slice';
+import { AppDispatch, RootState } from '../../redux/store';
+import { fetchUserById, setItem } from '../../redux/getUserByIdSlice/slice';
+import { PostType } from '../../redux/postsSlice/slice';
+import s from './UserPage.module.scss';
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
-  const user = useSelector((state: RootState) => state.user.item);
+  const user = useSelector((state: RootState) => state.getUserById.item);
   const postsnew = useSelector((state: RootState) => {
     const allPosts = state.posts.items;
     if (user) {

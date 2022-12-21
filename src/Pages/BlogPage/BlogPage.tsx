@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchPostById } from "../../redux/blogByIdSlice/slice";
-import { AppDispatch, RootState } from "../../redux/store";
-import s from "./BlogPage.module.scss";
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { useParams } from 'react-router-dom';
+import { fetchPostById } from '../../redux/blogByIdSlice/slice';
+import { AppDispatch, RootState } from '../../redux/store';
+import s from './BlogPage.module.scss';
 
 const BlogPage: React.FC = () => {
   const { id } = useParams();
-  const post = useSelector((state: RootState) => state.post.item);
-  const dispatch = useDispatch<AppDispatch>();
+  const post = useAppSelector((state) => state.post.item);
+  const dispatch = useAppDispatch();
 
   const getPostById = async () => {
     if (id) {
@@ -33,7 +33,6 @@ const BlogPage: React.FC = () => {
           </a>
           <span className={s.category}>{post.category}</span>
           <p>{post.text}</p>
-
         </div>
       </div>
       <div className={s.commentsWrapper}>

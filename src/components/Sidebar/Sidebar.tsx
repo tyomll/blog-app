@@ -1,13 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from '../../redux/postsSlice/slice';
-import { RootState } from '../../redux/store';
 import styles from './Sidebar.module.scss';
-
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 const Sidebar: React.FC = () => {
   const categories: string[] = ['All', 'Blog', 'Webinar', 'Lifestyle', 'Health', 'Tourism'];
-  const category = useSelector((state: RootState) => state.posts.category);
-  const dispatch = useDispatch();
+  const category = useAppSelector((state) => state.posts.category);
+  const dispatch = useAppDispatch();
   return (
     <div className={styles.root}>
       <ul>

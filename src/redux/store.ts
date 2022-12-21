@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import posts from './postsSlice/slice'
 import post from './blogByIdSlice/slice'
-import user from './userByIdSlice/slice'
+import getUserById from './getUserByIdSlice/slice'
+import user from './userSlice/slice'
 
 export const store = configureStore({
   reducer: {
+    user,
     posts,
     post,
-    user,
+    getUserById,
   },
 });
 
