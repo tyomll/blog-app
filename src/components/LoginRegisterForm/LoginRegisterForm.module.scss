@@ -1,0 +1,109 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  gap: 20px;
+}
+.texts {
+  flex: 1;
+  height: 400px;
+  .textsContainer {
+    .heading {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+
+      .logo {
+        background-image: linear-gradient(305deg, #fe9344, #fecd20);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: white;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 60px;
+      }
+    }
+    p {
+      font-size: 40px;
+      font-weight: 0;
+    }
+  }
+}
+.loginForm {
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 19%) 0px 10px 30px, rgb(0 0 0 / 23%) 0px 6px 10px;
+  justify-content: center;
+  align-items: center;
+  .logo {
+    background-image: linear-gradient(305deg, #fe9344, #fecd20);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+  }
+  .heading {
+    margin-top: 40px;
+    h1 {
+      font-size: 18px;
+      color: rgb(48, 53, 75);
+      font-weight: 500;
+    }
+  }
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+
+    input {
+      margin-top: 20px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #1e1e1e4a;
+      padding: 15px;
+      font-size: 18px;
+    }
+  }
+  .submitBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+    button {
+      width: 90%;
+      background-color: #e2e5ec;
+      color: #8e95a9;
+      outline: none;
+      border: none;
+      border-radius: 8px;
+      height: 34px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  }
+  .registerLink {
+    margin-top: 20px;
+    a {
+      color: #fe9344;
+      text-decoration: none;
+    }
+  }
+}
