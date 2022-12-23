@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { fetchPostById } from '../../redux/blogByIdSlice/slice';
 import { AppDispatch, RootState } from '../../redux/store';
-import s from './BlogPage.module.scss';
+import s from './PostPage.module.scss';
 
-const BlogPage: React.FC = () => {
+const PostPage: React.FC = () => {
   const { id } = useParams();
   const post = useAppSelector((state) => state.post.item);
   const dispatch = useAppDispatch();
@@ -27,10 +27,10 @@ const BlogPage: React.FC = () => {
         </div>
         <div className={s.description}>
           <h1>{post.title}</h1>
-          <a href="">
+          <Link to={`/users/${post.authorId}`}>
             <span>Author: </span>
             {post.author}
-          </a>
+          </Link>
           <span className={s.category}>{post.category}</span>
           <p>{post.text}</p>
         </div>
@@ -62,4 +62,4 @@ const BlogPage: React.FC = () => {
   );
 };
 
-export default BlogPage;
+export default PostPage;

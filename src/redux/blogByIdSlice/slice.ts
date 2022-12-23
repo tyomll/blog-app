@@ -8,13 +8,14 @@ enum Status {
 }
 
 export type BlogCommentsType = {
-    id: string;
-    author: string;
-    text: string;
+  id: string;
+  author: string;
+  text: string;
 };
 
 export type BlogByIdSliceType = {
   id: string;
+  authorId?: string;
   title: string;
   author: string;
   image: string;
