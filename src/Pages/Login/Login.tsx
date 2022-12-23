@@ -29,7 +29,7 @@ const Login: React.FC = () => {
           token: user.refreshToken,
         }),
       );
-      push('/');
+      push('/profile');
     });
   }
   return (

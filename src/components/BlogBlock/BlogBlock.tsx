@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 interface BlogBlockProps {
   id: string;
+  authorId : string;
   title: string;
   author: string;
   text: string;
@@ -12,6 +13,7 @@ interface BlogBlockProps {
 }
 const BlogBlock: React.FC<BlogBlockProps> = ({
   id,
+  authorId,
   title,
   author,
   text,
@@ -23,7 +25,7 @@ const BlogBlock: React.FC<BlogBlockProps> = ({
       <img src={image} />
       <div className={s.texts}>
         <span>Author: </span>
-        <Link to={`/users/${id}`}>{author}</Link>
+        <Link to={`/users/${authorId}`}>{author}</Link>
         <span className={s.category}>{category}</span>
         <h1>{title}</h1>
         <p>{text.substring(0, 150) + "..."}</p>

@@ -17,6 +17,7 @@ type PostCommentsType = {
 
 export type PostType = {
   id: string;
+  authorId: string;
   author: string;
   image: string;
   title: string;

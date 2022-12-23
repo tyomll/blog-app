@@ -1,42 +1,44 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import BlogBlock from '../../components/BlogBlock/BlogBlock';
-import { fetchPosts } from '../../redux/postsSlice/slice';
-import { AppDispatch, RootState } from '../../redux/store';
-import { fetchUserById, setItem } from '../../redux/getUserByIdSlice/slice';
-import { PostType } from '../../redux/postsSlice/slice';
-import s from './UserPage.module.scss';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import BlogBlock from "../../components/BlogBlock/BlogBlock";
+import { fetchPosts } from "../../redux/postsSlice/slice";
+import { AppDispatch, RootState } from "../../redux/store";
+import { fetchUserById, setItem } from "../../redux/getUserByIdSlice/slice";
+import { PostType } from "../../redux/postsSlice/slice";
+import s from "./UserPage.module.scss";
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
   const user = useSelector((state: RootState) => state.getUserById.item);
-  const postsnew = useSelector((state: RootState) => {
-    const allPosts = state.posts.items;
-    if (user) {
-      return allPosts.filter((post) => {
-        return post.author.toLowerCase() === user.userName.toLowerCase();
-      });
-    }
+  const posts = useSelector((state: RootState) => {
+    return state.posts.items.filter((post) => {
+      return post.author.toLowerCase() === user.userName?.toLowerCase();
+    });
   });
   const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = React.useState(true);
 
   async function getUser() {
+    setLoading(true);
     if (id) {
       await dispatch(fetchUserById(id));
     }
-    dispatch(fetchPosts());
+    setLoading(false);
+  }
+  async function getPosts() {
+    setLoading(true);
+    await dispatch(fetchPosts());
+    setLoading(false);
   }
 
   useEffect(() => {
     getUser();
+    getPosts()
   }, [id]);
-
-  if (!id) {
-    return <h1>Loading</h1>;
-  }
   return (
     <div className={s.root}>
+      {loading && <div>Loading</div>}
       <div className={s.wrapper}>
         <div className={s.userInfo}>
           <img src={user.avatar} />
@@ -45,8 +47,8 @@ const UserPage: React.FC = () => {
         <div className={s.userPostsSection}>
           <h1>Posts</h1>
           <div className={s.userPosts}>
-            {postsnew &&
-              postsnew.map((post: PostType) => {
+            {posts &&
+              posts.map((post: PostType) => {
                 return <BlogBlock key={post.id} {...post} />;
               })}
           </div>
