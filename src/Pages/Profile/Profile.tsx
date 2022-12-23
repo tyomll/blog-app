@@ -1,5 +1,5 @@
-import React from 'react'
-import s from './Profile.module.scss'
+import React from 'react';
+import s from './Profile.module.scss';
 
 const Profile = () => {
   return (
@@ -11,7 +11,7 @@ const Profile = () => {
         <h1></h1>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
