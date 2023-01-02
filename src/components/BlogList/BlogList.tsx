@@ -1,25 +1,19 @@
 import React from 'react';
-import { fetchPosts } from '../../redux/postsSlice/slice';
 import BlogBlock from '../BlogBlock/BlogBlock';
 import BlogBlockSkeleton from '../BlogBlock/Skeleton/BlogBlockSkeleton';
 import styles from './BlogList.module.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
 interface BlogListProps {
   searchValue: string;
 }
 const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   const blogs = useAppSelector((state) => state.posts.items);
-  const dispatch = useAppDispatch();
   const category = useAppSelector((state) => state.posts.category);
   const [loading, setLoading] = React.useState(true);
 
-  async function getBlogs() {
-    setLoading(true);
-    await dispatch(fetchPosts());
-    setLoading(false);
-  }
   React.useEffect(() => {
-    getBlogs();
+    getPostsFromPostSlice(setLoading);
   }, []);
 
   return (

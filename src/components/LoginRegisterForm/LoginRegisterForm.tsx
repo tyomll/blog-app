@@ -11,14 +11,15 @@ type contentType = {
 
 interface LoginRegisterFormType {
   content: contentType;
-  submitHandler: (email: string, pass: string) => void;
+  submitHandler: (username: string | null, email: string, pass: string) => void;
 }
 
 const activeButtonStyle = 'linear-gradient(305deg, #fe9344, #fecd20)';
 
 const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHandler }) => {
-  const [email, setEmail] = React.useState('');
-  const [pass, setPass] = React.useState('');
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('artyom123@gmail.com');
+  const [pass, setPass] = React.useState('artyom123');
   const [passTwo, setPassTwo] = React.useState('');
 
   return (
@@ -46,6 +47,14 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
           <h1>{content.formHeading}</h1>
         </div>
         <div className={s.inputs}>
+          {content.type === 'reg' && (
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          )}
           <input
             type="text"
             placeholder="Email"
@@ -74,7 +83,13 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
               backgroundImage: email && pass ? activeButtonStyle : '',
               color: email && pass ? 'white' : '',
             }}
-            onClick={() => submitHandler(email, pass)}>
+            onClick={() => {
+              if (content.type === 'reg') {
+                submitHandler(username, email, pass);
+              } else {
+                submitHandler(null, email, pass);
+              }
+            }}>
             {content.buttonText}
           </button>
         </div>

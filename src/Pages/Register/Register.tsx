@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { setUser } from '../../redux/userSlice/slice';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux-hooks';
@@ -16,11 +16,15 @@ const Register: React.FC = () => {
   const dispatch = useAppDispatch();
   const push = useNavigate();
 
-  function handleRegister(email: string, password: string) {
+  function handleRegister(username: string | null, email: string, password: string) {
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password).then(({ user }) => {
+    createUserWithEmailAndPassword(auth, email, password).then(async ({ user }) => {
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, { displayName: username });
+      }
       dispatch(
         setUser({
+          username: user.displayName,
           email: user.email,
           id: user.uid,
           token: user.refreshToken,

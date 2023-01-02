@@ -10,7 +10,7 @@ export type UserByIdSliceType = {
 };
 
 type initialStateType = {
-  item : UserByIdSliceType
+  item: UserByIdSliceType
 }
 const initialState: initialStateType = {
   item: {},
@@ -22,7 +22,6 @@ export const fetchUserById = createAsyncThunk(
     const { data } = await axios.get(
       `https://639b67c631877e43d68bac36.mockapi.io/Users/${id}`
     );
-
     return data;
   }
 );

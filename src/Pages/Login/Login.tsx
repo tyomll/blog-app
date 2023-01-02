@@ -15,15 +15,14 @@ const content = {
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const push = useNavigate();
 
-  function handleLogin(email: string, password: string) {
+  function handleLogin(username: string | null, email: string, password: string) {
     const auth = getAuth();
-
     signInWithEmailAndPassword(auth, email, password).then(({ user }) => {
       dispatch(
         setUser({
+          username: user.displayName,
           email: user.email,
           id: user.uid,
           token: user.refreshToken,

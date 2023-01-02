@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
-import { fetchPosts } from '../../redux/postsSlice/slice';
-import { fetchUserById } from '../../redux/getUserByIdSlice/slice';
 import { PostType } from '../../redux/postsSlice/slice';
 import s from './UserPage.module.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { getPostsFromPostSlice, getUserFromUserSlice } from '../../utils/fetchFromRedux';
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
   const user = useAppSelector((state) => state.getUserById.item);
-  const dispatch = useAppDispatch();
   const [loading, setLoading] = React.useState(true);
   const posts = useAppSelector((state) => {
     return state.posts.items.filter((post) => {
@@ -18,23 +16,9 @@ const UserPage: React.FC = () => {
     });
   });
 
-  async function getUser() {
-    setLoading(true);
-    if (id) {
-      await dispatch(fetchUserById(id));
-    }
-    setLoading(false);
-  }
-
-  async function getPosts() {
-    setLoading(true);
-    await dispatch(fetchPosts());
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    getUser();
-    getPosts();
+  React.useEffect(() => {
+    getUserFromUserSlice(id, setLoading);
+    getPostsFromPostSlice(setLoading);
   }, [id]);
 
   return (

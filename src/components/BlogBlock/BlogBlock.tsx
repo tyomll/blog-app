@@ -1,10 +1,10 @@
-import React from "react";
-import s from "./BlogBlock.module.scss";
-import { Link } from "react-router-dom";
+import React from 'react';
+import s from './BlogBlock.module.scss';
+import { Link } from 'react-router-dom';
 
 interface BlogBlockProps {
   id: string;
-  authorId : string;
+  authorId: string;
   title: string;
   author: string;
   text: string;
@@ -28,7 +28,7 @@ const BlogBlock: React.FC<BlogBlockProps> = ({
         <Link to={`/users/${authorId}`}>{author}</Link>
         <span className={s.category}>{category}</span>
         <h1>{title}</h1>
-        <p>{text.substring(0, 150) + "..."}</p>
+        <p>{text.substring(0, 150) + '...'}</p>
         <Link to={`/blog/${id}`}>
           <button>Read More</button>
         </Link>

@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { Link, useParams } from 'react-router-dom';
-import { fetchPostById } from '../../redux/blogByIdSlice/slice';
-import { AppDispatch, RootState } from '../../redux/store';
 import s from './PostPage.module.scss';
+import { getPostById } from '../../utils/fetchFromRedux';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
   const post = useAppSelector((state) => state.post.item);
-  const dispatch = useAppDispatch();
 
-  const getPostById = async () => {
-    if (id) {
-      await dispatch(fetchPostById(id));
-    }
-  };
   useEffect(() => {
-    getPostById();
+    getPostById(id);
   }, []);
 
   return (
