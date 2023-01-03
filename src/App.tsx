@@ -20,13 +20,13 @@ const App: React.FC = () => {
     <>
       <Navbar />
       <Routes>
-        <Route element={<LoggedInRoutes />}>
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-        <Route element={<LoggedOutRoutes />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+        {/* <Route element={<LoggedInRoutes />}> */}
+        <Route path="/profile" element={<Profile />} />
+        {/* </Route> */}
+        {/* <Route element={<LoggedOutRoutes />}> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {/* </Route> */}
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<PostPage />} />
         <Route path="/users/:id" element={<UserPage />} />
