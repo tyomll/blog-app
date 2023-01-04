@@ -30,7 +30,7 @@ interface BlogByIdSliceState {
 }
 
 const initialState: BlogByIdSliceState = {
-  item: <BlogByIdSliceType>{},
+  item: {} as BlogByIdSliceType,
   status: Status.LOADING,
 };
 

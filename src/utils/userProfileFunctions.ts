@@ -1,20 +1,22 @@
-import { updateProfile } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { updateProfile, User } from 'firebase/auth';
+import { getStorage, ref, getDownloadURL, uploadString } from 'firebase/storage';
 
 
-export async function uploadUserAvatar(file: File | null, currentUser: any, setLoading: any) {
+export async function uploadUserAvatar(photo: string | null, currentUser: User | null, setLoading: (arg: boolean) => void) {
   const storage = getStorage()
-  const fileRef = ref(storage, 'userAvatars/' + currentUser.uid + '.png')
-  setLoading(true)
-  if (file) {
-    const snapshot = await uploadBytes(fileRef, file)
+  if (currentUser) {
+    const fileRef = ref(storage, 'userAvatars/' + currentUser.uid + '.png')
+    setLoading(true)
+    if (photo) {
+      await uploadString(fileRef, photo, 'data_url')
+    }
+    const photoURL = await getDownloadURL(fileRef)
+    updateProfile(currentUser, {
+      photoURL: photoURL as string
+    }
+    )
+    setLoading(false)
   }
-  const photoURL = await getDownloadURL(fileRef)
-  updateProfile(currentUser, {
-    photoURL: <any>photoURL
-  }
-  )
-  setLoading(false)
-  alert('exav')
+
 
 }

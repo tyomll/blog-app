@@ -11,7 +11,9 @@ import s from './Profile.module.scss';
 import { uploadUserAvatar } from '../../utils/userProfileFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
-const Profile = () => {
+import UploadimageModal from '../../components/UploadimageModal/UploadimageModal';
+
+const Profile: React.FC = () => {
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -23,21 +25,19 @@ const Profile = () => {
   //     return post.author.toLowerCase() === user?.displayName?.toLowerCase();
   //   });
   // });
-  const [photo, setPhoto] = React.useState<File | null>(null);
-  const [photoURL, setPhotoURL] = React.useState(
+  const [photo, setPhoto] = React.useState<null | string>(null);
+  const [photoURL, setPhotoURL] = React.useState<string>(
     'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   );
   const refresh = () => window.location.reload();
+  const [uploadMode, setUploadMode] = React.useState<boolean>(false);
+
   function logOutUser() {
     auth.signOut();
     push('/');
   }
-  async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e?.target.files) {
-      setPhoto(e.target.files[0]);
-    }
-  }
   async function handleAvatarSumbit() {
+    setUploadMode(false);
     await uploadUserAvatar(photo, user, setLoading);
     refresh();
   }
@@ -51,6 +51,13 @@ const Profile = () => {
 
   return (
     <div className={s.root}>
+      {uploadMode && (
+        <UploadimageModal
+          setPhoto={setPhoto}
+          handleAvatarSumbit={handleAvatarSumbit}
+          setUploadMode={setUploadMode}
+        />
+      )}
       {loading ? (
         <div className="lds-dual-ring"></div>
       ) : (
@@ -59,14 +66,18 @@ const Profile = () => {
             <div className={s.avatar}>
               <div className={s.image}>
                 <img src={photoURL} />
-                <label htmlFor="uploadFile">
+                <button id="uploadFile" onClick={() => setUploadMode(true)}>
                   <FontAwesomeIcon icon={faCamera} />
-                </label>
-                <input type="file" id="uploadFile" onChange={(event) => handleImageChange(event)} />
+                </button>
               </div>
-              <button onClick={handleAvatarSumbit}>submit</button>
             </div>
-            <h1>{user?.displayName}</h1>
+            <div className={s.details}>
+              <h1>{user?.displayName}</h1>
+              <span>{user?.email}</span>
+            </div>
+            <div className={s.addPost}>
+              
+            </div>
           </div>
           <div className={s.userPostsSection}>
             <h1>Posts</h1>
