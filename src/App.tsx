@@ -10,6 +10,7 @@ import PostPage from './Pages/PostPage/PostPage';
 import { checkLoggedInUser } from './utils/checkLoggedInUser';
 import LoggedInRoutes from './utils/LoggedInRoutes';
 import LoggedOutRoutes from './utils/LoggedOutRoutes';
+import PostCreatingPage from './Pages/PostCreatingPage/PostCreatingPage';
 
 const App: React.FC = () => {
   React.useEffect(() => {
@@ -26,10 +27,12 @@ const App: React.FC = () => {
         {/* <Route element={<LoggedOutRoutes />}> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         {/* </Route> */}
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<PostPage />} />
         <Route path="/users/:id" element={<UserPage />} />
+        <Route path="/create-post" element={<PostCreatingPage />} />
       </Routes>
     </>
   );

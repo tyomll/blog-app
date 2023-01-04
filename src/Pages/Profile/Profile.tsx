@@ -1,7 +1,7 @@
 import { current } from '@reduxjs/toolkit';
 import { getAuth, updateCurrentUser } from 'firebase/auth';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { useAuth } from '../../hooks/use-auth';
@@ -16,8 +16,6 @@ import UploadimageModal from '../../components/UploadimageModal/UploadimageModal
 const Profile: React.FC = () => {
   const auth = getAuth();
   const user = auth.currentUser;
-
-  const { email } = useAuth();
   const push = useNavigate();
   const [loading, setLoading] = React.useState(true);
   // const posts = useAppSelector((state) => {
@@ -76,7 +74,7 @@ const Profile: React.FC = () => {
               <span>{user?.email}</span>
             </div>
             <div className={s.addPost}>
-              
+              <Link to="/create-post">Add post</Link>
             </div>
           </div>
           <div className={s.userPostsSection}>

@@ -11,7 +11,7 @@ const UserPage: React.FC = () => {
   const user = useAppSelector((state) => state.getUserById.item);
   const [loading, setLoading] = React.useState(true);
   const posts = useAppSelector((state) => {
-    return state.posts.items.filter((post) => {
+    return state.posts.items.filter((post: any) => {
       return post.author.toLowerCase() === user.userName?.toLowerCase();
     });
   });

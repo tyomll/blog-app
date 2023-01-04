@@ -1,5 +1,7 @@
+import { collection, DocumentReference, getDocs } from 'firebase/firestore';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { db } from '../../firebase';
 
 enum Status {
   LOADING = "loading",
@@ -27,7 +29,7 @@ export type PostType = {
 };
 
 interface PostsSliceStateType {
-  items: PostType[];
+  items: any;
   status: Status;
   category: string;
 }
@@ -39,13 +41,11 @@ const initialState: PostsSliceStateType = {
 };
 
 export const fetchPosts = createAsyncThunk(
-  "pizza/fetchBlogsStatus",
-  async () => {
-    const { data } = await axios.get(
-      `https://639b67c631877e43d68bac36.mockapi.io/blogs`
-    );
-
-    return data;
+  "blog/fetchBlogsStatus",
+  async (collectionRef: any) => {
+    const data = await getDocs(collectionRef)
+    const newData = data.docs.map((doc) => ({ ...doc.data() as Record<string, unknown>, id: doc.id }));
+    return newData
   }
 );
 const postsSlice = createSlice({

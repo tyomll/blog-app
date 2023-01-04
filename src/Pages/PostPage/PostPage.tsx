@@ -22,7 +22,7 @@ const PostPage: React.FC = () => {
           <h1>{post.title}</h1>
           <Link to={`/users/${post.authorId}`}>
             <span>Author: </span>
-            {post.author}
+            {post.author && post.author.name}
           </Link>
           <span className={s.category}>{post.category}</span>
           <p>{post.text}</p>
@@ -32,7 +32,7 @@ const PostPage: React.FC = () => {
         <h1>Comments</h1>
         <div className={s.comments}>
           {post.comments &&
-            post.comments.map((comment) => {
+            post.comments?.map((comment: any) => {
               return (
                 <div key={comment.id} className={s.comment}>
                   <div className={s.authorData}>

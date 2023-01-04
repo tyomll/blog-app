@@ -4,28 +4,19 @@ import { Link } from 'react-router-dom';
 
 interface BlogBlockProps {
   id: string;
-  authorId: string;
+  author: { name: string; id: string };
   title: string;
-  author: string;
   text: string;
   image: string;
   category: string;
 }
-const BlogBlock: React.FC<BlogBlockProps> = ({
-  id,
-  authorId,
-  title,
-  author,
-  text,
-  image,
-  category,
-}) => {
+const BlogBlock: React.FC<any> = ({ id, author, title, text, image, category }) => {
   return (
     <div className={s.block}>
       <img src={image} />
       <div className={s.texts}>
         <span>Author: </span>
-        <Link to={`/users/${authorId}`}>{author}</Link>
+        <Link to={`/users/${author.id}`}>{author.name}</Link>
         <span className={s.category}>{category}</span>
         <h1>{title}</h1>
         <p>{text.substring(0, 150) + '...'}</p>

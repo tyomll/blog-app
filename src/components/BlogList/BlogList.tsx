@@ -15,16 +15,16 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   React.useEffect(() => {
     getPostsFromPostSlice(setLoading);
   }, []);
-
+  
   return (
     <div className={styles.root}>
       {loading &&
-        blogs.map((_, i) => {
+        blogs.map((_: any, i: any) => {
           return <BlogBlockSkeleton key={i} />;
         })}
       {!loading &&
         blogs
-          .filter((blog) => {
+          .filter((blog: any) => {
             if (category !== 'all') {
               return blog.category === category;
             } else {
@@ -32,14 +32,14 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
             }
           })
 
-          .filter((blog) => {
+          .filter((blog: any) => {
             if (searchValue.trim() !== '') {
               return blog.title.toLowerCase().trim().includes(searchValue.trim().toLowerCase());
             } else {
               return blog;
             }
           })
-          .map((blog) => {
+          .map((blog: any) => {
             return <BlogBlock key={blog.id} {...blog} />;
           })}
     </div>
