@@ -8,8 +8,9 @@ const Navbar: React.FC = () => {
   const { isAuth } = useAuth();
   const location = useLocation();
   const push = useNavigate();
+  const auth: any = getAuth();
+
   function logOutUser() {
-    const auth = getAuth();
     auth.signOut();
     push('/');
   }
@@ -46,7 +47,7 @@ const Navbar: React.FC = () => {
               <span>My Profile</span>
             )}
 
-            <img src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000" />
+            {auth && <img src={auth.currentUser.photoURL} />}
           </Link>
         )}
       </nav>

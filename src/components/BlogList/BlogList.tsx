@@ -15,7 +15,6 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   React.useEffect(() => {
     getPostsFromPostSlice(setLoading);
   }, []);
-  
   return (
     <div className={styles.root}>
       {loading &&

@@ -26,6 +26,7 @@ const UserPage: React.FC = () => {
   React.useEffect(() => {
     getUserData();
   }, [id]);
+  
   return (
     <div className={s.root}>
       {loading ? (
@@ -34,10 +35,13 @@ const UserPage: React.FC = () => {
         <div className={s.wrapper}>
           <div className={s.userInfo}>
             <div className={s.image}>{imageURL && <img src={imageURL} />}</div>
-            <div className={s.details}>
-              <h1>{user.username}</h1>
-              <span>{user.email}</span>
-            </div>
+
+            {user && (
+              <div className={s.details}>
+                <h1>{user.username}</h1>
+                <span>{user.email}</span>
+              </div>
+            )}
           </div>
           <div className={s.userPostsSection}>
             <h1>Posts</h1>

@@ -9,6 +9,8 @@ export interface PostDataType {
   title: string;
   text: string;
   category: string;
+  comments: [];
+  image: string;
 }
 const PostCreatingPage: React.FC = () => {
   const [photo, setPhoto] = React.useState<null | File>(null);
@@ -16,6 +18,8 @@ const PostCreatingPage: React.FC = () => {
     title: '',
     text: '',
     category: '',
+    comments: [],
+    image: '',
   });
   const push = useNavigate();
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +48,7 @@ const PostCreatingPage: React.FC = () => {
         onChange={(e) => setPostData({ ...postData, category: e.target.value })}
       />
 
-      <button onClick={() => createPost(photo, postData)}>Post</button>
+      <button onClick={() => createPost(photo, postData, setPostData)}>Post</button>
     </div>
   );
 };
