@@ -18,11 +18,11 @@ const Profile: React.FC = () => {
   const user = auth.currentUser;
   const push = useNavigate();
   const [loading, setLoading] = React.useState(true);
-  // const posts = useAppSelector((state) => {
-  //   return state.filter((post) => {
-  //     return post.author.toLowerCase() === user?.displayName?.toLowerCase();
-  //   });
-  // });
+  const posts = useAppSelector((state: any) => {
+    return state.posts.items.filter((post: PostType) => {
+      return post.author.name.toLowerCase() === user?.displayName?.toLowerCase();
+    });
+  });
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [photoURL, setPhotoURL] = React.useState<string>(
     'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
@@ -79,7 +79,12 @@ const Profile: React.FC = () => {
           </div>
           <div className={s.userPostsSection}>
             <h1>Posts</h1>
-            <div className={s.userPosts}></div>
+            <div className={s.userPosts}>
+              {posts &&
+                posts.map((post: PostType) => {
+                  return <BlogBlock key={post.id} {...post} />;
+                })}
+            </div>
           </div>
         </div>
       )}

@@ -1,26 +1,31 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { fetchUserDataById } from '../../utils/userProfileFunctions';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
 import { PostType } from '../../redux/postsSlice/slice';
 import s from './UserPage.module.scss';
-import { useAppSelector } from '../../hooks/redux-hooks';
-import { getPostsFromPostSlice, getUserFromUserSlice } from '../../utils/fetchFromRedux';
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
   const user = useAppSelector((state) => state.getUserById.item);
-  const [loading, setLoading] = React.useState(true);
   const posts = useAppSelector((state) => {
-    return state.posts.items.filter((post: any) => {
-      return post.author.toLowerCase() === user.userName?.toLowerCase();
+    return state.posts.items.filter((post: PostType) => {
+      return post.author.id.toLowerCase() === id?.toLowerCase();
     });
   });
+  const [imageURL, setImageURL] = React.useState('');
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const push = useNavigate();
 
+  function getUserData() {
+    if (id) {
+      fetchUserDataById(id, setImageURL, setLoading, push);
+    }
+  }
   React.useEffect(() => {
-    getUserFromUserSlice(id, setLoading);
-    getPostsFromPostSlice(setLoading);
+    getUserData();
   }, [id]);
-
   return (
     <div className={s.root}>
       {loading ? (
@@ -28,8 +33,11 @@ const UserPage: React.FC = () => {
       ) : (
         <div className={s.wrapper}>
           <div className={s.userInfo}>
-            <img src={user.avatar} />
-            <h1>{user.userName}</h1>
+            <div className={s.image}>{imageURL && <img src={imageURL} />}</div>
+            <div className={s.details}>
+              <h1>{user.username}</h1>
+              <span>{user.email}</span>
+            </div>
           </div>
           <div className={s.userPostsSection}>
             <h1>Posts</h1>

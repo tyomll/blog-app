@@ -10,10 +10,13 @@ interface BlogBlockProps {
   image: string;
   category: string;
 }
-const BlogBlock: React.FC<any> = ({ id, author, title, text, image, category }) => {
+const BlogBlock: React.FC<BlogBlockProps> = ({ id, author, title, text, image, category }) => {
   return (
     <div className={s.block}>
-      <img src={image} />
+      <div className={s.image}>
+        <img src={image} />
+      </div>
+
       <div className={s.texts}>
         <span>Author: </span>
         <Link to={`/users/${author.id}`}>{author.name}</Link>

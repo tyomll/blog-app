@@ -16,13 +16,11 @@ export type BlogCommentsType = {
 
 export type BlogByIdSliceType = {
   id: string;
-  authorId?: string;
+  author: { name: string; id: string };
   title: string;
-  author: string;
-  image: string;
   text: string;
+  image: string;
   category: string;
-  comments: BlogCommentsType[];
 };
 
 interface BlogByIdSliceState {

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import LoginRegisterForm from '../../components/LoginRegisterForm/LoginRegisterForm';
 import s from './Register.module.scss';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const content = {
   type: 'reg',
@@ -19,6 +21,8 @@ const Register: React.FC = () => {
   function handleRegister(username: string | null, email: string, password: string) {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password).then(async ({ user }) => {
+      const ref = doc(db, 'users', user.uid);
+      const docRef = await setDoc(ref, { username, email });
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, { displayName: username });
       }

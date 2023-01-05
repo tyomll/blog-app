@@ -1,7 +1,5 @@
-import { collection, DocumentReference, getDocs } from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { db } from '../../firebase';
 
 enum Status {
   LOADING = "loading",
@@ -19,13 +17,14 @@ type PostCommentsType = {
 
 export type PostType = {
   id: string;
-  authorId: string;
-  author: string;
-  image: string;
+  author: {
+    name: string;
+    id: string
+  };
   title: string;
   text: string;
+  image: string;
   category: string;
-  comments: PostCommentsType[];
 };
 
 interface PostsSliceStateType {

@@ -1,33 +1,30 @@
+import { doc, getDoc } from 'firebase/firestore';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import { db } from '../../firebase';
 
 export type UserByIdSliceType = {
-  id?: string;
-  authorId?: string;
-  avatar?: string;
-  userName?: string;
-  password?: string;
+  username: string,
+  email: string,
 };
 
 type initialStateType = {
   item: UserByIdSliceType
 }
-const initialState: initialStateType = {
-  item: {},
+const initialState = {
+  item: {} as any,
 };
 
 export const fetchUserById = createAsyncThunk(
-  "postById/fetchUserByIdStatus",
+  "userById/fetchUserByIdStatus",
   async (id: string) => {
-    const { data } = await axios.get(
-      `https://639b67c631877e43d68bac36.mockapi.io/Users/${id}`
-    );
-    return data;
+    const docRef = doc(db, 'users', id)
+    const data = await getDoc(docRef)
+    return data.data()
   }
 );
 
 const userByIdSlice = createSlice({
-  name: "postById",
+  name: "userById",
   initialState,
   reducers: {
     setItem(state, action: PayloadAction<UserByIdSliceType>) {
