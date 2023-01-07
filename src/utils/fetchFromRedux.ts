@@ -15,13 +15,14 @@ export const getUserFromUserSlice = async (id: string | undefined, setLoading?: 
 }
 export const getPostsFromPostSlice = async (setLoading?: (arg: boolean) => void) => {
   const postCollectionRef = collection(db, 'posts')
-  if (setLoading !== undefined) setLoading(true);
+  if (setLoading !== undefined) {
+    setLoading(true);
+  }
   await store.dispatch(fetchPosts(postCollectionRef));
   if (setLoading !== undefined) setLoading(false);
 }
 
 export const getPostById = async (id: string | undefined) => {
-
   if (id) {
     await store.dispatch(fetchPostById(id));
   }

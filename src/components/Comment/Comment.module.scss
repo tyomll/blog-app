@@ -1,0 +1,42 @@
+.comment {
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 1px 1px 12px 0 rgb(0 0 0 / 8%);
+  padding: 10px;
+  border-radius: 10px;
+
+  .authorDetails {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    img {
+      padding: 3px;
+      width: 70px;
+      height: 70px;
+      background-image: linear-gradient(305deg, #fe9344, #fecd20);
+
+      border-radius: 50%;
+    }
+    .authorData {
+      display: flex;
+      flex-direction: column;
+      a {
+        font-size: 22px;
+        font-weight: bold;
+        text-decoration: none;
+        color: black;
+      }
+      span {
+        color: gray;
+        font-size: 15px;
+        border-radius: 10px;
+      }
+    }
+  }
+  .commentText {
+    margin-top: 10px;
+    p {
+      font-size: 20px;
+    }
+  }
+}

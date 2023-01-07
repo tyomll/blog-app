@@ -1,14 +1,13 @@
-import uuid from 'react-uuid';
 import { auth } from './../firebase';
 import { PostDataType } from './../Pages/PostCreatingPage/PostCreatingPage';
-import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
+import { uuidv4 } from '@firebase/util';
 
 export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void) => {
   const storage = getStorage()
-  const fileRef = ref(storage, 'postImages/' + uuid() + '.png')
-
+  const fileRef = ref(storage, 'postImages/' + uuidv4() + '.png')
   if (file) {
     await uploadBytes(fileRef, file).then(async () => {
       await getDownloadURL(fileRef).then(async (imageURL) => {
@@ -17,8 +16,6 @@ export const createPost = async (file: File | null, postData: PostDataType, setP
         const title = postData.title;
         const text = postData.text;
         const category = postData.category;
-        const comments = postData.comments;
-        const image = postData.image
         await addDoc(postCollectionRef, {
           author: {
             name: auth.currentUser?.displayName,
@@ -27,10 +24,9 @@ export const createPost = async (file: File | null, postData: PostDataType, setP
           title,
           text,
           category,
-          comments,
-          image,
-
+          image: imageURL,
         });
+
       }).catch((e) => {
         console.log(e.message)
       })
@@ -48,8 +44,23 @@ export const updatePost = (id: string, data: any) => {
   }
   const postRef = doc(db, "posts", id);
   updateDoc(postRef, newData).then(() => {
-    console.log('add areci')
+    console.log('post add areci')
   }).catch((e) => {
     console.log(e.message)
   })
+}
+
+export const addComment = async (text: string, postId: string, uid: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
+  const id = uuidv4()
+  const date = Date.now()
+  const docRef = doc(db, 'comments', id)
+  await setDoc(docRef, { text, id, postId, date, uid })
+    .then(() => {
+      setSnackbarText('Your comment added successfully!');
+      showSnackbar(true)
+    })
+    .catch((e) => {
+      showSnackbar(true)
+      setSnackbarText("Something went wrong. Please try again.")
+    })
 }

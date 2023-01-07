@@ -4,6 +4,7 @@ import BlogBlockSkeleton from '../BlogBlock/Skeleton/BlogBlockSkeleton';
 import styles from './BlogList.module.scss';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
+
 interface BlogListProps {
   searchValue: string;
 }
@@ -15,6 +16,7 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   React.useEffect(() => {
     getPostsFromPostSlice(setLoading);
   }, []);
+
   return (
     <div className={styles.root}>
       {loading &&

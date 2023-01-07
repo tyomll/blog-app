@@ -1,7 +1,5 @@
 import React from 'react';
-// import { addDoc, collection } from 'firebase/firestore';
 import s from './PostCreatingPage.module.scss';
-// import { db, auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { createPost } from '../../utils/postFunctions';
 
@@ -9,7 +7,6 @@ export interface PostDataType {
   title: string;
   text: string;
   category: string;
-  comments: [];
   image: string;
 }
 const PostCreatingPage: React.FC = () => {
@@ -18,7 +15,6 @@ const PostCreatingPage: React.FC = () => {
     title: '',
     text: '',
     category: '',
-    comments: [],
     image: '',
   });
   const push = useNavigate();

@@ -4,6 +4,8 @@
   justify-content: center;
   margin-top: 50px;
   flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 20px;
   .container {
     display: flex;
     width: 90%;
@@ -65,45 +67,9 @@
   .commentsWrapper {
     display: flex;
     justify-content: flex-start;
-    height: 400px;
     margin-top: 50px;
     width: 90%;
     flex-direction: column;
-
-    .comments {
-      .comment {
-        margin-top: 20px;
-        background-color: #fff;
-        box-shadow: 1px 1px 12px 0 rgb(0 0 0 / 8%);
-        width: 35%;
-        padding: 10px;
-        border-radius: 10px;
-
-        .authorData {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          img {
-            padding: 3px;
-            width: 70px;
-            background-image: linear-gradient(305deg, #fe9344, #fecd20);
-
-            border-radius: 50%;
-          }
-          p {
-            padding: 5px;
-            font-size: 23px;
-            border-radius: 10px;
-          }
-        }
-        .commentText {
-          margin-top: 10px;
-          p {
-            font-size: 20px;
-          }
-        }
-      }
-    }
 
     .commentInput {
       display: flex;

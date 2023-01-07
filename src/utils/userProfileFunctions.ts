@@ -27,20 +27,20 @@ export function getUserAvatar(id: string, setImageURL: (arg: string) => void) {
   const fileRef = ref(storage, 'userAvatars/' + id + '.png');
   getDownloadURL(fileRef).then((url) => {
     setImageURL(url);
-  });
+  })
 }
 export function fetchUserDataById(
   id: string,
-  setImageURL: (arg: string) => void,
-  setLoading: (arg: boolean) => void,
-  push: (arg: string) => void,
+  setImageURL?: (arg: string) => void,
+  setLoading?: (arg: boolean) => void,
+  push?: (arg: string) => void,
 ) {
-  if (id === auth.currentUser?.uid) {
+  if (id === auth.currentUser?.uid && push) {
     push('/profile');
     return
   }
   store.dispatch(fetchUserById(id))
-  getUserAvatar(id, setImageURL);
+  if (setImageURL) getUserAvatar(id, setImageURL);
   getPostsFromPostSlice(setLoading);
 
 }
