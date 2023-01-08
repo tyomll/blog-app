@@ -4,15 +4,15 @@ import BlogBlockSkeleton from '../BlogBlock/Skeleton/BlogBlockSkeleton';
 import styles from './BlogList.module.scss';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
+import { PostType } from '../../redux/postsSlice/slice';
 
 interface BlogListProps {
   searchValue: string;
 }
 const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
-  const blogs = useAppSelector((state) => state.posts.items);
+  const posts = useAppSelector((state) => state.posts.items);
   const category = useAppSelector((state) => state.posts.category);
   const [loading, setLoading] = React.useState(true);
-
   React.useEffect(() => {
     getPostsFromPostSlice(setLoading);
   }, []);
@@ -20,28 +20,32 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   return (
     <div className={styles.root}>
       {loading &&
-        blogs.map((_: any, i: any) => {
+        posts.map((_: any, i: any) => {
           return <BlogBlockSkeleton key={i} />;
         })}
       {!loading &&
-        blogs
-          .filter((blog: any) => {
+        posts
+          .filter((post: any) => {
             if (category !== 'all') {
-              return blog.category === category;
+              return post.category === category;
             } else {
-              return blog;
+              return post;
             }
+          })
+          .filter((post: any) => {
+            if (searchValue.trim() !== '') {
+              return post.title.toLowerCase().trim().includes(searchValue.trim().toLowerCase());
+            } else {
+              return post;
+            }
+          })
+          .sort((a: any, b: any) => {
+            // Sorting posts by date, DESC
+            return b.date - a.date;
           })
 
-          .filter((blog: any) => {
-            if (searchValue.trim() !== '') {
-              return blog.title.toLowerCase().trim().includes(searchValue.trim().toLowerCase());
-            } else {
-              return blog;
-            }
-          })
-          .map((blog: any) => {
-            return <BlogBlock key={blog.id} {...blog} />;
+          .map((post: any) => {
+            return <BlogBlock key={post.id} {...post} />;
           })}
     </div>
   );

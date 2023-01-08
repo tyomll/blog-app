@@ -17,7 +17,7 @@ const PostCreatingPage: React.FC = () => {
     category: '',
     image: '',
   });
-  const push = useNavigate();
+  // const push = useNavigate();
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       e.preventDefault();
@@ -30,17 +30,20 @@ const PostCreatingPage: React.FC = () => {
       <input
         type="text"
         value={postData.title}
+        placeholder="title"
         onChange={(e) => setPostData({ ...postData, title: e.target.value })}
       />
       <input
         type="text"
         value={postData.text}
+        placeholder="description"
         onChange={(e) => setPostData({ ...postData, text: e.target.value })}
       />
       <input type="file" onChange={(event) => handleImageUpload(event)} />
       <input
         type="text"
         value={postData.category}
+        placeholder="category"
         onChange={(e) => setPostData({ ...postData, category: e.target.value })}
       />
 

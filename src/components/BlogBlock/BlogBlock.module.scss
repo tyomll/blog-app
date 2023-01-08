@@ -6,6 +6,7 @@
   margin-left: 20px;
   height: 540px;
   margin-top: 20px;
+  position: relative;
   .image {
     width: 100%;
     height: 230px;
@@ -19,24 +20,42 @@
     }
   }
 
-  .texts {
+  .content {
     padding: 20px;
 
-    a {
-      color: #f7a153;
-      cursor: pointer;
-      transition: 0.3s;
-      text-decoration: none;
+    .author {
+      display: flex;
+      justify-content: space-between;
+      .info {
+        a {
+          color: #f7a153;
+          cursor: pointer;
+          transition: 0.3s;
+          text-decoration: none;
 
-      span {
-        color: rgba(0, 0, 0, 0.711);
-        cursor: auto;
+          span {
+            color: rgba(0, 0, 0, 0.711);
+            cursor: auto;
+          }
+
+          &:hover {
+            color: #ff7b00;
+          }
+        }
       }
-
-      &:hover {
-        color: #ff7b00;
+      .delete {
+        svg {
+          font-size: 20px;
+          color: rgb(249, 2, 2);
+          cursor: pointer;
+          transition: 0.3s;
+          &:hover {
+            color: rgb(244, 61, 61);
+          }
+        }
       }
     }
+
     .category {
       display: flex;
       background-color: #fbeddd;
@@ -48,19 +67,30 @@
       margin-top: 5px;
       cursor: pointer;
     }
-    button {
-      margin-top: 20px;
-      background-image: linear-gradient(305deg, #fe9344, #fecd20);
-      width: fit-content;
-      height: 40px;
-      border: none;
-      outline: none;
-      border-radius: 30px;
-      color: rgb(254, 246, 246);
-      font-weight: 600;
-      font-size: 17px;
-      cursor: pointer;
-      padding: 10px;
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: absolute;
+      bottom: 20px;
+      width: calc(100% - 40px);
+      button {
+        background-image: linear-gradient(305deg, #fe9344, #fecd20);
+        width: fit-content;
+        height: 40px;
+        border: none;
+        outline: none;
+        border-radius: 30px;
+        color: rgb(254, 246, 246);
+        font-weight: 600;
+        font-size: 17px;
+        cursor: pointer;
+        padding: 10px;
+      }
+      span {
+        color: grey;
+      }
     }
   }
 }

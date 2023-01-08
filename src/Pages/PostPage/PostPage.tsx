@@ -57,7 +57,15 @@ const PostPage: React.FC = () => {
       </div>
       <div className={s.commentsWrapper}>
         <h1>Comments</h1>
-        <div className={s.comments}>{id && <CommentsList postId={id} />}</div>
+        <div className={s.comments}>
+          {id && (
+            <CommentsList
+              postId={id}
+              showSnackbar={showSnackbar}
+              setSnackbarText={setSnackbarText}
+            />
+          )}
+        </div>
         <div className={s.commentInput}>
           <textarea
             placeholder="Leave your thoughts..."
@@ -75,7 +83,12 @@ const PostPage: React.FC = () => {
         TransitionComponent={Slide}
         autoHideDuration={3000}
         key={'bottom' + 'center'}>
-        <Alert severity={snackbarText === 'Your comment added successfully!' ? 'success' : 'error'}>
+        <Alert
+          severity={
+            snackbarText === 'Your comment added successfully!' || 'Comment deleted successfully!'
+              ? 'success'
+              : 'error'
+          }>
           {snackbarText}
         </Alert>
       </Snackbar>

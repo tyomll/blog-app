@@ -25,6 +25,7 @@ export type PostType = {
   text: string;
   image: string;
   category: string;
+  date: number;
 };
 
 interface PostsSliceStateType {

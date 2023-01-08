@@ -26,7 +26,7 @@ const UserPage: React.FC = () => {
   React.useEffect(() => {
     getUserData();
   }, [id]);
-  
+
   return (
     <div className={s.root}>
       {loading ? (

@@ -1,6 +1,6 @@
 import { auth } from './../firebase';
 import { PostDataType } from './../Pages/PostCreatingPage/PostCreatingPage';
-import { collection, addDoc, updateDoc, doc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, setDoc, deleteDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
@@ -17,6 +17,7 @@ export const createPost = async (file: File | null, postData: PostDataType, setP
         const text = postData.text;
         const category = postData.category;
         await addDoc(postCollectionRef, {
+          id: uuidv4(),
           author: {
             name: auth.currentUser?.displayName,
             id: auth.currentUser?.uid,
@@ -25,6 +26,7 @@ export const createPost = async (file: File | null, postData: PostDataType, setP
           text,
           category,
           image: imageURL,
+          date: Date.now()
         });
 
       }).catch((e) => {
@@ -63,4 +65,15 @@ export const addComment = async (text: string, postId: string, uid: string, show
       showSnackbar(true)
       setSnackbarText("Something went wrong. Please try again.")
     })
+}
+
+export async function deleteComment(id: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) {
+  const docRef = doc(db, 'comments', id)
+  await deleteDoc(docRef).then(() => {
+    showSnackbar(true)
+    setSnackbarText('Comment deleted successfully!')
+  }).catch((e) => {
+    showSnackbar(true)
+    setSnackbarText(e.message)
+  })
 }

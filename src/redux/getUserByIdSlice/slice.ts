@@ -1,17 +1,9 @@
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, DocumentData, getDoc } from 'firebase/firestore';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { db } from '../../firebase';
 
-export type UserByIdSliceType = {
-  username: string,
-  email: string,
-};
-
-type initialStateType = {
-  item: UserByIdSliceType
-}
 const initialState = {
-  item: {} as any,
+  item: {} as DocumentData | undefined,
 };
 
 export const fetchUserById = createAsyncThunk(
@@ -27,13 +19,14 @@ const userByIdSlice = createSlice({
   name: "userById",
   initialState,
   reducers: {
-    setItem(state, action: PayloadAction<UserByIdSliceType>) {
+    setItem(state, action: PayloadAction<DocumentData>) {
       state.item = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserById.fulfilled, (state, action) => {
       state.item = action.payload;
+
     });
   },
 });
