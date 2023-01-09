@@ -34,14 +34,7 @@ const App: React.FC = () => {
         <Route path="/blog/:id" element={<PostPage />} />
         <Route path="/users/:id" element={<UserPage />} />
 
-        <Route
-          path="/create-post"
-          element={
-            <CssVarsProvider>
-              <PostCreatingPage />{' '}
-            </CssVarsProvider>
-          }
-        />
+        <Route path="/create-post" element={<PostCreatingPage />} />
       </Routes>
     </>
   );

@@ -1,12 +1,11 @@
 import { auth } from './../firebase';
 import { PostDataType } from './../Pages/PostCreatingPage/PostCreatingPage';
-import { collection, addDoc, updateDoc, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc, deleteDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
 
-export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void) => {
-  console.log(postData)
+export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void, navigate: (arg: string) => void) => {
   const storage = getStorage()
   const fileRef = ref(storage, 'postImages/' + uuidv4() + '.png')
   if (file) {
@@ -32,25 +31,14 @@ export const createPost = async (file: File | null, postData: PostDataType, setP
       }).catch((e) => {
         console.log(e.message)
       })
+      setTimeout(() => {
+        navigate('/')
+      }, 3000);
     }).catch((e) => {
       console.log(e.message)
     })
   }
 };
-
-export const updatePost = (id: string, data: any) => {
-  const newData = {
-    comments: [
-      data
-    ]
-  }
-  const postRef = doc(db, "posts", id);
-  updateDoc(postRef, newData).then(() => {
-    console.log('post add areci')
-  }).catch((e) => {
-    console.log(e.message)
-  })
-}
 
 export const addComment = async (text: string, postId: string, uid: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const id = uuidv4()

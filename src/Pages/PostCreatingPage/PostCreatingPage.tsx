@@ -7,6 +7,9 @@ import ReactQuill from 'react-quill';
 import Button from '@mui/joy/Button';
 import PublishIcon from '@mui/icons-material/Publish';
 import swal from 'sweetalert';
+import parse from 'html-react-parser';
+import { Alert, Slide, Snackbar } from '@mui/material';
+import { CssVarsProvider } from '@mui/joy';
 
 export interface PostDataType {
   title: string;
@@ -17,23 +20,33 @@ export interface PostDataType {
 const PostCreatingPage: React.FC = () => {
   const quillRef = React.useRef<ReactQuill>(null);
   const [photo, setPhoto] = React.useState<null | File>(null);
-
+  const [snackbar, showSnackbar] = React.useState(false);
+  const [snackbarText, setSnackbarText] = React.useState('');
   const [postData, setPostData] = React.useState<PostDataType>({
     title: '',
     text: '',
     category: '',
   });
 
-  // const push = useNavigate();
+  const navigate = useNavigate();
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       e.preventDefault();
       setPhoto(e.target.files[0]);
-      alert('uploaded');
+      showSnackbar(true);
+      setSnackbarText('Image uploaded!');
     }
   };
-  function getText(e: any) {
-    setPostData({ ...postData, text: e });
+  function getText(text: any) {
+    const textLength = quillRef!.current!.editor!.getLength();
+    if (textLength <= 1000) {
+      setPostData({ ...postData, text });
+    } else {
+      setSnackbarText('Description should be maximum 1000 characters.');
+      showSnackbar(true);
+      const trimmedValue = text.substring(0, 1000);
+      setPostData({ ...postData, text: trimmedValue });
+    }
   }
   return (
     <div className={s.root}>
@@ -45,29 +58,55 @@ const PostCreatingPage: React.FC = () => {
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
           className={s.title}
         />
-        <ReactQuill ref={quillRef} onChange={(e) => getText(e)} placeholder="Description..." />
-
-        <Button startDecorator={<PublishIcon />} variant="solid" component="label">
-          Upload Image
-          <input
-            type="file"
-            onChange={(event) => handleImageUpload(event)}
-            className={s.image}
-            hidden
-          />
-        </Button>
-        <input
-          type="text"
-          value={postData.category}
-          placeholder="Category"
-          onChange={(e) => setPostData({ ...postData, category: e.target.value })}
-          className={s.title}
+        <ReactQuill
+          ref={quillRef}
+          value={postData.text}
+          onChange={(e) => getText(e)}
+          placeholder="Description..."
         />
-        {/* <button className={s.submit}>Post</button> */}
-        <Button variant="solid" onClick={() => createPost(photo, postData, setPostData)}>
-          Post
-        </Button>
+        <CssVarsProvider>
+          <Button startDecorator={<PublishIcon />} variant="outlined" component="label">
+            Upload Image
+            <input
+              type="file"
+              onChange={(event) => handleImageUpload(event)}
+              className={s.image}
+              hidden
+            />
+          </Button>
+          <input
+            type="text"
+            value={postData.category}
+            placeholder="Category"
+            onChange={(e) => setPostData({ ...postData, category: e.target.value })}
+            className={s.title}
+          />
+          <Button
+            variant="solid"
+            onClick={() => {
+              setSnackbarText('Post added to blog successfully.');
+              showSnackbar(true);
+              createPost(photo, postData, setPostData, navigate);
+            }}>
+            Post
+          </Button>
+        </CssVarsProvider>
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={snackbar}
+        onClose={() => showSnackbar(false)}
+        message="rfasfas"
+        TransitionComponent={Slide}
+        autoHideDuration={3000}
+        key={'bottom' + 'center'}>
+        <Alert
+          severity={
+            snackbarText !== 'Description should be maximum 1000 characters.' ? 'success' : 'error'
+          }>
+          {snackbarText}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

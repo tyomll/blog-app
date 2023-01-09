@@ -1,8 +1,6 @@
 import { doc, DocumentData, getDoc } from 'firebase/firestore';
-import { store } from './../redux/store';
 import { getPostsFromPostSlice } from './fetchFromRedux';
-import { fetchUserById } from './../redux/getUserByIdSlice/slice';
-import { storage, auth, db } from './../firebase';
+import { storage, db } from './../firebase';
 import { updateProfile, User } from 'firebase/auth';
 import { getStorage, ref, getDownloadURL, uploadString } from 'firebase/storage';
 

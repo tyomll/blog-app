@@ -26,7 +26,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
       <div className={s.content}>
         <div className={s.author}>
           <div className={s.info}>
-            <h1>{title}</h1>
+            <h1>{title.slice(0, 15) + '...'}</h1>
             <span>Author: </span>
             <Link to={`/users/${author.id}`}>{author.name}</Link>
           </div>
@@ -38,7 +38,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
         </div>
         <span className={s.category}>{category}</span>
         <div className={s.texts}>
-          <div className={s.description}>{text && parse(text.substring(0, 190) + '...')}</div>
+          <div className={s.description}>{text && parse(text.slice(0, 130) + '...')}</div>
         </div>
         <div className={s.button}>
           <Link to={`/blog/${id}`}>
