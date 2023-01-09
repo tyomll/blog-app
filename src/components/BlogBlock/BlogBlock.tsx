@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useDeletePosts } from '../../hooks/posts';
 import { Alert, Slide, Snackbar } from '@mui/material';
+import parse from 'html-react-parser';
 
 const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, category, date }) => {
   const [snackbar, showSnackbar] = React.useState<boolean>(false);
@@ -25,6 +26,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
       <div className={s.content}>
         <div className={s.author}>
           <div className={s.info}>
+            <h1>{title}</h1>
             <span>Author: </span>
             <Link to={`/users/${author.id}`}>{author.name}</Link>
           </div>
@@ -36,8 +38,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
         </div>
         <span className={s.category}>{category}</span>
         <div className={s.texts}>
-          <h1>{title}</h1>
-          <p>{text.substring(0, 150) + '...'}</p>
+          <div className={s.description}>{text && parse(text.substring(0, 190) + '...')}</div>
         </div>
         <div className={s.button}>
           <Link to={`/blog/${id}`}>
@@ -46,6 +47,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
           <span>{formatDistanceToNow(date) + ' ' + 'ago'}</span>
         </div>
       </div>
+
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={snackbar}

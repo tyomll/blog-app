@@ -18,11 +18,7 @@ export function useDeletePosts(id: string, showSnackbar: (arg: boolean) => void,
         querySnapshot.forEach(async (doc) => deleteDoc(doc.ref))
         showSnackbar(true)
         setSnackbarText("Post deleted successfully!")
-
-
         refresh()
-
-
       }
     });
   }

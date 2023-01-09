@@ -17,17 +17,15 @@ interface CommentType {
 const Comment: React.FC<CommentType> = ({ comment, showSnackbar, setSnackbarText }) => {
   const auth = getAuth();
   const currentUser = auth.currentUser;
-  const author = useAppSelector((state) => state.getUserById.item);
   const { text, uid, date, id } = comment;
   const [avatar, setAvatar] = React.useState('');
-
+  const [author, setAuthor] = React.useState<any>('');
   function onDeleteComment() {
     deleteComment(id, showSnackbar, setSnackbarText);
   }
   React.useEffect(() => {
-    fetchUserDataById(uid, setAvatar);
+    fetchUserDataById(uid, setAuthor, setAvatar);
   }, []);
-
   return (
     <div className={s.comment}>
       <div className={s.authorDetails}>

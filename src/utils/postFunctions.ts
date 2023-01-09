@@ -6,12 +6,12 @@ import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
 
 export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void) => {
+  console.log(postData)
   const storage = getStorage()
   const fileRef = ref(storage, 'postImages/' + uuidv4() + '.png')
   if (file) {
     await uploadBytes(fileRef, file).then(async () => {
       await getDownloadURL(fileRef).then(async (imageURL) => {
-        setPostData({ ...postData, image: imageURL })
         const postCollectionRef = collection(db, 'posts');
         const title = postData.title;
         const text = postData.text;

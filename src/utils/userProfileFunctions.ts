@@ -1,7 +1,8 @@
+import { doc, DocumentData, getDoc } from 'firebase/firestore';
 import { store } from './../redux/store';
 import { getPostsFromPostSlice } from './fetchFromRedux';
 import { fetchUserById } from './../redux/getUserByIdSlice/slice';
-import { storage, auth } from './../firebase';
+import { storage, auth, db } from './../firebase';
 import { updateProfile, User } from 'firebase/auth';
 import { getStorage, ref, getDownloadURL, uploadString } from 'firebase/storage';
 
@@ -29,17 +30,22 @@ export function getUserAvatar(id: string, setImageURL: (arg: string) => void) {
     setImageURL(url);
   })
 }
-export function fetchUserDataById(
+
+export async function fetchUserDataById(
   id: string,
+  setAuthor?: (arg: DocumentData | undefined) => void,
   setImageURL?: (arg: string) => void,
   setLoading?: (arg: boolean) => void,
-  push?: (arg: string) => void,
+
 ) {
-  if (id === auth.currentUser?.uid && push) {
-    push('/profile');
-    return
+
+  if (setAuthor) {
+    const docRef = doc(db, 'users', id)
+    const data = await getDoc(docRef)
+    const userInfo = data.data()
+    setAuthor(userInfo)
   }
-  store.dispatch(fetchUserById(id))
+
   if (setImageURL) getUserAvatar(id, setImageURL);
   getPostsFromPostSlice(setLoading);
 

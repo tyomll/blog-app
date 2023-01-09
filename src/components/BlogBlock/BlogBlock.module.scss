@@ -21,11 +21,24 @@
   }
 
   .content {
-    padding: 20px;
-
+    padding: 15px 20px 20px 20px;
+    .texts {
+      .description {
+        margin-top: 10px;
+        text-align: left;
+        max-width: 100%;
+        padding: 0px 20px 0 20px;
+        word-break: break-all;
+        color: rgb(0, 0, 0);
+        li {
+          margin-left: -5px;
+        }
+      }
+    }
     .author {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       .info {
         a {
           color: #f7a153;

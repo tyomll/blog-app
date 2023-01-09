@@ -8,11 +8,14 @@ import { getAuth } from 'firebase/auth';
 import CommentsList from '../../components/CommentsList/CommentsList';
 import { Alert, Snackbar } from '@mui/material';
 import Slide from '@mui/material/Slide';
+import parse from 'html-react-parser';
+import { fetchUserDataById, getUserAvatar } from '../../utils/userProfileFunctions';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
   const auth: any = getAuth();
   const post = useAppSelector((state) => state.post.item);
+  const [authorAvatar, setAuthorAvatar] = React.useState('');
   const [snackbar, showSnackbar] = React.useState<boolean>(false);
   const [snackbarText, setSnackbarText] = React.useState<string>(
     'Your comment added successfully!',
@@ -33,26 +36,38 @@ const PostPage: React.FC = () => {
     }
   };
 
+  async function getPost() {
+    await getPostById(id);
+  }
   useEffect(() => {
-    getPostById(id);
-  }, []);
+    getPost();
+  }, [id]);
+
+  useEffect(() => {
+    if (post.id) {
+      getUserAvatar(post.author?.id, setAuthorAvatar);
+    }
+  }, [post]);
 
   return (
     <div className={s.root}>
       <div className={s.container}>
+        <div className={s.postInfo}>
+          <h1>{post.title}</h1>
+          {post.author && (
+            <Link className={s.author} to={`/users/${post.author.id}`}>
+              <img src={authorAvatar} alt="avatar" />
+              {post.author && post.author.name}
+            </Link>
+          )}
+          <span className={s.category}>{post.category}</span>
+        </div>
         <div className={s.postImage}>
           <img src={post.image} />
         </div>
         <div className={s.description}>
           <h1>{post.title}</h1>
-          {post.author && (
-            <Link to={`/users/${post.author.id}`}>
-              <span>Author: </span>
-              {post.author && post.author.name}
-            </Link>
-          )}
-          <span className={s.category}>{post.category}</span>
-          <p>{post.text}</p>
+          <div className={s.content}>{post.text && parse(post.text)}</div>
         </div>
       </div>
       <div className={s.commentsWrapper}>

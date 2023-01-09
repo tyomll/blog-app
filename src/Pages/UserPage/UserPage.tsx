@@ -5,6 +5,7 @@ import { fetchUserDataById } from '../../utils/userProfileFunctions';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
 import { PostType } from '../../redux/postsSlice/slice';
 import s from './UserPage.module.scss';
+import { auth } from '../../firebase';
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
@@ -20,7 +21,11 @@ const UserPage: React.FC = () => {
 
   function getUserData() {
     if (id) {
-      fetchUserDataById(id, setImageURL, setLoading, push);
+      if (id === auth.currentUser?.uid && push) {
+        push('/profile');
+      } else {
+        fetchUserDataById(id, undefined, setImageURL, setLoading);
+      }
     }
   }
   React.useEffect(() => {
