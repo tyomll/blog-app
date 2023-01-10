@@ -5,10 +5,10 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
 
-export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void, navigate: (arg: string) => void) => {
+export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const storage = getStorage()
   const fileRef = ref(storage, 'postImages/' + uuidv4() + '.png')
-  if (file) {
+  if (file && postData.title.trim() !== '' && postData.text.trim() !== '' && postData.category.trim() !== '') {
     await uploadBytes(fileRef, file).then(async () => {
       await getDownloadURL(fileRef).then(async (imageURL) => {
         const postCollectionRef = collection(db, 'posts');
@@ -31,12 +31,15 @@ export const createPost = async (file: File | null, postData: PostDataType, setP
       }).catch((e) => {
         console.log(e.message)
       })
-      setTimeout(() => {
-        navigate('/')
-      }, 3000);
+      navigate('/')
     }).catch((e) => {
       console.log(e.message)
     })
+  }
+  else {
+    setSnackbarText("Please fill all the fields.")
+    showSnackbar(true)
+
   }
 };
 

@@ -49,6 +49,7 @@ const PostPage: React.FC = () => {
       getUserAvatar(post.author?.id, setAuthorAvatar);
     }
   }, [post]);
+
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -58,13 +59,15 @@ const PostPage: React.FC = () => {
         <div className={s.description}>
           <div className={s.postInfo}>
             <h1>{post.title}</h1>
-            {post.author && (
-              <Link className={s.author} to={`/users/${post.author.id}`}>
-                <img src={authorAvatar} alt="avatar" />
-                {post.author && post.author.name}
-                <span>{'| Published -  ' + format(post.date, 'yyyy.MM.dd')}</span>
-              </Link>
-            )}
+            <div className={s.author}>
+              {post.author && (
+                <Link to={`/users/${post.author.id}`}>
+                  <img src={authorAvatar} alt="avatar" />
+                  <span>{post.author && post.author.name}</span>
+                </Link>
+              )}
+              <span>{post.date && '| Published -  ' + format(post.date, 'yyyy.MM.dd')}</span>
+            </div>
             <span className={s.category}>{post.category}</span>
           </div>
           <div className={s.content}>{post.text && parse(post.text)}</div>

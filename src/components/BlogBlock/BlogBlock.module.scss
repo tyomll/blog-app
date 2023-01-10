@@ -100,6 +100,8 @@
         padding: 10px;
       }
       span {
+        max-width: 140px;
+        word-break: break-all;
         color: grey;
       }
     }

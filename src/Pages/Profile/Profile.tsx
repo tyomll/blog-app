@@ -8,11 +8,12 @@ import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
 import s from './Profile.module.scss';
 import { uploadUserAvatar } from '../../utils/userProfileFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faBullhorn } from '@fortawesome/free-solid-svg-icons';
 import UploadimageModal from '../../components/UploadimageModal/UploadimageModal';
 import Loader from '../../components/Loader/Loader';
 import Avatar from '@mui/joy/Avatar';
 import { toPng } from 'html-to-image';
+
 const Profile: React.FC = () => {
   const auth = getAuth();
   const user = auth?.currentUser;
@@ -68,7 +69,7 @@ const Profile: React.FC = () => {
 
   if (loading) return <Loader />;
   return (
-    <div className={s.root}>
+    <div className={s.root} style={{ overflowY: uploadMode ? 'hidden' : 'initial' }}>
       {uploadMode && (
         <UploadimageModal
           setPhoto={setPhoto}
@@ -93,27 +94,31 @@ const Profile: React.FC = () => {
               ) : (
                 <img src={photoURL} />
               )}
-
               <button id="uploadFile" onClick={() => setUploadMode(true)}>
                 <FontAwesomeIcon icon={faCamera} />
               </button>
             </div>
           </div>
           <div className={s.details}>
-            <h1>{user?.displayName}</h1>
+            <h1>@{user?.displayName}</h1>
             <span>{user?.email}</span>
           </div>
-          <div className={s.addPost}>
-            <Link to="/create-post">Add post</Link>
-          </div>
+          <Link to="/create-post" className={s.addPost}>
+            <FontAwesomeIcon icon={faBullhorn} />
+            Add post
+          </Link>
         </div>
         <div className={s.userPostsSection}>
           <h1>Posts</h1>
           <div className={s.userPosts}>
             {posts &&
-              posts.map((post: any) => {
-                return <BlogBlock key={post.id} {...post} />;
-              })}
+              posts
+                .sort((a: any, b: any) => {
+                  return b.date - a.date;
+                })
+                .map((post: any) => {
+                  return <BlogBlock key={post.id} {...post} />;
+                })}
           </div>
         </div>
       </div>
