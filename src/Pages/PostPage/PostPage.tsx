@@ -9,7 +9,8 @@ import CommentsList from '../../components/CommentsList/CommentsList';
 import { Alert, Snackbar } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import parse from 'html-react-parser';
-import { fetchUserDataById, getUserAvatar } from '../../utils/userProfileFunctions';
+import { getUserAvatar } from '../../utils/userProfileFunctions';
+import { format } from 'date-fns';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
@@ -48,25 +49,24 @@ const PostPage: React.FC = () => {
       getUserAvatar(post.author?.id, setAuthorAvatar);
     }
   }, [post]);
-
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <div className={s.postInfo}>
-          <h1>{post.title}</h1>
-          {post.author && (
-            <Link className={s.author} to={`/users/${post.author.id}`}>
-              <img src={authorAvatar} alt="avatar" />
-              {post.author && post.author.name}
-            </Link>
-          )}
-          <span className={s.category}>{post.category}</span>
-        </div>
         <div className={s.postImage}>
           <img src={post.image} />
         </div>
         <div className={s.description}>
-          <h1>{post.title}</h1>
+          <div className={s.postInfo}>
+            <h1>{post.title}</h1>
+            {post.author && (
+              <Link className={s.author} to={`/users/${post.author.id}`}>
+                <img src={authorAvatar} alt="avatar" />
+                {post.author && post.author.name}
+                <span>{'| Published -  ' + format(post.date, 'yyyy.MM.dd')}</span>
+              </Link>
+            )}
+            <span className={s.category}>{post.category}</span>
+          </div>
           <div className={s.content}>{post.text && parse(post.text)}</div>
         </div>
       </div>

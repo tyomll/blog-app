@@ -39,12 +39,12 @@ const PostCreatingPage: React.FC = () => {
   };
   function getText(text: any) {
     const textLength = quillRef!.current!.editor!.getLength();
-    if (textLength <= 1000) {
+    if (textLength <= 2000) {
       setPostData({ ...postData, text });
     } else {
-      setSnackbarText('Description should be maximum 1000 characters.');
+      setSnackbarText('Description should be maximum 2000 characters.');
       showSnackbar(true);
-      const trimmedValue = text.substring(0, 1000);
+      const trimmedValue = text.substring(0, 2000);
       setPostData({ ...postData, text: trimmedValue });
     }
   }
@@ -102,7 +102,7 @@ const PostCreatingPage: React.FC = () => {
         key={'bottom' + 'center'}>
         <Alert
           severity={
-            snackbarText !== 'Description should be maximum 1000 characters.' ? 'success' : 'error'
+            snackbarText !== 'Description should be maximum 2000 characters.' ? 'success' : 'error'
           }>
           {snackbarText}
         </Alert>

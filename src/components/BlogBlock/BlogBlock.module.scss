@@ -3,7 +3,6 @@
   border-radius: 25px;
   background-color: white;
   box-shadow: 8px 8px 27px #d3d3d3, -8px -8px 27px #ededed;
-  margin-left: 20px;
   height: 540px;
   margin-top: 20px;
   position: relative;
@@ -60,9 +59,9 @@
           font-size: 20px;
           color: rgb(249, 2, 2);
           cursor: pointer;
-          transition: 0.3s;
+          transition: 0.2s;
           &:hover {
-            color: rgb(244, 61, 61);
+            color: rgba(244, 61, 61, 0.839);
           }
         }
       }

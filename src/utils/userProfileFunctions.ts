@@ -4,7 +4,6 @@ import { storage, db } from './../firebase';
 import { updateProfile, User } from 'firebase/auth';
 import { getStorage, ref, getDownloadURL, uploadString } from 'firebase/storage';
 
-
 export async function uploadUserAvatar(photo: string | null, currentUser: User | null, setLoading: (arg: boolean) => void) {
   const storage = getStorage()
   if (currentUser) {
@@ -34,9 +33,7 @@ export async function fetchUserDataById(
   setAuthor?: (arg: DocumentData | undefined) => void,
   setImageURL?: (arg: string) => void,
   setLoading?: (arg: boolean) => void,
-
 ) {
-
   if (setAuthor) {
     const docRef = doc(db, 'users', id)
     const data = await getDoc(docRef)

@@ -11,7 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import UploadimageModal from '../../components/UploadimageModal/UploadimageModal';
 import Loader from '../../components/Loader/Loader';
-
+import Avatar from '@mui/joy/Avatar';
+import { toPng } from 'html-to-image';
 const Profile: React.FC = () => {
   const auth = getAuth();
   const user = auth?.currentUser;
@@ -24,11 +25,10 @@ const Profile: React.FC = () => {
   });
 
   const [photo, setPhoto] = React.useState<null | string>(null);
-  const [photoURL, setPhotoURL] = React.useState<string>(
-    'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  );
+  const [photoURL, setPhotoURL] = React.useState<string>('');
   const refresh = () => window.location.reload();
   const [uploadMode, setUploadMode] = React.useState<boolean>(false);
+  const avatarRef = React.useRef<HTMLDivElement>(null);
 
   function logOutUser() {
     auth.signOut();
@@ -40,6 +40,19 @@ const Profile: React.FC = () => {
     refresh();
   }
 
+  async function setUserDefaultAvatar() {
+    if (avatarRef.current === null) {
+      return;
+    }
+    await toPng(avatarRef.current, { cacheBust: true })
+      .then(async (dataUrl) => {
+        await uploadUserAvatar(dataUrl, user, setLoading);
+        refresh();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   React.useEffect(() => {
     if (user?.photoURL) {
       setPhotoURL(user.photoURL);
@@ -47,8 +60,13 @@ const Profile: React.FC = () => {
     getPostsFromPostSlice(setLoading);
   }, [user]);
 
-  if (loading) return <Loader />;
+  React.useEffect(() => {
+    if (user?.photoURL === null) {
+      setUserDefaultAvatar();
+    }
+  });
 
+  if (loading) return <Loader />;
   return (
     <div className={s.root}>
       {uploadMode && (
@@ -62,7 +80,20 @@ const Profile: React.FC = () => {
         <div className={s.userInfo}>
           <div className={s.avatar}>
             <div className={s.image}>
-              <img src={photoURL} />
+              {photoURL === '' ? (
+                <Avatar
+                  ref={avatarRef}
+                  variant="outlined"
+                  sx={{
+                    fontSize: '70px',
+                    '--Avatar-size': '200px',
+                  }}>
+                  {user?.displayName?.slice(0, 1).toUpperCase()}
+                </Avatar>
+              ) : (
+                <img src={photoURL} />
+              )}
+
               <button id="uploadFile" onClick={() => setUploadMode(true)}>
                 <FontAwesomeIcon icon={faCamera} />
               </button>

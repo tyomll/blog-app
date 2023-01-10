@@ -5,6 +5,7 @@ import styles from './BlogList.module.scss';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
 import { PostType } from '../../redux/postsSlice/slice';
+import PostsNotFound from '../PostsNotFound/PostsNotFound';
 
 interface BlogListProps {
   searchValue: string;
@@ -13,10 +14,14 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   const posts = useAppSelector((state) => state.posts.items);
   const category = useAppSelector((state) => state.posts.category);
   const [loading, setLoading] = React.useState(true);
+
   React.useEffect(() => {
     getPostsFromPostSlice(setLoading);
   }, []);
 
+  if (posts.length === 0) {
+    return <PostsNotFound />;
+  }
   return (
     <div className={styles.root}>
       {loading &&

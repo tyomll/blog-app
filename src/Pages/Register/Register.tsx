@@ -16,7 +16,7 @@ const content = {
 };
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
-  const push = useNavigate();
+  const navigate = useNavigate();
 
   function handleRegister(username: string | null, email: string, password: string) {
     const auth = getAuth();
@@ -34,7 +34,7 @@ const Register: React.FC = () => {
           token: user.refreshToken,
         }),
       );
-      push('/');
+      navigate('/profile');
     });
   }
   return (

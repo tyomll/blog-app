@@ -9,7 +9,7 @@ import { auth } from '../../firebase';
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
-  const user = useAppSelector((state) => state.getUserById.item);
+  const [user, setUser] = React.useState<any>('');
   const posts = useAppSelector((state) => {
     return state.posts.items.filter((post: PostType) => {
       return post.author.id.toLowerCase() === id?.toLowerCase();
@@ -17,17 +17,18 @@ const UserPage: React.FC = () => {
   });
   const [imageURL, setImageURL] = React.useState('');
   const [loading, setLoading] = React.useState<boolean>(true);
-  const push = useNavigate();
+  const navigate = useNavigate();
 
   function getUserData() {
     if (id) {
-      if (id === auth.currentUser?.uid && push) {
-        push('/profile');
+      if (id === auth.currentUser?.uid && navigate) {
+        navigate('/profile');
       } else {
-        fetchUserDataById(id, undefined, setImageURL, setLoading);
+        fetchUserDataById(id, setUser, setImageURL, setLoading);
       }
     }
   }
+
   React.useEffect(() => {
     getUserData();
   }, [id]);
