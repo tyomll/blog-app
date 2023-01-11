@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useAppSelector } from '../../hooks/redux-hooks';
-import { Link, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import s from './PostPage.module.scss';
 import { getPostById } from '../../utils/fetchFromRedux';
 import { addComment } from '../../utils/postFunctions';
@@ -11,11 +11,14 @@ import Slide from '@mui/material/Slide';
 import parse from 'html-react-parser';
 import { getUserAvatar } from '../../utils/userProfileFunctions';
 import { format } from 'date-fns';
+import { setCategory } from '../../redux/postsSlice/slice';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
   const auth: any = getAuth();
   const post = useAppSelector((state) => state.post.item);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [authorAvatar, setAuthorAvatar] = React.useState('');
   const [snackbar, showSnackbar] = React.useState<boolean>(false);
   const [snackbarText, setSnackbarText] = React.useState<string>(
@@ -68,7 +71,14 @@ const PostPage: React.FC = () => {
               )}
               <span>{post.date && '| Published -  ' + format(post.date, 'yyyy.MM.dd')}</span>
             </div>
-            <span className={s.category}>{post.category}</span>
+            <span
+              className={s.category}
+              onClick={() => {
+                dispatch(setCategory(post.category.toLowerCase()));
+                navigate('/');
+              }}>
+              {post.category}
+            </span>
           </div>
           <div className={s.content}>{post.text && parse(post.text)}</div>
         </div>

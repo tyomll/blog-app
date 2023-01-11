@@ -8,7 +8,8 @@ import Button from '@mui/joy/Button';
 import PublishIcon from '@mui/icons-material/Publish';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import { Alert, Slide, Snackbar } from '@mui/material';
-import { CssVarsProvider } from '@mui/joy';
+import { CssVarsProvider, Option, Select } from '@mui/joy';
+import useCategories from '../../hooks/useCategories';
 
 export interface PostDataType {
   title: string;
@@ -17,7 +18,9 @@ export interface PostDataType {
 }
 
 const PostCreatingPage: React.FC = () => {
+  const { getCategories }: any = useCategories();
   const quillRef = React.useRef<ReactQuill>(null);
+  const [categories, setCategories] = React.useState<any>(null);
   const [photo, setPhoto] = React.useState<null | File>(null);
   const [snackbar, showSnackbar] = React.useState(false);
   const [snackbarText, setSnackbarText] = React.useState('');
@@ -26,8 +29,8 @@ const PostCreatingPage: React.FC = () => {
     text: '',
     category: '',
   });
-
   const navigate = useNavigate();
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       e.preventDefault();
@@ -45,6 +48,10 @@ const PostCreatingPage: React.FC = () => {
       setPostData({ ...postData, text: trimmedValue });
     }
   }
+  React.useEffect(() => {
+    getCategories(setCategories);
+  }, []);
+
   return (
     <>
       <div className={s.root} style={snackbar ? { pointerEvents: 'none', opacity: '0.3' } : {}}>
@@ -75,13 +82,19 @@ const PostCreatingPage: React.FC = () => {
                 hidden
               />
             </Button>
-            <input
-              type="text"
+            <Select
+              placeholder="Choose category..."
               value={postData.category}
-              placeholder="Category"
-              onChange={(e) => setPostData({ ...postData, category: e.target.value })}
-              className={s.title}
-            />
+              onChange={(_, item) => setPostData({ ...postData, category: item! })}>
+              {categories &&
+                categories.map((category: any) => {
+                  return (
+                    <Option key={category.id} value={category.title.toLowerCase()}>
+                      {category.title}
+                    </Option>
+                  );
+                })}
+            </Select>
             <Button
               variant="solid"
               disabled={snackbar === true ? true : false}
@@ -91,7 +104,7 @@ const PostCreatingPage: React.FC = () => {
               onClick={() => {
                 setSnackbarText('Post added to blog successfully.');
                 showSnackbar(true);
-                createPost(photo, postData, setPostData, navigate, showSnackbar, setSnackbarText);
+                createPost(photo, postData, navigate, showSnackbar, setSnackbarText);
                 setPostData({ title: '', text: '', category: '' });
               }}>
               Post

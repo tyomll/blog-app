@@ -12,6 +12,7 @@ import LoggedInRoutes from './utils/LoggedInRoutes';
 import LoggedOutRoutes from './utils/LoggedOutRoutes';
 import PostCreatingPage from './Pages/PostCreatingPage/PostCreatingPage';
 import { CssVarsProvider } from '@mui/joy/styles';
+import AdminPanel from './Pages/AdminPanel/AdminPanel';
 
 const App: React.FC = () => {
   React.useEffect(() => {
@@ -33,6 +34,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<PostPage />} />
         <Route path="/users/:id" element={<UserPage />} />
+        <Route path="/admin" element={<AdminPanel />} />
 
         <Route path="/create-post" element={<PostCreatingPage />} />
       </Routes>

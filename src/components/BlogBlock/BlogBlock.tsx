@@ -1,15 +1,17 @@
 import React from 'react';
 import s from './BlogBlock.module.scss';
 import { Link, useLocation } from 'react-router-dom';
-import { PostType } from '../../redux/postsSlice/slice';
+import { PostType, setCategory } from '../../redux/postsSlice/slice';
 import { formatDistanceToNow } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useDeletePosts } from '../../hooks/posts';
 import { Alert, Slide, Snackbar } from '@mui/material';
 import parse from 'html-react-parser';
+import { useAppDispatch } from '../../hooks/redux-hooks';
 
 const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, category, date }) => {
+  const dispatch = useAppDispatch();
   const [snackbar, showSnackbar] = React.useState<boolean>(false);
   const [snackbarText, setSnackbarText] = React.useState<string>(
     'Your comment added successfully!',
@@ -36,7 +38,9 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
             </div>
           )}
         </div>
-        <span className={s.category}>{category}</span>
+        <span className={s.category} onClick={() => dispatch(setCategory(category.toLowerCase()))}>
+          {category}
+        </span>
         <div className={s.texts}>
           <div className={s.description}>{text && parse(text.slice(0, 130) + '...')}</div>
         </div>

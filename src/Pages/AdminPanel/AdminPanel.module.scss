@@ -1,0 +1,9 @@
+.root {
+  min-height: calc(100vh - 130px);
+  margin: 30px 50px 0px 50px;
+
+  .container {
+    display: flex;
+    gap: 20px;
+  }
+}

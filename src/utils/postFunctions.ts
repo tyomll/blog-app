@@ -5,7 +5,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
 
-export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
+export const createPost = async (file: File | null, postData: PostDataType, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const storage = getStorage()
   const fileRef = ref(storage, 'postImages/' + uuidv4() + '.png')
   if (file && postData.title.trim() !== '' && postData.text.trim() !== '' && postData.category.trim() !== '') {
