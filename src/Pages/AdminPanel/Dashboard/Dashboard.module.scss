@@ -1,8 +1,5 @@
 .root {
   width: 100%;
-  background-color: #fff;
-  box-shadow: 1px 1px 12px 0 rgb(0 0 0 / 8%);
-  border-radius: 20px;
   min-height: calc(100vh - 150px);
 
   .container {
@@ -11,7 +8,11 @@
       gap: 30px;
       padding: 20px;
       .card {
-        background-image: linear-gradient(305deg, #fe9344, #fecd20);
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        background-color: #fff;
+        box-shadow: 1px 1px 12px 0 rgb(0 0 0 / 8%);
         width: 25%;
         height: 200px;
         border-radius: 20px;
@@ -19,14 +20,18 @@
 
         h2 {
           font-size: 30px;
-          color: rgb(255, 255, 255);
-          font-weight: 500;
+          color: rgb(28, 28, 28);
+          font-weight: 600;
         }
 
         span {
           color: rgb(28, 28, 28);
-          font-size: 20px;
+          font-size: 30px;
           font-weight: bold;
+        }
+        p {
+          width: 100%;
+          font-size: 25px;
         }
       }
     }

@@ -22,7 +22,7 @@ const Register: React.FC = () => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password).then(async ({ user }) => {
       const ref = doc(db, 'users', user.uid);
-      const docRef = await setDoc(ref, { username, email });
+      await setDoc(ref, { createdAt: Date.now().toString(), username, email });
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, { displayName: username });
       }
