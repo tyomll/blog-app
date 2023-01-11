@@ -8,8 +8,8 @@ export function useDeletePosts(id: string, showSnackbar: (arg: boolean) => void,
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this post!",
       icon: "warning",
-      buttons: true,
-      dangerMode: true,
+      buttons: true as any,
+      dangerMode: true as any,
     }).then(async (willDelete: boolean) => {
       if (willDelete && id) {
         await deleteDoc(doc(db, 'posts', id))
