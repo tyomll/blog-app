@@ -1,0 +1,8 @@
+.root {
+  position: relative;
+  height: 200px;
+  .container {
+    position: absolute;
+    bottom: 50px;
+  }
+}

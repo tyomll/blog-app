@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Login.module.scss';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from '../../redux/userSlice/slice';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import LoginRegisterForm from '../../components/LoginRegisterForm/LoginRegisterForm';
 
