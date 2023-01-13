@@ -1,38 +1,20 @@
 import React from 'react';
-import { db } from '../../../firebase';
-import { collection, getDocs } from 'firebase/firestore';
 import { ResponsiveLine } from '@nivo/line';
-import { uuidv4 } from '@firebase/util';
+import useChartData from '../../../hooks/useChartData';
 
 const Chart: React.FC = () => {
   const [data, setData] = React.useState<any>([]);
+  const { getPostsData, getUsersData }: any = useChartData(setData);
 
   const fetchData = async () => {
-    const ref = collection(db, 'posts');
-    const docs: any = await getDocs(ref);
-    const dataa = docs.docs.map((doc: any) => ({ ...(doc.data() as Record<string, unknown>) }));
-    let postsPerDay: any = {};
-
-    dataa.forEach((doc: any) => {
-      const postDate = new Date(doc.date);
-      const date = postDate.toISOString().slice(0, 10);
-      if (postsPerDay[date]) {
-        postsPerDay[date] += 1;
-      } else {
-        postsPerDay[date] = 1;
-      }
-    });
-    setData([
-      {
-        id: 'Total Posts',
-        color: 'hsl(5, 70%, 50%)',
-        data: Object.entries(postsPerDay).map(([x, y]) => ({ x, y })),
-      },
-    ]);
+    await getPostsData();
+    await getUsersData();
   };
 
   React.useEffect(() => {
-    fetchData();
+    if (!data[0]) {
+      fetchData();
+    }
   }, []);
 
   if (data.data === null) {
@@ -41,7 +23,22 @@ const Chart: React.FC = () => {
   return (
     <div style={{ height: '400px', minWidth: '0' }}>
       <ResponsiveLine
+        key={data.id}
         data={data}
+        tooltip={({ point }: any) => {
+          return (
+            <div
+              key={point.data.id}
+              style={{
+                background: 'white',
+                padding: '9px 12px',
+                border: '1px solid #ccc',
+              }}>
+              <div>Date: {point.data.x}</div>
+              <div>Count: {point.data.y}</div>
+            </div>
+          );
+        }}
         pointLabel={'dsadasdasdasd'}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
