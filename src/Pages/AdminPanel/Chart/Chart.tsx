@@ -2,9 +2,22 @@ import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import useChartData from '../../../hooks/useChartData';
 
+interface Data {
+  color: string;
+  data: Array<{
+    x: string;
+    y: number;
+  }>;
+  id: string;
+}
+interface useChartDataReturn {
+  getPostsData: () => Promise<void>;
+  getUsersData: () => Promise<void>;
+}
+
 const Chart: React.FC = () => {
-  const [data, setData] = React.useState<any>([]);
-  const { getPostsData, getUsersData }: any = useChartData(setData);
+  const [data, setData] = React.useState<Data[]>([]);
+  const { getPostsData, getUsersData }: useChartDataReturn = useChartData(setData);
 
   const fetchData = async () => {
     await getPostsData();
@@ -17,18 +30,17 @@ const Chart: React.FC = () => {
     }
   }, []);
 
-  if (data.data === null) {
+  if (!data[0]) {
     return <>loading...</>;
   }
+
   return (
     <div style={{ height: '400px', minWidth: '0' }}>
       <ResponsiveLine
-        key={data.id}
         data={data}
         tooltip={({ point }: any) => {
           return (
             <div
-              key={point.data.id}
               style={{
                 background: 'white',
                 padding: '9px 12px',
@@ -39,7 +51,6 @@ const Chart: React.FC = () => {
             </div>
           );
         }}
-        pointLabel={'dsadasdasdasd'}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{
