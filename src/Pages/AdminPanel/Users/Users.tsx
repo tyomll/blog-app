@@ -17,10 +17,10 @@ export interface SortBy {
 const Users: React.FC = () => {
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [sort, setSort] = React.useState<SortBy>({
-    order: '',
-    sortBy: '',
+    order: 'asc',
+    sortBy: 'username',
   });
-  console.log(sort);
+
   return (
     <div className={s.root}>
       <div className={s.header}>
@@ -75,6 +75,7 @@ const Users: React.FC = () => {
                 <span
                   onClick={() => {
                     setSort({ ...sort, sortBy: 'email' });
+
                     if (sort.order === 'asc') {
                       setSort({ ...sort, order: 'desc' });
                     } else {
@@ -92,7 +93,7 @@ const Users: React.FC = () => {
                   onClick={() => {
                     setSort({ ...sort, sortBy: 'createdAt' });
 
-                    if (sort.sortBy === 'asc') {
+                    if (sort.sortBy === '') {
                       setSort({ ...sort, order: 'desc' });
                     } else {
                       setSort({ ...sort, order: 'asc' });
