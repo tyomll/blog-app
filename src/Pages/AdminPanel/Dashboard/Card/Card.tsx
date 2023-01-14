@@ -26,14 +26,14 @@ const Card: React.FC<CardProps> = ({ index, dashboardData }) => {
     todaysUsers: {
       icon: faUsers,
       count: dashboardData?.todaysUsers?.length,
-      text: 'Registrated Users Today',
+      text: 'Registered Users in last 24 hours',
       bgColor: 'rgb(255, 247, 205)',
       color: 'rgb(122, 79, 1)',
     },
     todaysPosts: {
       icon: faSuperscript,
       count: dashboardData?.todaysPosts?.length,
-      text: 'Posts Today',
+      text: 'Posts in last 24 hours',
       bgColor: 'rgb(255, 231, 217)',
       color: 'rgb(122, 12, 46)',
     },

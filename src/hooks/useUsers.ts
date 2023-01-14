@@ -5,7 +5,7 @@ const useUsers = () => {
   const getUsers = async (setUser: (arg: any) => void) => {
     const ref = collection(db, "users")
     const data = await getDocs(ref)
-    const users = data.docs.map((doc) => ({ ...doc.data() as Record<string, unknown> }))
+    const users = data.docs.map((doc) => ({ ...doc.data() as Record<string, unknown>, id: doc.id }))
     setUser(users)
   }
   return { getUsers }

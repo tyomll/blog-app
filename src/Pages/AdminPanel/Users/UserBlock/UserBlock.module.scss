@@ -1,0 +1,58 @@
+.root {
+  .container {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    border-bottom: 1px solid rgb(241, 243, 244);
+    padding: 0 5px 0 5px;
+    gap: 10px;
+    word-break: break-all;
+    .checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+
+      .checkboxContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+
+        input {
+          width: 18px;
+          height: 18px;
+          background-color: white;
+          outline: none;
+          cursor: pointer;
+        }
+
+        transition: 0.3s;
+        &:hover {
+          border-radius: 50%;
+          background-color: rgb(243, 244, 245);
+        }
+      }
+    }
+    .avatar {
+      width: fit-content;
+      height: fit-content;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+    .username {
+      margin-left: 6px;
+      width: 25%;
+    }
+    .email {
+      width: 30%;
+    }
+    .date {
+      width: 30%;
+    }
+  }
+}
