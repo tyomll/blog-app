@@ -4,6 +4,7 @@ import s from './AdminPanel.module.scss';
 import Dashboard from './Dashboard/Dashboard';
 import Header from './Header/Header';
 import Users from './Users/Users';
+import Posts from './Posts/Posts';
 
 const AdminPanel: React.FC = () => {
   const [pageIndex, setPageIndex] = React.useState<number>(0);
@@ -25,11 +26,11 @@ const AdminPanel: React.FC = () => {
               <Users />
             </>
           )}
-          {/* {pageIndex === 2 && (
+          {pageIndex === 2 && (
             <>
-              <Users />
+              <Posts />
             </>
-          )} */}
+          )}
         </div>
       </div>
     </div>

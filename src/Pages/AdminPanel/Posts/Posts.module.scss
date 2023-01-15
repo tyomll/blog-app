@@ -10,7 +10,7 @@
     justify-content: space-between;
     width: 90%;
     margin-bottom: 50px;
-
+    margin-top: 15px;
     button {
       display: flex;
       align-items: center;
@@ -43,6 +43,7 @@
     background-color: #fff;
     border-radius: 12px;
     width: 90%;
+    margin-bottom: 40px;
     .content {
       width: 100%;
       .contentHeader {
@@ -116,7 +117,7 @@
               cursor: pointer;
             }
           }
-          .username {
+          .title {
             margin-left: 16px;
             width: calc(25% + 50px);
             span {
@@ -126,8 +127,17 @@
               }
             }
           }
-          .email {
-            width: 30%;
+          .author {
+            width: 25%;
+            span {
+              cursor: pointer;
+              svg {
+                margin-left: 5px;
+              }
+            }
+          }
+          .category {
+            width: 25%;
             span {
               cursor: pointer;
               svg {
@@ -136,7 +146,7 @@
             }
           }
           .date {
-            width: 30%;
+            width: 25%;
             span {
               cursor: pointer;
               svg {

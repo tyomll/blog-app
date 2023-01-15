@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './Users.module.scss';
+import s from './Posts.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowDown,
@@ -8,28 +8,29 @@ import {
   faSearch,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
-import UserList from './UserList/UserList';
+import PostList from './PostList/PostList';
 
 export interface SortBy {
   order: string;
   sortBy: string;
 }
-const Users: React.FC = () => {
+const Posts: React.FC = () => {
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [sort, setSort] = React.useState<SortBy>({
     order: 'asc',
-    sortBy: 'username',
+    sortBy: 'title',
   });
+
   return (
     <div className={s.root}>
       <div className={s.header}>
         <div>
-          <h1>Users</h1>
+          <h1>Posts</h1>
         </div>
         <div>
           <button>
             <FontAwesomeIcon icon={faPlus} />
-            <span>New user</span>
+            <span>New post</span>
           </button>
         </div>
       </div>
@@ -40,7 +41,7 @@ const Users: React.FC = () => {
               <FontAwesomeIcon icon={faSearch} />
               <input
                 type="text"
-                placeholder="Search user..."
+                placeholder="Search post..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
@@ -51,7 +52,7 @@ const Users: React.FC = () => {
                 setSort({
                   ...sort,
                   order: 'asc',
-                  sortBy: 'username',
+                  sortBy: 'title',
                 });
               }}>
               <FontAwesomeIcon icon={faSort} />
@@ -62,32 +63,47 @@ const Users: React.FC = () => {
               <div className={s.checkbox}>
                 <input type="checkbox" />
               </div>
-              <div className={s.username}>
+              <div className={s.title}>
                 <span
                   onClick={() => {
                     setSort({
                       ...sort,
-                      sortBy: 'username',
+                      sortBy: 'title',
                       order: sort.order === 'asc' ? 'desc' : 'asc',
                     });
                   }}>
-                  Name
-                  {sort.sortBy === 'username' && (
+                  Title
+                  {sort.sortBy === 'title' && (
                     <FontAwesomeIcon icon={sort.order === 'asc' ? faArrowUp : faArrowDown} />
                   )}
                 </span>
               </div>
-              <div className={s.email}>
+              <div className={s.author}>
                 <span
                   onClick={() => {
                     setSort({
                       ...sort,
-                      sortBy: 'email',
+                      sortBy: 'author',
                       order: sort.order === 'asc' ? 'desc' : 'asc',
                     });
                   }}>
-                  Email
-                  {sort.sortBy === 'email' && (
+                  Author
+                  {sort.sortBy === 'author' && (
+                    <FontAwesomeIcon icon={sort.order === 'asc' ? faArrowUp : faArrowDown} />
+                  )}
+                </span>
+              </div>
+              <div className={s.category}>
+                <span
+                  onClick={() => {
+                    setSort({
+                      ...sort,
+                      sortBy: 'category',
+                      order: sort.order === 'asc' ? 'desc' : 'asc',
+                    });
+                  }}>
+                  Category
+                  {sort.sortBy === 'category' && (
                     <FontAwesomeIcon icon={sort.order === 'asc' ? faArrowUp : faArrowDown} />
                   )}
                 </span>
@@ -97,20 +113,20 @@ const Users: React.FC = () => {
                   onClick={() => {
                     setSort({
                       ...sort,
-                      sortBy: 'createdAt',
+                      sortBy: 'date',
                       order: sort.order === 'asc' ? 'desc' : 'asc',
                     });
                   }}>
-                  Registration date
-                  {sort.sortBy === 'createdAt' && (
+                  Post date
+                  {sort.sortBy === 'date' && (
                     <FontAwesomeIcon icon={sort.order === 'asc' ? faArrowUp : faArrowDown} />
                   )}
                 </span>
               </div>
             </div>
           </div>
-          <div className={s.users}>
-            <UserList searchValue={searchValue} sort={sort} />
+          <div className={s.posts}>
+            <PostList searchValue={searchValue} sort={sort} />
           </div>
         </div>
       </div>
@@ -118,4 +134,4 @@ const Users: React.FC = () => {
   );
 };
 
-export default Users;
+export default Posts;

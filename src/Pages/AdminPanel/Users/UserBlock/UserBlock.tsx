@@ -26,7 +26,7 @@ const UserBlock: React.FC<UserBlockProps> = ({ id, username, email, createdAt })
           </div>
         </div>
         <div className={s.avatar}>
-          <img src={userAvatar} alt="avatar" />
+          <img src={userAvatar} alt="user-avatar" />
         </div>
         <div className={s.username}>
           <span>{username}</span>
@@ -35,7 +35,7 @@ const UserBlock: React.FC<UserBlockProps> = ({ id, username, email, createdAt })
           <span>{email}</span>
         </div>
         <div className={s.date}>
-          <span>{format(Number(createdAt), 'yyyy.mm.dd')}</span>
+          <span>{format(Number(createdAt), 'yyyy.MM.dd')}</span>
         </div>
       </div>
     </div>

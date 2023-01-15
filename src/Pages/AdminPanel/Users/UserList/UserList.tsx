@@ -19,9 +19,12 @@ const UserList: React.FC<UserListProps> = ({ searchValue, sort }) => {
     <div>
       {users
         ?.sort((a: any, b: any) => {
-          if(sort.sortBy !== ''){
-            return a[sort.sortBy].localeCompare(b[sort.sortBy]);
-
+          if (sort.sortBy !== '') {
+            if (sort.order === 'asc') {
+              return a[sort.sortBy].localeCompare(b[sort.sortBy]);
+            } else {
+              return b[sort.sortBy].localeCompare(a[sort.sortBy]);
+            }
           }
         })
         .filter((user: any) => {
