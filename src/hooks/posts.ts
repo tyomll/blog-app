@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore"
+import { collection, deleteDoc, doc, getDocs, query, where, writeBatch } from "firebase/firestore"
 import { db } from "../firebase"
 import swal from 'sweetalert';
 
@@ -26,9 +26,8 @@ export const useTodaysPosts = () => {
   return { getTodaysPosts }
 }
 
-export function useDeletePosts(id: string, setSnackbar: any) {
+export function useDeletePosts(id?: string, setSnackbar?: any) {
   const refresh = () => window.location.reload();
-
 
   async function deletePost() {
     let docId = null as any;
@@ -56,5 +55,43 @@ export function useDeletePosts(id: string, setSnackbar: any) {
       }
     });
   }
-  return { deletePost }
+
+  async function deleteMultiplePost(deletingPostsArray: string[]) {
+    const batch = writeBatch(db);
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this post!",
+      icon: "warning",
+      buttons: true as any,
+      dangerMode: true as any,
+    }).then(async (willDelete: boolean) => {
+      if (willDelete) {
+        const deletePromise = deletingPostsArray.map(async (postID) => {
+          let docId = null as any;
+          const q = query(collection(db, "posts"), where("id", "==", postID))
+          const querySnapshot = await getDocs(q)
+          querySnapshot.forEach((doc) => docId = doc.id)
+          return docId;
+        });
+        const docIds = await Promise.all(deletePromise);
+        docIds.forEach((id) => {
+          batch.delete(doc(db, "posts", id))
+        });
+        await batch.commit();
+        if (setSnackbar) {
+          setSnackbar({
+            show: true,
+            text: "Posts deleted successfully!",
+            status: 'success',
+          })
+        }
+      }
+      refresh()
+
+    });
+  }
+
+
+
+  return { deletePost, deleteMultiplePost }
 }

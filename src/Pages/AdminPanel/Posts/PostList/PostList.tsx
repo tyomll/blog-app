@@ -4,20 +4,51 @@ import PostBlock from '../PostBlock/PostBlock';
 import { SortBy } from '../Posts';
 
 interface UserListProps {
+  checkedPosts: string[];
+  setCheckedPosts: (arg: string[]) => void;
+  checkAll: boolean;
+  setCheckAll: (arg: boolean) => void;
   searchValue: string;
   sort: SortBy;
 }
 
-const PostList: React.FC<UserListProps> = ({ searchValue, sort }) => {
+const PostList: React.FC<UserListProps> = ({
+  checkedPosts,
+  setCheckedPosts,
+  checkAll,
+  setCheckAll,
+  searchValue,
+  sort,
+}) => {
   const [posts, setPosts] = React.useState<any>([]);
+
   const { getPosts } = usePosts();
 
   async function fetchPosts() {
     await getPosts(setPosts);
   }
+
   React.useEffect(() => {
     fetchPosts();
   }, []);
+
+  React.useEffect(() => {
+    if (checkAll) {
+      setCheckedPosts(
+        posts.map((post: any) => {
+          return post.id;
+        }),
+      );
+    } else {
+      setCheckedPosts([]);
+    }
+  }, [checkAll]);
+
+  React.useEffect(() => {
+    if (checkedPosts.length === posts.length && posts.length > 0) {
+      setCheckAll(true);
+    }
+  }, [checkedPosts]);
 
   return (
     <div>
@@ -46,7 +77,18 @@ const PostList: React.FC<UserListProps> = ({ searchValue, sort }) => {
             return post.title.toLowerCase().includes(searchValue.toLowerCase());
           })
           .map((post: any) => {
-            return <PostBlock key={post.id} {...post} />;
+            function setCheckAll(arg: boolean): void {
+              throw new Error('Function not implemented.');
+            }
+
+            return (
+              <PostBlock
+                key={post.id}
+                {...post}
+                checkedPosts={checkedPosts}
+                setCheckedPosts={setCheckedPosts}
+              />
+            );
           })}
     </div>
   );

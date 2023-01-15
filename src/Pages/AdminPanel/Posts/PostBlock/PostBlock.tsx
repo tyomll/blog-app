@@ -17,9 +17,20 @@ export interface PostBlockProps {
   };
   category: string;
   date: string | number;
+  checkedPosts: any;
+  setCheckedPosts: (arg: any) => void;
 }
 
-const PostBlock: React.FC<PostBlockProps> = ({ id, title, image, author, category, date }) => {
+const PostBlock: React.FC<PostBlockProps> = ({
+  id,
+  title,
+  image,
+  author,
+  category,
+  date,
+  checkedPosts,
+  setCheckedPosts,
+}) => {
   const [openModal, setOpenModal] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState({
     show: false,
@@ -36,7 +47,21 @@ const PostBlock: React.FC<PostBlockProps> = ({ id, title, image, author, categor
       <div className={s.container}>
         <div className={s.checkbox}>
           <div className={s.checkboxContainer}>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={checkedPosts.includes(id)}
+              onChange={() => {
+                if (!checkedPosts.includes(id)) {
+                  setCheckedPosts([...checkedPosts, id]);
+                } else {
+                  setCheckedPosts(
+                    checkedPosts.filter((postID: any) => {
+                      return postID !== id;
+                    }),
+                  );
+                }
+              }}
+            />
           </div>
         </div>
         <div className={s.image}>
