@@ -4,7 +4,6 @@ import BlogBlockSkeleton from '../BlogBlock/Skeleton/BlogBlockSkeleton';
 import styles from './BlogList.module.scss';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
-import { PostType } from '../../redux/postsSlice/slice';
 import PostsNotFound from '../PostsNotFound/PostsNotFound';
 
 interface BlogListProps {

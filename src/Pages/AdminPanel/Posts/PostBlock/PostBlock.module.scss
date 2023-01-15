@@ -4,7 +4,7 @@
     align-items: center;
     height: 80px;
     border-bottom: 1px solid rgb(241, 243, 244);
-    padding: 0 5px 0 5px;
+    padding: 0 15px 0 15px;
     gap: 10px;
     word-break: break-all;
     .checkbox {
@@ -46,16 +46,16 @@
     }
     .title {
       margin-left: 6px;
-      width: 25%;
+      width: 23%;
     }
     .author {
-      width: 25%;
+      width: 23%;
     }
     .category {
-      width: 25%;
+      width: 23%;
     }
     .date {
-      width: 25%;
+      width: 23%;
     }
   }
 }

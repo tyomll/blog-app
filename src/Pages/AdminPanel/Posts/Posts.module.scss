@@ -105,7 +105,8 @@
           color: rgb(99, 115, 129);
           background-color: rgb(244, 246, 248);
           font-weight: 600;
-          padding: 0px 0px 0px 4px;
+          padding: 0 15px 0 15px;
+
           .checkbox {
             display: flex;
             width: 50px;
@@ -128,6 +129,8 @@
             }
           }
           .author {
+            margin-left: 10px;
+
             width: 25%;
             span {
               cursor: pointer;
@@ -153,6 +156,9 @@
                 margin-left: 5px;
               }
             }
+          }
+          .divdier {
+            width: 22px;
           }
         }
       }

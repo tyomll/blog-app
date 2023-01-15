@@ -10,8 +10,5 @@ const useCategories = () => {
     setCategories(categories)
   }
   return { getCategories }
-
-
-
 }
 export default useCategories;

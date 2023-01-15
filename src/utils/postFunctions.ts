@@ -1,9 +1,10 @@
 import { auth } from './../firebase';
 import { PostDataType } from './../Pages/PostCreatingPage/PostCreatingPage';
-import { collection, addDoc, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc, deleteDoc, updateDoc, query, where, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
+import { editedDataType } from '../components/EditModal/EditModal';
 
 export const createPost = async (file: File | null, postData: PostDataType, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const storage = getStorage()
@@ -42,7 +43,6 @@ export const createPost = async (file: File | null, postData: PostDataType, navi
 
   }
 };
-
 export const addComment = async (text: string, postId: string, uid: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const id = uuidv4()
   const date = Date.now()
@@ -58,6 +58,34 @@ export const addComment = async (text: string, postId: string, uid: string, show
     })
 }
 
+export async function updatePost(id: string, data: editedDataType, setSnackbar: any) {
+  const refresh = () => window.location.reload();
+  let docId = null as any;
+  const q = query(collection(db, "posts"), where("id", "==", id))
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach(async (doc) => docId = doc.id)
+  const postRef = doc(db, 'posts', docId)
+
+
+  updateDoc(postRef, {
+    title: data.title,
+    category: data.category,
+    date: data.date
+  }).then(response => {
+    setSnackbar({
+      show: true,
+      text: 'Post was updated!',
+      status: 'success',
+    })
+    refresh()
+  }).catch(error => {
+    setSnackbar({
+      show: true,
+      text: error.message,
+      status: 'error',
+    })
+  })
+}
 export async function deleteComment(id: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) {
   const docRef = doc(db, 'comments', id)
   await deleteDoc(docRef).then(() => {

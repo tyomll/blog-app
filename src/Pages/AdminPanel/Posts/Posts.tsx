@@ -123,6 +123,7 @@ const Posts: React.FC = () => {
                   )}
                 </span>
               </div>
+              <div className={s.divdier}></div>
             </div>
           </div>
           <div className={s.posts}>

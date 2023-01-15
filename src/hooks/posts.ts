@@ -26,8 +26,15 @@ export const useTodaysPosts = () => {
   return { getTodaysPosts }
 }
 
-export function useDeletePosts(id: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void, refresh: () => void) {
+export function useDeletePosts(id: string, setSnackbar: any) {
+  const refresh = () => window.location.reload();
+
+
   async function deletePost() {
+    let docId = null as any;
+    const q = query(collection(db, "posts"), where("id", "==", id))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach(async (doc) => docId = doc.id)
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this post!",
@@ -35,13 +42,16 @@ export function useDeletePosts(id: string, showSnackbar: (arg: boolean) => void,
       buttons: true as any,
       dangerMode: true as any,
     }).then(async (willDelete: boolean) => {
-      if (willDelete && id) {
-        await deleteDoc(doc(db, 'posts', id))
-        const q = query(collection(db, "comments"), where("postId", "==", id))
+      if (willDelete && docId) {
+        await deleteDoc(doc(db, 'posts', docId))
+        const q = query(collection(db, "comments"), where("postId", "==", docId))
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach(async (doc) => deleteDoc(doc.ref))
-        showSnackbar(true)
-        setSnackbarText("Post deleted successfully!")
+        setSnackbar({
+          show: true,
+          text: "Post deleted successfully!",
+          status: 'success',
+        })
         refresh()
       }
     });

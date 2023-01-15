@@ -11,13 +11,14 @@ import parse from 'html-react-parser';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 
 const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, category, date }) => {
+  console.log(id);
   const dispatch = useAppDispatch();
-  const [snackbar, showSnackbar] = React.useState<boolean>(false);
-  const [snackbarText, setSnackbarText] = React.useState<string>(
-    'Your comment added successfully!',
-  );
-  const refresh = () => window.location.reload();
-  const { deletePost } = useDeletePosts(id, showSnackbar, setSnackbarText, refresh);
+  const [snackbar, setSnackbar] = React.useState({
+    show: false,
+    text: '',
+    status: 'success' as any,
+  });
+  const { deletePost } = useDeletePosts(id, setSnackbar);
   const location = useLocation();
 
   return (
@@ -54,20 +55,13 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
 
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={snackbar}
-        onClose={() => showSnackbar(false)}
-        message={snackbarText}
+        open={snackbar.show}
+        onClose={() => setSnackbar({ ...snackbar, show: false })}
+        message={snackbar.text}
         TransitionComponent={Slide}
         autoHideDuration={3000}
         key={'bottom' + 'center'}>
-        <Alert
-          severity={
-            snackbarText === 'Your comment added successfully!' || 'Comment deleted successfully!'
-              ? 'success'
-              : 'error'
-          }>
-          {snackbarText}
-        </Alert>
+        <Alert severity={snackbar.status}>{snackbar.text}</Alert>
       </Snackbar>
     </div>
   );
