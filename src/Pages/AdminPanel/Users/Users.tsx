@@ -7,19 +7,26 @@ import {
   faPlus,
   faSearch,
   faSort,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import UserList from './UserList/UserList';
+import { useDeleteUsers } from '../../../hooks/useUsers';
 
 export interface SortBy {
   order: string;
   sortBy: string;
 }
+
 const Users: React.FC = () => {
   const [searchValue, setSearchValue] = React.useState<string>('');
+  const [checkAll, setCheckAll] = React.useState<boolean>(false);
+  const [checkedUsers, setCheckedUsers] = React.useState<string[]>([]);
+  const { deleteMultipleUsers } = useDeleteUsers();
   const [sort, setSort] = React.useState<SortBy>({
     order: 'asc',
     sortBy: 'username',
   });
+
   return (
     <div className={s.root}>
       <div className={s.header}>
@@ -35,32 +42,58 @@ const Users: React.FC = () => {
       </div>
       <div className={s.container}>
         <div className={s.content}>
-          <div className={s.contentHeader}>
-            <div className={s.search}>
-              <FontAwesomeIcon icon={faSearch} />
-              <input
-                type="text"
-                placeholder="Search user..."
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
+          {checkedUsers.length > 0 && (
+            <div className={s.contentHeaderSelected}>
+              <div className={s.selected}>
+                <h3>{checkedUsers.length} selected</h3>
+              </div>
+              <div
+                className={s.deleteSelected}
+                onClick={() => {
+                  deleteMultipleUsers(checkedUsers);
+                }}>
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </div>
             </div>
-            <div
-              className={s.filter}
-              onClick={() => {
-                setSort({
-                  ...sort,
-                  order: 'asc',
-                  sortBy: 'username',
-                });
-              }}>
-              <FontAwesomeIcon icon={faSort} />
+          )}
+          {checkedUsers.length === 0 && (
+            <div className={s.contentHeader}>
+              <div className={s.search}>
+                <FontAwesomeIcon icon={faSearch} />
+                <input
+                  type="text"
+                  placeholder="Search user..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+              </div>
+              <div
+                className={s.filter}
+                onClick={() => {
+                  setSort({
+                    ...sort,
+                    order: 'asc',
+                    sortBy: 'username',
+                  });
+                }}>
+                <FontAwesomeIcon icon={faSort} />
+              </div>
             </div>
-          </div>
+          )}
           <div className={s.list}>
             <div className={s.listHeader}>
               <div className={s.checkbox}>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={checkAll}
+                  onChange={() => {
+                    if (!checkAll) {
+                      setCheckAll(true);
+                    } else {
+                      setCheckAll(false);
+                    }
+                  }}
+                />
               </div>
               <div className={s.username}>
                 <span
@@ -110,7 +143,14 @@ const Users: React.FC = () => {
             </div>
           </div>
           <div className={s.users}>
-            <UserList searchValue={searchValue} sort={sort} />
+            <UserList
+              checkedUsers={checkedUsers}
+              setCheckedUsers={setCheckedUsers}
+              checkAll={checkAll}
+              setCheckAll={setCheckAll}
+              searchValue={searchValue}
+              sort={sort}
+            />
           </div>
         </div>
       </div>

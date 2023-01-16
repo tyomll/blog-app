@@ -2,16 +2,40 @@ import React from 'react';
 import { format } from 'date-fns';
 import { getUserAvatar } from '../../../../utils/userProfileFunctions';
 import s from './UserBlock.module.scss';
+import { Alert, Slide, Snackbar } from '@mui/material';
+import { useDeleteUsers } from '../../../../hooks/useUsers';
+import MenuPopup from '../../../../components/MenuPopup/MenuPopup';
+import EditModal from '../../../../components/EditModal/EditModal';
 
 interface UserBlockProps {
   id: string;
   username: string;
   email: string;
   createdAt: string;
+  checkedUsers: any;
+  setCheckedUsers: (arg: any) => void;
 }
 
-const UserBlock: React.FC<UserBlockProps> = ({ id, username, email, createdAt }) => {
+const UserBlock: React.FC<UserBlockProps> = ({
+  id,
+  username,
+  email,
+  createdAt,
+  checkedUsers,
+  setCheckedUsers,
+}) => {
+  const [openModal, setOpenModal] = React.useState(false);
   const [userAvatar, setUserAvatar] = React.useState('');
+  const [snackbar, setSnackbar] = React.useState({
+    show: false,
+    text: '',
+    status: 'success' as any,
+  });
+  const { deleteUser, deleteMultipleUsers } = useDeleteUsers(id, setSnackbar);
+
+  async function handleDeletePost() {
+    await deleteUser();
+  }
 
   React.useEffect(() => {
     getUserAvatar(id, setUserAvatar);
@@ -22,7 +46,21 @@ const UserBlock: React.FC<UserBlockProps> = ({ id, username, email, createdAt })
       <div className={s.container}>
         <div className={s.checkbox}>
           <div className={s.checkboxContainer}>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={checkedUsers.includes(id)}
+              onChange={() => {
+                if (!checkedUsers.includes(id)) {
+                  setCheckedUsers([...checkedUsers, id]);
+                } else {
+                  setCheckedUsers(
+                    checkedUsers.filter((postID: any) => {
+                      return postID !== id;
+                    }),
+                  );
+                }
+              }}
+            />
           </div>
         </div>
         <div className={s.avatar}>
@@ -37,7 +75,26 @@ const UserBlock: React.FC<UserBlockProps> = ({ id, username, email, createdAt })
         <div className={s.date}>
           <span>{format(Number(createdAt), 'yyyy.MM.dd')}</span>
         </div>
+        <MenuPopup deletePost={handleDeletePost} setOpenModal={setOpenModal} />
+        <EditModal
+          id={id}
+          username={username}
+          email={email}
+          createdAt={createdAt}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={snackbar.show}
+        onClose={() => setSnackbar({ ...snackbar, show: false })}
+        message={snackbar.text}
+        TransitionComponent={Slide}
+        autoHideDuration={3000}
+        key={'bottom' + 'center'}>
+        <Alert severity={snackbar.status}>{snackbar.text}</Alert>
+      </Snackbar>
     </div>
   );
 };

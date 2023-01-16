@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './Posts.module.scss';
+import PostCreatingPage from '../../PostCreatingPage/PostCreatingPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowDown,
@@ -20,6 +21,7 @@ const Posts: React.FC = () => {
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [checkAll, setCheckAll] = React.useState<boolean>(false);
   const [checkedPosts, setCheckedPosts] = React.useState<string[]>([]);
+  const [createPostMode, setCreatePostMode] = React.useState<boolean>(false);
   const { deleteMultiplePost } = useDeletePosts();
 
   const [sort, setSort] = React.useState<SortBy>({
@@ -27,6 +29,9 @@ const Posts: React.FC = () => {
     sortBy: 'title',
   });
 
+  function handleCreatePost() {
+    setCreatePostMode(true);
+  }
   return (
     <div className={s.root}>
       <div className={s.header}>
@@ -34,7 +39,7 @@ const Posts: React.FC = () => {
           <h1>Posts</h1>
         </div>
         <div>
-          <button>
+          <button onClick={handleCreatePost}>
             <FontAwesomeIcon icon={faPlus} />
             <span>New post</span>
           </button>
@@ -170,6 +175,11 @@ const Posts: React.FC = () => {
           </div>
         </div>
       </div>
+      {createPostMode && (
+        <div className={s.createPostModal}>
+          <PostCreatingPage />
+        </div>
+      )}
     </div>
   );
 };

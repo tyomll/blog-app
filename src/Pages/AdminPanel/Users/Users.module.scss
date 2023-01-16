@@ -45,6 +45,36 @@
     width: 90%;
     .content {
       width: 100%;
+      .contentHeaderSelected {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0px 24px 0px 24px;
+        height: 100px;
+        color: rgb(32, 101, 209);
+        background-color: rgb(209, 233, 252);
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+
+        .deleteSelected {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          transition: 0.3s;
+          cursor: pointer;
+          svg {
+            color: rgb(99, 115, 129);
+            font-size: 20px;
+          }
+          &:hover {
+            border-radius: 50%;
+            background-color: rgba(99, 115, 129, 0.08);
+          }
+        }
+      }
       .contentHeader {
         display: flex;
         justify-content: space-between;

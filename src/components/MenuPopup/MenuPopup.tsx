@@ -7,7 +7,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 interface MenuPopupProps {
   deletePost: () => void;
-  setOpenModal: (arg: boolean) => void;
+  setOpenModal?: (arg: boolean) => void;
 }
 const MenuPopup: React.FC<MenuPopupProps> = ({ deletePost, setOpenModal }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -24,7 +24,7 @@ const MenuPopup: React.FC<MenuPopupProps> = ({ deletePost, setOpenModal }) => {
   };
   const handleOpenModal = () => {
     handleClose();
-    setOpenModal(true);
+    setOpenModal && setOpenModal(true);
   };
 
   return (

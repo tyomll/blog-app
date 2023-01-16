@@ -24,7 +24,6 @@ const Chart: React.FC = () => {
     await getPostsData();
     await getUsersData();
   };
-
   React.useEffect(() => {
     if (!data[0]) {
       fetchData();
@@ -34,7 +33,6 @@ const Chart: React.FC = () => {
   if (!data[0]) {
     return <Loader />;
   }
-
   return (
     <div style={{ width: '90%' }}>
       <div style={{ height: '400px', minWidth: '0' }}>

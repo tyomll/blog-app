@@ -11,7 +11,6 @@ import { checkLoggedInUser } from './utils/checkLoggedInUser';
 import LoggedInRoutes from './utils/LoggedInRoutes';
 import LoggedOutRoutes from './utils/LoggedOutRoutes';
 import PostCreatingPage from './Pages/PostCreatingPage/PostCreatingPage';
-import { CssVarsProvider } from '@mui/joy/styles';
 import AdminPanel from './Pages/AdminPanel/AdminPanel';
 
 const App: React.FC = () => {

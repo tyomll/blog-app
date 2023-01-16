@@ -29,7 +29,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
       <div className={s.content}>
         <div className={s.author}>
           <div className={s.info}>
-            <h1>{title.slice(0, 15) + '...'}</h1>
+            <h1>{title.slice(0, 12) + '...'}</h1>
             <span>Author: </span>
             <Link to={`/users/${author.id}`}>{author.name}</Link>
           </div>

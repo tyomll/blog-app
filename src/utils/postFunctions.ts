@@ -4,7 +4,7 @@ import { collection, addDoc, doc, setDoc, deleteDoc, updateDoc, query, where, ge
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
-import { editedDataType } from '../components/EditModal/EditModal';
+import { PostEditedDataType } from '../components/EditModal/EditModal';
 
 export const createPost = async (file: File | null, postData: PostDataType, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const storage = getStorage()
@@ -58,14 +58,13 @@ export const addComment = async (text: string, postId: string, uid: string, show
     })
 }
 
-export async function updatePost(id: string, data: editedDataType, setSnackbar: any) {
+export async function updatePost(id: string, data: any, setSnackbar: any) {
   const refresh = () => window.location.reload();
   let docId = null as any;
   const q = query(collection(db, "posts"), where("id", "==", id))
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach(async (doc) => docId = doc.id)
   const postRef = doc(db, 'posts', docId)
-
 
   updateDoc(postRef, {
     title: data.title,

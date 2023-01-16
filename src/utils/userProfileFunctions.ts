@@ -1,4 +1,4 @@
-import { doc, DocumentData, getDoc } from 'firebase/firestore';
+import { doc, DocumentData, getDoc, updateDoc } from 'firebase/firestore';
 import { getPostsFromPostSlice } from './fetchFromRedux';
 import { storage, db } from './../firebase';
 import { updateProfile, User } from 'firebase/auth';
@@ -40,8 +40,29 @@ export async function fetchUserDataById(
     const userInfo = data.data()
     setAuthor(userInfo)
   }
-
   if (setImageURL) getUserAvatar(id, setImageURL);
   getPostsFromPostSlice(setLoading);
-
+}
+export async function updateUser(id: string, data: any, setSnackbar: any) {
+  const refresh = () => window.location.reload();
+  const ref = doc(db, 'users', id)
+  console.log(data)
+  updateDoc(ref, {
+    username: data.username,
+    email: data.email,
+    createdAt: data.createdAt
+  }).then(response => {
+    setSnackbar({
+      show: true,
+      text: 'User Details was updated!',
+      status: 'success',
+    })
+    refresh()
+  }).catch(error => {
+    setSnackbar({
+      show: true,
+      text: error.message,
+      status: 'error',
+    })
+  })
 }

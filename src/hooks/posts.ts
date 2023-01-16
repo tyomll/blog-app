@@ -74,6 +74,7 @@ export function useDeletePosts(id?: string, setSnackbar?: any) {
           return docId;
         });
         const docIds = await Promise.all(deletePromise);
+        console.log(docIds)
         docIds.forEach((id) => {
           batch.delete(doc(db, "posts", id))
         });
@@ -87,7 +88,6 @@ export function useDeletePosts(id?: string, setSnackbar?: any) {
         }
       }
       refresh()
-
     });
   }
 

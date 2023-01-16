@@ -77,10 +77,6 @@ const PostList: React.FC<UserListProps> = ({
             return post.title.toLowerCase().includes(searchValue.toLowerCase());
           })
           .map((post: any) => {
-            function setCheckAll(arg: boolean): void {
-              throw new Error('Function not implemented.');
-            }
-
             return (
               <PostBlock
                 key={post.id}

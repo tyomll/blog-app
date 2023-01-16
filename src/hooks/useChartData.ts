@@ -19,16 +19,19 @@ const useChartData = (setData: any) => {
         postsPerDay[date] = 1;
       }
     });
+    if (dataa.length !== 0) {
+      setData((prevState: any) => [
+        ...prevState,
+        {
+          id: 'Total Posts',
+          color: 'hsl(5, 70%, 50%)',
+          data: Object.entries(postsPerDay).map(([x, y]) => ({ x, y })),
+        },
+      ]);
+    }
 
-    setData((prevState: any) => [
-      ...prevState,
-      {
-        id: 'Total Posts',
-        color: 'hsl(5, 70%, 50%)',
-        data: Object.entries(postsPerDay).map(([x, y]) => ({ x, y })),
-      },
-    ]);
   }
+
   async function getUsersData() {
     const ref = collection(db, 'users');
     const docs: any = await getDocs(ref);
@@ -44,14 +47,16 @@ const useChartData = (setData: any) => {
         usersPerDay[date] = 1;
       }
     });
-    setData((prevState: any) => [
-      ...prevState,
-      {
-        id: 'Total Users',
-        color: 'hsl(5, 70%, 50%)',
-        data: Object.entries(usersPerDay).map(([x, y]) => ({ x, y })),
-      },
-    ]);
+    if (dataa.length !== 0) {
+      setData((prevState: any) => [
+        ...prevState,
+        {
+          id: 'Total Users',
+          color: 'hsl(5, 70%, 50%)',
+          data: Object.entries(usersPerDay).map(([x, y]) => ({ x, y })),
+        },
+      ]);
+    }
   }
   return { getPostsData, getUsersData }
 }
