@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowDown,
   faArrowUp,
-  faPlus,
   faSearch,
   faSort,
   faTrashAlt,
@@ -21,23 +20,17 @@ const Users: React.FC = () => {
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [checkAll, setCheckAll] = React.useState<boolean>(false);
   const [checkedUsers, setCheckedUsers] = React.useState<string[]>([]);
-  const { deleteMultipleUsers } = useDeleteUsers();
   const [sort, setSort] = React.useState<SortBy>({
     order: 'asc',
     sortBy: 'username',
   });
+  const { deleteMultipleUsers } = useDeleteUsers();
 
   return (
     <div className={s.root}>
       <div className={s.header}>
         <div>
           <h1>Users</h1>
-        </div>
-        <div>
-          <button>
-            <FontAwesomeIcon icon={faPlus} />
-            <span>New user</span>
-          </button>
         </div>
       </div>
       <div className={s.container}>

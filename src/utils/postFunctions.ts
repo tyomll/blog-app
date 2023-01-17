@@ -40,7 +40,6 @@ export const createPost = async (file: File | null, postData: PostDataType, navi
   else {
     setSnackbarText("Please fill all the fields.")
     showSnackbar(true)
-
   }
 };
 export const addComment = async (text: string, postId: string, uid: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
@@ -58,7 +57,7 @@ export const addComment = async (text: string, postId: string, uid: string, show
     })
 }
 
-export async function updatePost(id: string, data: any, setSnackbar: any) {
+export async function updatePost(id: string, data: PostEditedDataType, setSnackbar: any) {
   const refresh = () => window.location.reload();
   let docId = null as any;
   const q = query(collection(db, "posts"), where("id", "==", id))

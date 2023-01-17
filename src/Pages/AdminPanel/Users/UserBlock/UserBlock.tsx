@@ -31,7 +31,7 @@ const UserBlock: React.FC<UserBlockProps> = ({
     text: '',
     status: 'success' as any,
   });
-  const { deleteUser, deleteMultipleUsers } = useDeleteUsers(id, setSnackbar);
+  const { deleteUser } = useDeleteUsers(id, setSnackbar);
 
   async function handleDeletePost() {
     await deleteUser();

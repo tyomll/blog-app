@@ -49,10 +49,13 @@ const UserList: React.FC<UserListProps> = ({
       {users
         ?.sort((a: any, b: any) => {
           if (sort.sortBy !== '') {
+            console.log(b);
             if (sort.order === 'asc') {
-              return a[sort.sortBy].localeCompare(b[sort.sortBy]);
+              // post date is number coming from back end, so i converting it to string
+              return a[sort.sortBy].toString().localeCompare(b[sort.sortBy].toString());
             } else {
-              return b[sort.sortBy].localeCompare(a[sort.sortBy]);
+              // post date is number coming from back end, so i converting it to string
+              return b[sort.sortBy].toString().localeCompare(a[sort.sortBy].toString());
             }
           }
         })

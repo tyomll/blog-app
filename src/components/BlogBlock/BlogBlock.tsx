@@ -11,7 +11,6 @@ import parse from 'html-react-parser';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 
 const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, category, date }) => {
-  console.log(id);
   const dispatch = useAppDispatch();
   const [snackbar, setSnackbar] = React.useState({
     show: false,
@@ -52,7 +51,6 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
           <span>{formatDistanceToNow(date) + ' ' + 'ago'}</span>
         </div>
       </div>
-
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={snackbar.show}
