@@ -12,30 +12,11 @@ import Slide from '@mui/material/Slide';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import useCategories from '../../hooks/useCategories';
-import { CssVarsProvider, Option, Select } from '@mui/joy';
+import { AlertPropsColorOverrides, CssVarsProvider, Option, Select } from '@mui/joy';
 import { updateUser } from '../../utils/userProfileFunctions';
+import { EditModalProps, PostEditedDataType, UserEditedDataType } from './types/editModal.type';
+import { CategoriesType } from '../../types/categories.type';
 
-interface EditModalProps {
-  id: string;
-  username?: string;
-  email?: string;
-  createdAt?: string;
-  title?: string;
-  category?: string;
-  date?: any;
-  openModal: boolean;
-  setOpenModal: (arg: boolean) => void;
-}
-export interface PostEditedDataType {
-  title: string | undefined;
-  category: string | undefined;
-  date: any | undefined;
-}
-export interface UserEditedDataType {
-  username: string | undefined;
-  email: string | undefined;
-  createdAt: any | undefined;
-}
 const EditModal: React.FC<EditModalProps> = ({
   id,
   username,
@@ -47,17 +28,17 @@ const EditModal: React.FC<EditModalProps> = ({
   openModal,
   setOpenModal,
 }) => {
-  const { getCategories }: any = useCategories();
-  const [categories, setCategories] = React.useState<any>(null);
+  const { getCategories } = useCategories();
+  const [categories, setCategories] = React.useState<CategoriesType[] | null>(null);
   const [postEditedData, setPostEditedData] = React.useState<PostEditedDataType>({
     title: title,
     category: category,
-    date: date as any,
+    date: date as Date | number | string,
   });
   const [userEditedData, setUserEditedData] = React.useState<UserEditedDataType>({
     username: username,
     email: email,
-    createdAt: Number(createdAt) as any,
+    createdAt: Number(createdAt) as number,
   });
   const [snackbar, setSnackbar] = React.useState({
     show: false,
@@ -113,7 +94,9 @@ const EditModal: React.FC<EditModalProps> = ({
             fullWidth
             variant="standard"
             value={userEditedData.username}
-            onChange={(e) => setUserEditedData({ ...userEditedData, username: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUserEditedData({ ...userEditedData, username: e.target.value })
+            }
           />
           <TextField
             autoFocus
@@ -125,7 +108,9 @@ const EditModal: React.FC<EditModalProps> = ({
             fullWidth
             variant="standard"
             value={userEditedData.email}
-            onChange={(e) => setUserEditedData({ ...userEditedData, email: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUserEditedData({ ...userEditedData, email: e.target.value })
+            }
           />
           <TextField
             autoFocus
@@ -190,18 +175,6 @@ const EditModal: React.FC<EditModalProps> = ({
             value={postEditedData.title}
             onChange={(e) => setPostEditedData({ ...postEditedData, title: e.target.value })}
           />
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            id="category"
-            placeholder="Category"
-            label="Post Category"
-            type="category"
-            fullWidth
-            variant="standard"
-            value={postEditedData.category}
-            onChange={(e) => setPostEditedData({ ...postEditedData, category: e.target.value })}
-          /> */}
           <CssVarsProvider>
             <label htmlFor="select-category" id="select-label" style={{ fontSize: '13px' }}>
               Category
@@ -217,7 +190,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 marginTop: '5px',
               }}>
               {categories &&
-                categories.map((category: any) => {
+                categories.map((category: CategoriesType) => {
                   return (
                     <Option key={category.id} value={category.title.toLowerCase()}>
                       {category.title}

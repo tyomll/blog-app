@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import s from './PostPage.module.scss';
 import { getPostById } from '../../utils/fetchFromRedux';
 import { addComment } from '../../utils/postFunctions';
-import { getAuth } from 'firebase/auth';
+import { Auth, getAuth } from 'firebase/auth';
 import CommentsList from '../../components/CommentsList/CommentsList';
 import { Alert, Snackbar } from '@mui/material';
 import Slide from '@mui/material/Slide';
@@ -15,7 +15,7 @@ import { setCategory } from '../../redux/postsSlice/slice';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
-  const auth: any = getAuth();
+  const auth: Auth = getAuth();
   const post = useAppSelector((state) => state.post.item);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -69,7 +69,9 @@ const PostPage: React.FC = () => {
                   <span>{post.author && post.author.name}</span>
                 </Link>
               )}
-              <span>{post.date && '| Published -  ' + format(post.date, 'yyyy.MM.dd')}</span>
+              <span>
+                {post.date && '| Published -  ' + format(Number(post.date), 'yyyy.MM.dd')}
+              </span>
             </div>
             <span
               className={s.category}

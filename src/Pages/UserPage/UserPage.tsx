@@ -3,19 +3,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { fetchUserDataById } from '../../utils/userProfileFunctions';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
-import { PostType } from '../../redux/postsSlice/slice';
 import s from './UserPage.module.scss';
 import { auth } from '../../firebase';
+import { PostType } from '../../types/post.type';
+import { DocumentData } from 'firebase/firestore';
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
-  const [user, setUser] = React.useState<any>('');
+  const [user, setUser] = React.useState<DocumentData>();
   const posts = useAppSelector((state) => {
     return state.posts.items.filter((post: PostType) => {
       return post.author.id.toLowerCase() === id?.toLowerCase();
     });
   });
-  const [imageURL, setImageURL] = React.useState('');
+  const [imageURL, setImageURL] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(true);
   const navigate = useNavigate();
 

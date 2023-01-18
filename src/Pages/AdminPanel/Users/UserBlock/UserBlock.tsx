@@ -6,14 +6,15 @@ import { Alert, Slide, Snackbar } from '@mui/material';
 import { useDeleteUsers } from '../../../../hooks/useUsers';
 import MenuPopup from '../../../../components/MenuPopup/MenuPopup';
 import EditModal from '../../../../components/EditModal/EditModal';
+import { SnackbarType } from '../../../../types/snackbar.type';
 
 interface UserBlockProps {
   id: string;
   username: string;
   email: string;
   createdAt: string;
-  checkedUsers: any;
-  setCheckedUsers: (arg: any) => void;
+  checkedUsers: string[];
+  setCheckedUsers: (arg: string[]) => void;
 }
 
 const UserBlock: React.FC<UserBlockProps> = ({
@@ -24,12 +25,12 @@ const UserBlock: React.FC<UserBlockProps> = ({
   checkedUsers,
   setCheckedUsers,
 }) => {
-  const [openModal, setOpenModal] = React.useState(false);
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [snackbar, setSnackbar] = React.useState({
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [userAvatar, setUserAvatar] = React.useState<string>('');
+  const [snackbar, setSnackbar] = React.useState<SnackbarType>({
     show: false,
     text: '',
-    status: 'success' as any,
+    status: 'success',
   });
   const { deleteUser } = useDeleteUsers(id, setSnackbar);
 
@@ -54,7 +55,7 @@ const UserBlock: React.FC<UserBlockProps> = ({
                   setCheckedUsers([...checkedUsers, id]);
                 } else {
                   setCheckedUsers(
-                    checkedUsers.filter((postID: any) => {
+                    checkedUsers.filter((postID: string) => {
                       return postID !== id;
                     }),
                   );

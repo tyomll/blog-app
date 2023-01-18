@@ -4,7 +4,7 @@ import { collection, addDoc, doc, setDoc, deleteDoc, updateDoc, query, where, ge
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
-import { PostEditedDataType } from '../components/EditModal/EditModal';
+import { PostEditedDataType } from '../components/EditModal/types/editModal.type';
 
 export const createPost = async (file: File | null, postData: PostDataType, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const storage = getStorage()
@@ -42,7 +42,7 @@ export const createPost = async (file: File | null, postData: PostDataType, navi
     showSnackbar(true)
   }
 };
-export const addComment = async (text: string, postId: string, uid: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
+export const addComment = async (text: string, postId: string, uid: string | undefined, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const id = uuidv4()
   const date = Date.now()
   const docRef = doc(db, 'comments', id)

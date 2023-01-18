@@ -8,6 +8,7 @@ import Posts from './Posts/Posts';
 
 const AdminPanel: React.FC = () => {
   const [pageIndex, setPageIndex] = React.useState<number>(0);
+
   return (
     <div className={s.root}>
       <div className={s.container}>

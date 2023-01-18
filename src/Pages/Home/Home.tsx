@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import styles from './Home.module.scss';
 
 const Home: React.FC = () => {
-  const [searchValue, setSearchValue] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState<string>('');
 
   return (
     <div className={styles.root}>

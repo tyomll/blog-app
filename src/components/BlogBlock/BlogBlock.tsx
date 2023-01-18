@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './BlogBlock.module.scss';
 import { Link, useLocation } from 'react-router-dom';
-import { PostType, setCategory } from '../../redux/postsSlice/slice';
+import { setCategory } from '../../redux/postsSlice/slice';
 import { formatDistanceToNow } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,7 @@ import { useDeletePosts } from '../../hooks/posts';
 import { Alert, Slide, Snackbar } from '@mui/material';
 import parse from 'html-react-parser';
 import { useAppDispatch } from '../../hooks/redux-hooks';
+import { PostType } from '../../types/post.type';
 
 const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, category, date }) => {
   const dispatch = useAppDispatch();

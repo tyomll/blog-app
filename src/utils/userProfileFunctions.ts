@@ -46,7 +46,6 @@ export async function fetchUserDataById(
 export async function updateUser(id: string, data: any, setSnackbar: any) {
   const refresh = () => window.location.reload();
   const ref = doc(db, 'users', id)
-  console.log(data)
   updateDoc(ref, {
     username: data.username,
     email: data.email,

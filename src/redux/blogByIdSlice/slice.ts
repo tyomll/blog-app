@@ -1,32 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { db } from '../../firebase';
-
-enum Status {
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-}
-
-export type BlogCommentsType = {
-  id: string;
-  author: string;
-  text: string;
-};
-
-export type BlogByIdSliceType = {
-  id: string;
-  author: { name: string; id: string };
-  title: string;
-  text: string;
-  image: string;
-  category: string;
-};
-
-interface BlogByIdSliceState {
-  item: any;
-  status: Status;
-}
+import { BlogByIdSliceState, BlogByIdSliceType, Status } from './types/blogByIdSlice.type';
 
 const initialState: BlogByIdSliceState = {
   item: {} as BlogByIdSliceType,
@@ -38,7 +13,7 @@ export const fetchPostById = createAsyncThunk(
   async (id: string) => {
     const docRef = doc(db, 'posts', id)
     const data = await getDoc(docRef)
-    return data.data()
+    return data.data() as BlogByIdSliceType
   }
 );
 

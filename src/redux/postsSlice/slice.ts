@@ -1,38 +1,7 @@
-import { getDocs } from 'firebase/firestore';
+import { getDocs, CollectionReference } from 'firebase/firestore';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-enum Status {
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-}
-
-type PostCommentsType = {
-  comments: {
-    id: string;
-    author: string;
-    text: string;
-  };
-};
-
-export type PostType = {
-  id: string;
-  author: {
-    name: string;
-    id: string
-  };
-  title: string;
-  text: string;
-  image: string;
-  category: string;
-  date: number;
-};
-
-interface PostsSliceStateType {
-  items: any;
-  status: Status;
-  category: string;
-}
+import { PostType } from '../../types/post.type';
+import { PostsSliceStateType, Status } from './types/postSlice.type';
 
 const initialState: PostsSliceStateType = {
   items: [],
@@ -42,9 +11,12 @@ const initialState: PostsSliceStateType = {
 
 export const fetchPosts = createAsyncThunk(
   "blog/fetchBlogsStatus",
-  async (collectionRef: any) => {
+  async (collectionRef: CollectionReference) => {
     const data = await getDocs(collectionRef)
-    const newData = data.docs.map((doc) => ({ ...doc.data() as Record<string, unknown>, id: doc.id }));
+    const newData = data.docs.map((doc) => {
+      const { author, title, text, image, category, date } = doc.data() as PostType;
+      return { id: doc.id, author, title, text, image, category, date };
+    });
     return newData
   }
 );

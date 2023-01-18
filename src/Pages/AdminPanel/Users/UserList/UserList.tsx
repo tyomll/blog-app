@@ -1,5 +1,6 @@
 import React from 'react';
 import useUsers from '../../../../hooks/useUsers';
+import { UserType } from '../../../../types/user.type';
 import UserBlock from '../UserBlock/UserBlock';
 import { SortBy } from '../Users';
 
@@ -19,7 +20,7 @@ const UserList: React.FC<UserListProps> = ({
   searchValue,
   sort,
 }) => {
-  const [users, setUsers] = React.useState<any>();
+  const [users, setUsers] = React.useState<UserType[]>();
   const { getUsers } = useUsers();
 
   React.useEffect(() => {
@@ -27,7 +28,7 @@ const UserList: React.FC<UserListProps> = ({
   }, []);
 
   React.useEffect(() => {
-    if (checkAll) {
+    if (checkAll && users) {
       setCheckedUsers(
         users.map((user: any) => {
           return user.id;
@@ -49,7 +50,6 @@ const UserList: React.FC<UserListProps> = ({
       {users
         ?.sort((a: any, b: any) => {
           if (sort.sortBy !== '') {
-            console.log(b);
             if (sort.order === 'asc') {
               // post date is number coming from back end, so i converting it to string
               return a[sort.sortBy].toString().localeCompare(b[sort.sortBy].toString());
@@ -59,10 +59,10 @@ const UserList: React.FC<UserListProps> = ({
             }
           }
         })
-        .filter((user: any) => {
+        .filter((user: UserType) => {
           return user.username.toLowerCase().includes(searchValue.toLowerCase());
         })
-        .map((user: any) => {
+        .map((user: UserType) => {
           return (
             <UserBlock
               key={user.id}

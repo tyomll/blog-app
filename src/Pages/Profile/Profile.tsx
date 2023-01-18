@@ -3,7 +3,6 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
 import { useAppSelector } from '../../hooks/redux-hooks';
-import { PostType } from '../../redux/postsSlice/slice';
 import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
 import s from './Profile.module.scss';
 import { uploadUserAvatar } from '../../utils/userProfileFunctions';
@@ -13,13 +12,13 @@ import UploadimageModal from '../../components/UploadimageModal/UploadimageModal
 import Loader from '../../components/Loader/Loader';
 import Avatar from '@mui/joy/Avatar';
 import { toPng } from 'html-to-image';
+import { PostType } from '../../types/post.type';
 
 const Profile: React.FC = () => {
   const auth = getAuth();
   const user = auth?.currentUser;
-  const push = useNavigate();
-  const [loading, setLoading] = React.useState(true);
-  const posts = useAppSelector((state: any) => {
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const posts = useAppSelector((state) => {
     return state.posts.items.filter((post: PostType) => {
       return post.author.id.toLowerCase() === user?.uid?.toLowerCase();
     });
@@ -30,10 +29,6 @@ const Profile: React.FC = () => {
   const avatarRef = React.useRef<HTMLDivElement>(null);
   const refresh = () => window.location.reload();
 
-  function logOutUser() {
-    auth.signOut();
-    push('/');
-  }
   async function handleAvatarSumbit() {
     setUploadMode(false);
     await uploadUserAvatar(photo, user, setLoading);

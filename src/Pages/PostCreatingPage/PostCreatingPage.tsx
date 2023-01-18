@@ -10,6 +10,7 @@ import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import { Alert, Slide, Snackbar } from '@mui/material';
 import { CssVarsProvider, Option, Select } from '@mui/joy';
 import useCategories from '../../hooks/useCategories';
+import { CategoriesType } from '../../types/categories.type';
 
 export interface PostDataType {
   title: string;
@@ -18,12 +19,12 @@ export interface PostDataType {
 }
 
 const PostCreatingPage: React.FC = () => {
-  const { getCategories }: any = useCategories();
+  const { getCategories } = useCategories();
   const quillRef = React.useRef<ReactQuill>(null);
-  const [categories, setCategories] = React.useState<any>(null);
+  const [categories, setCategories] = React.useState<CategoriesType[] | null>(null);
   const [photo, setPhoto] = React.useState<null | File>(null);
-  const [snackbar, showSnackbar] = React.useState(false);
-  const [snackbarText, setSnackbarText] = React.useState('');
+  const [snackbar, showSnackbar] = React.useState<boolean>(false);
+  const [snackbarText, setSnackbarText] = React.useState<string>('');
   const [postData, setPostData] = React.useState<PostDataType>({
     title: '',
     text: '',
@@ -37,7 +38,8 @@ const PostCreatingPage: React.FC = () => {
       setPhoto(e.target.files[0]);
     }
   };
-  function getText(text: any) {
+
+  function getText(text: string) {
     const textLength = quillRef!.current!.editor!.getLength();
     if (textLength <= 2000) {
       setPostData({ ...postData, text });
@@ -87,7 +89,7 @@ const PostCreatingPage: React.FC = () => {
               value={postData.category}
               onChange={(_, item) => setPostData({ ...postData, category: item! })}>
               {categories &&
-                categories.map((category: any) => {
+                categories.map((category: CategoriesType) => {
                   return (
                     <Option key={category.id} value={category.title.toLowerCase()}>
                       {category.title}
