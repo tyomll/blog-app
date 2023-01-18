@@ -1,6 +1,6 @@
 import { getAuth } from 'firebase/auth';
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { PostType } from '../../redux/postsSlice/slice';
@@ -24,12 +24,11 @@ const Profile: React.FC = () => {
       return post.author.id.toLowerCase() === user?.uid?.toLowerCase();
     });
   });
-
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [photoURL, setPhotoURL] = React.useState<string>('');
-  const refresh = () => window.location.reload();
   const [uploadMode, setUploadMode] = React.useState<boolean>(false);
   const avatarRef = React.useRef<HTMLDivElement>(null);
+  const refresh = () => window.location.reload();
 
   function logOutUser() {
     auth.signOut();
@@ -54,6 +53,7 @@ const Profile: React.FC = () => {
         console.log(err);
       });
   }
+
   React.useEffect(() => {
     if (user?.photoURL) {
       setPhotoURL(user.photoURL);
