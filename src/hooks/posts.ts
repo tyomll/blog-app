@@ -1,21 +1,21 @@
 import { collection, deleteDoc, doc, getDocs, query, where, writeBatch } from "firebase/firestore"
 import { db } from "../firebase"
 import swal from 'sweetalert';
-
-
+import { SnackbarType } from "../types/snackbar.type";
+import { PostType } from '../types/post.type';
 
 export const usePosts = () => {
-  const getPosts = async (setPosts: (arg: any) => void) => {
+  const getPosts = async (setPosts: (arg: PostType[]) => void) => {
     const ref = collection(db, "posts")
     const data = await getDocs(ref)
-    const posts = data.docs.map((doc) => ({ ...doc.data() as Record<string, unknown> }))
+    const posts = data.docs.map((doc) => ({ ...doc.data() as Record<string, unknown> })) as any
     setPosts(posts)
   }
   return { getPosts }
 }
 
 export const useTodaysPosts = () => {
-  const getTodaysPosts = async (setTodaysPosts: (arg: any) => void) => {
+  const getTodaysPosts = async (setTodaysPosts: (arg: PostType[]) => void) => {
     const ref = collection(db, "posts")
     const data = await getDocs(ref)
     const posts: any = data.docs.map((doc) => ({ ...doc.data() as Record<string, unknown> }))
@@ -26,7 +26,7 @@ export const useTodaysPosts = () => {
   return { getTodaysPosts }
 }
 
-export function useDeletePosts(id?: string, setSnackbar?: any) {
+export function useDeletePosts(id?: string, setSnackbar?: (arg: SnackbarType) => void) {
   const refresh = () => window.location.reload();
 
   async function deletePost() {
@@ -46,11 +46,13 @@ export function useDeletePosts(id?: string, setSnackbar?: any) {
         const q = query(collection(db, "comments"), where("postId", "==", docId))
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach(async (doc) => deleteDoc(doc.ref))
-        setSnackbar({
-          show: true,
-          text: "Post deleted successfully!",
-          status: 'success',
-        })
+        if (setSnackbar) {
+          setSnackbar({
+            show: true,
+            text: "Post deleted successfully!",
+            status: 'success',
+          })
+        }
         refresh()
       }
     });
@@ -66,7 +68,7 @@ export function useDeletePosts(id?: string, setSnackbar?: any) {
       dangerMode: true as any,
     }).then(async (willDelete: boolean) => {
       if (willDelete) {
-        const deletePromise = deletingPostsArray.map(async (postID) => {
+        const deletePromise = deletingPostsArray.map(async (postID: string) => {
           let docId = null as any;
           const q = query(collection(db, "posts"), where("id", "==", postID))
           const querySnapshot = await getDocs(q)

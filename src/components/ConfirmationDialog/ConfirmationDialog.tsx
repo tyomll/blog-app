@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Button,
   Dialog,
@@ -6,10 +7,9 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
-import React from 'react';
 
 const ConfirmationDialog: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   const handleClickOpen = () => {
     setOpen(true);

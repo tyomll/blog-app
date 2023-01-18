@@ -10,10 +10,11 @@ import { Alert, Slide, Snackbar } from '@mui/material';
 import parse from 'html-react-parser';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import { PostType } from '../../types/post.type';
+import { SnackbarType } from '../../types/snackbar.type';
 
 const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, category, date }) => {
   const dispatch = useAppDispatch();
-  const [snackbar, setSnackbar] = React.useState({
+  const [snackbar, setSnackbar] = React.useState<SnackbarType>({
     show: false,
     text: '',
     status: 'success' as any,
@@ -49,7 +50,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
           <Link to={`/blog/${id}`}>
             <button>Read More</button>
           </Link>
-          <span>{formatDistanceToNow(date) + ' ' + 'ago'}</span>
+          <span>{formatDistanceToNow(Number(date)) + ' ' + 'ago'}</span>
         </div>
       </div>
       <Snackbar

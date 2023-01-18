@@ -3,9 +3,10 @@ import { setCategory } from '../../redux/postsSlice/slice';
 import styles from './Sidebar.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import useCategories from '../../hooks/useCategories';
+import { CategoriesType } from '../../types/categories.type';
 const Sidebar: React.FC = () => {
   const { getCategories } = useCategories();
-  const [categories, setCategories] = React.useState<any>(null);
+  const [categories, setCategories] = React.useState<CategoriesType[] | null>(null);
   const currentCategory = useAppSelector((state) => state.posts.category);
   const dispatch = useAppDispatch();
 

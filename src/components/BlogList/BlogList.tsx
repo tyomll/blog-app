@@ -5,6 +5,7 @@ import styles from './BlogList.module.scss';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
 import PostsNotFound from '../PostsNotFound/PostsNotFound';
+import { PostType } from '../../types/post.type';
 
 interface BlogListProps {
   searchValue: string;
@@ -12,7 +13,7 @@ interface BlogListProps {
 const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   const posts = useAppSelector((state) => state.posts.items);
   const category = useAppSelector((state) => state.posts.category);
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     getPostsFromPostSlice(setLoading);
@@ -24,19 +25,19 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   return (
     <div className={styles.root}>
       {loading &&
-        posts.map((_: any, i: any) => {
+        posts.map((_: PostType, i: number) => {
           return <BlogBlockSkeleton key={i} />;
         })}
       {!loading &&
         posts
-          .filter((post: any) => {
+          .filter((post: PostType) => {
             if (category !== 'all') {
               return post.category === category;
             } else {
               return post;
             }
           })
-          .filter((post: any) => {
+          .filter((post: PostType) => {
             if (searchValue.trim() !== '') {
               return post.title.toLowerCase().trim().includes(searchValue.trim().toLowerCase());
             } else {
@@ -48,7 +49,7 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
             return b.date - a.date;
           })
 
-          .map((post: any) => {
+          .map((post: PostType) => {
             return <BlogBlock key={post.id} {...post} />;
           })}
     </div>

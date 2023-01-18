@@ -1,30 +1,30 @@
-import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/redux-hooks';
-import { fetchUserDataById } from '../../utils/userProfileFunctions';
 import s from './Comment.module.scss';
+import { formatDistanceToNow } from 'date-fns';
+import { Link } from 'react-router-dom';
+import { fetchUserDataById } from '../../utils/userProfileFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { getAuth } from 'firebase/auth';
 import { deleteComment } from '../../utils/postFunctions';
+import { CommentType } from '../../types/comment.type';
 
-interface CommentType {
-  comment: any;
+interface CommentProps {
+  comment: CommentType;
   showSnackbar: (arg: boolean) => void;
   setSnackbarText: (arg: string) => void;
 }
-const Comment: React.FC<CommentType> = ({ comment, showSnackbar, setSnackbarText }) => {
+const Comment: React.FC<CommentProps> = ({ comment, showSnackbar, setSnackbarText }) => {
   const auth = getAuth();
   const currentUser = auth.currentUser;
-  const { text, uid, date, id } = comment;
+  const { text, uid, date, id } = comment as CommentType;
   const [avatar, setAvatar] = React.useState('');
   const [author, setAuthor] = React.useState<any>('');
   function onDeleteComment() {
-    deleteComment(id, showSnackbar, setSnackbarText);
+    deleteComment(id!, showSnackbar, setSnackbarText);
   }
   React.useEffect(() => {
-    fetchUserDataById(uid, setAuthor, setAvatar);
+    fetchUserDataById(uid!, setAuthor, setAvatar);
   }, []);
   return (
     <div className={s.comment}>
@@ -32,7 +32,7 @@ const Comment: React.FC<CommentType> = ({ comment, showSnackbar, setSnackbarText
         <img src={avatar} />
         <div className={s.authorData}>
           <Link to={`/users/${comment.uid}`}>@{author?.username}</Link>
-          <span>{formatDistanceToNow(date) + ' ' + 'ago'}</span>
+          <span>{formatDistanceToNow(Number(date)) + ' ' + 'ago'}</span>
         </div>
         {currentUser && currentUser.uid === uid && (
           <div className={s.deleteBtn} onClick={onDeleteComment}>

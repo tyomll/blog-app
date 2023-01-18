@@ -1,3 +1,4 @@
+import { SnackbarType } from './../types/snackbar.type';
 import { doc, DocumentData, getDoc, updateDoc } from 'firebase/firestore';
 import { getPostsFromPostSlice } from './fetchFromRedux';
 import { storage, db } from './../firebase';
@@ -43,7 +44,7 @@ export async function fetchUserDataById(
   if (setImageURL) getUserAvatar(id, setImageURL);
   getPostsFromPostSlice(setLoading);
 }
-export async function updateUser(id: string, data: any, setSnackbar: any) {
+export async function updateUser(id: string, data: any, setSnackbar: (arg: SnackbarType) => void) {
   const refresh = () => window.location.reload();
   const ref = doc(db, 'users', id)
   updateDoc(ref, {

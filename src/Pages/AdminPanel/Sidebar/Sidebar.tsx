@@ -4,8 +4,13 @@ import { getUserAvatar } from '../../../utils/userProfileFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faUser, faMailBulk } from '@fortawesome/free-solid-svg-icons';
 import s from './Sidebar.module.scss';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-const pages: any = [
+interface PagesType {
+  title: string;
+  icon: IconDefinition;
+}
+const pages: PagesType[] = [
   { title: 'dashboard', icon: faChartLine },
   { title: 'users', icon: faUser },
   { title: 'posts', icon: faMailBulk },
@@ -45,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ pageIndex, setPageIndex }) => {
         </div>
         <div className={s.pages}>
           <ul className={s.pagesContainer}>
-            {pages.map((page: any, i: number) => {
+            {pages.map((page: PagesType, i: number) => {
               return (
                 <div
                   key={i}

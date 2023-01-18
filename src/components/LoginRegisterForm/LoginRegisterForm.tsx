@@ -17,10 +17,10 @@ interface LoginRegisterFormType {
 const activeButtonStyle = 'linear-gradient(305deg, #fe9344, #fecd20)';
 
 const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHandler }) => {
-  const [username, setUsername] = React.useState('');
-  const [email, setEmail] = React.useState('artyom123@gmail.com');
-  const [pass, setPass] = React.useState('artyom123');
-  const [passTwo, setPassTwo] = React.useState('');
+  const [username, setUsername] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>('artyom123@gmail.com');
+  const [pass, setPass] = React.useState<string>('artyom123');
+  const [passTwo, setPassTwo] = React.useState<string>('');
 
   return (
     <div className={s.wrapper}>

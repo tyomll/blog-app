@@ -3,7 +3,7 @@ import { ResponsiveLine } from '@nivo/line';
 import useChartData from '../../../../hooks/useChartData';
 import Loader from '../../../../components/Loader/Loader';
 
-interface Data {
+export interface Data {
   color: string;
   data: Array<{
     x: string;

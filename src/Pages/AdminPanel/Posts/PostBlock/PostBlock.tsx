@@ -5,7 +5,7 @@ import MenuPopup from '../../../../components/MenuPopup/MenuPopup';
 import EditModal from '../../../../components/EditModal/EditModal';
 import { Alert, Slide, Snackbar } from '@mui/material';
 import { useDeletePosts } from '../../../../hooks/posts';
-import swal from 'sweetalert';
+import { SnackbarType } from '../../../../types/snackbar.type';
 
 export interface PostBlockProps {
   id: string;
@@ -16,7 +16,7 @@ export interface PostBlockProps {
     name: string;
   };
   category: string;
-  date: string | number;
+  date: string | number | Date;
   checkedPosts: any;
   setCheckedPosts: (arg: any) => void;
 }
@@ -31,11 +31,11 @@ const PostBlock: React.FC<PostBlockProps> = ({
   checkedPosts,
   setCheckedPosts,
 }) => {
-  const [openModal, setOpenModal] = React.useState(false);
-  const [snackbar, setSnackbar] = React.useState({
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [snackbar, setSnackbar] = React.useState<SnackbarType>({
     show: false,
     text: '',
-    status: 'success' as any,
+    status: 'success',
   });
   const { deletePost } = useDeletePosts(id, setSnackbar);
 
@@ -55,7 +55,7 @@ const PostBlock: React.FC<PostBlockProps> = ({
                   setCheckedPosts([...checkedPosts, id]);
                 } else {
                   setCheckedPosts(
-                    checkedPosts.filter((postID: any) => {
+                    checkedPosts.filter((postID: string) => {
                       return postID !== id;
                     }),
                   );

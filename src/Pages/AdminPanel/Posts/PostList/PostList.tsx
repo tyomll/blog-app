@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePosts } from '../../../../hooks/posts';
+import { PostType } from '../../../../types/post.type';
 import PostBlock from '../PostBlock/PostBlock';
 import { SortBy } from '../Posts';
 
@@ -20,7 +21,7 @@ const PostList: React.FC<UserListProps> = ({
   searchValue,
   sort,
 }) => {
-  const [posts, setPosts] = React.useState<any>([]);
+  const [posts, setPosts] = React.useState<PostType[]>([]);
 
   const { getPosts } = usePosts();
 
@@ -35,7 +36,7 @@ const PostList: React.FC<UserListProps> = ({
   React.useEffect(() => {
     if (checkAll) {
       setCheckedPosts(
-        posts.map((post: any) => {
+        posts.map((post: PostType) => {
           return post.id;
         }),
       );
@@ -73,10 +74,10 @@ const PostList: React.FC<UserListProps> = ({
               }
             }
           })
-          .filter((post: any) => {
+          .filter((post: PostType) => {
             return post.title.toLowerCase().includes(searchValue.toLowerCase());
           })
-          .map((post: any) => {
+          .map((post: PostType) => {
             return (
               <PostBlock
                 key={post.id}

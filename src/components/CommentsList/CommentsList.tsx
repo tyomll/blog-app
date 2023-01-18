@@ -1,3 +1,4 @@
+import { DocumentData } from 'firebase/firestore';
 import React from 'react';
 import { useComments } from '../../hooks/comments';
 import Comment from '../Comment/Comment';
@@ -15,7 +16,7 @@ const CommentsList: React.FC<CommentsListType> = ({ postId, showSnackbar, setSna
   return (
     <>
       {comments &&
-        comments.map((comment: any) => {
+        comments.map((comment: DocumentData) => {
           return (
             <Comment
               key={comment.id}

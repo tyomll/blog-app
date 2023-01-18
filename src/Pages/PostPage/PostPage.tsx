@@ -12,6 +12,7 @@ import parse from 'html-react-parser';
 import { getUserAvatar } from '../../utils/userProfileFunctions';
 import { format } from 'date-fns';
 import { setCategory } from '../../redux/postsSlice/slice';
+import { CommentType } from '../../types/comment.type';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
@@ -24,16 +25,17 @@ const PostPage: React.FC = () => {
   const [snackbarText, setSnackbarText] = React.useState<string>(
     'Your comment added successfully!',
   );
-  const [comment, setComment] = React.useState({
+  const [comment, setComment] = React.useState<CommentType>({
     postId: id as string,
     text: '',
   });
 
   const handleCommentAdd = () => {
     setComment({ ...comment, text: '' });
-    if (comment.text.trim() !== '') {
+    if (comment.text?.trim() !== '') {
       const userId = auth.currentUser?.uid;
-      if (comment) addComment(comment.text, comment.postId, userId, showSnackbar, setSnackbarText);
+      if (comment)
+        addComment(comment.text!, comment.postId!, userId, showSnackbar, setSnackbarText);
     } else {
       showSnackbar(true);
       setSnackbarText('Please fill text field.');

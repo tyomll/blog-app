@@ -5,8 +5,9 @@ interface HeaderProps {
   searchValue: string;
   setSearchValue: (value: string) => void;
 }
+
 const Header: React.FC<HeaderProps> = ({ searchValue, setSearchValue }) => {
-  const [localSearchValue, setLocalSearchValue] = React.useState(searchValue);
+  const [localSearchValue, setLocalSearchValue] = React.useState<string>(searchValue);
   return (
     <div className={styles.root}>
       <div className={styles.container}>

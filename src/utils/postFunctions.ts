@@ -1,3 +1,4 @@
+import { SnackbarType } from './../types/snackbar.type';
 import { auth } from './../firebase';
 import { PostDataType } from './../Pages/PostCreatingPage/PostCreatingPage';
 import { collection, addDoc, doc, setDoc, deleteDoc, updateDoc, query, where, getDocs } from 'firebase/firestore';
@@ -57,7 +58,7 @@ export const addComment = async (text: string, postId: string, uid: string | und
     })
 }
 
-export async function updatePost(id: string, data: PostEditedDataType, setSnackbar: any) {
+export async function updatePost(id: string, data: PostEditedDataType, setSnackbar: (arg: SnackbarType) => void) {
   const refresh = () => window.location.reload();
   let docId = null as any;
   const q = query(collection(db, "posts"), where("id", "==", id))
