@@ -28,6 +28,10 @@
         img {
           width: 150px;
           height: 50px;
+          @media (max-width: 540px) {
+            width: 100px;
+            height: 35px;
+          }
         }
       }
     }
@@ -56,6 +60,17 @@
 
         &:hover {
           background-image: linear-gradient(305deg, #f89a57, #eec73a);
+        }
+      }
+
+      @media (max-width: 540px) {
+        gap: 10px;
+        a {
+          font-size: 17px;
+        }
+        .register {
+          font-size: 15px;
+          padding: 10px;
         }
       }
     }

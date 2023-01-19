@@ -5,4 +5,9 @@
     position: absolute;
     bottom: 50px;
   }
+  @media (max-width: 900px) {
+    display: flex;
+    justify-content: center;
+    height: 100px;
+  }
 }

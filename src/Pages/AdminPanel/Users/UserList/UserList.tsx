@@ -46,7 +46,7 @@ const UserList: React.FC<UserListProps> = ({
   }, [checkedUsers]);
 
   return (
-    <div>
+    <div className="gago">
       {users
         ?.sort((a: any, b: any) => {
           if (sort.sortBy !== '') {

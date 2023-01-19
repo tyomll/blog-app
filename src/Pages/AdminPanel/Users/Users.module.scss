@@ -4,6 +4,7 @@
   justify-content: center;
   min-height: 100vh;
   flex-direction: column;
+
   .header {
     display: flex;
     align-items: center;
@@ -177,5 +178,8 @@
         }
       }
     }
+  }
+  @media (max-width: 900px) {
+    min-height: auto;
   }
 }

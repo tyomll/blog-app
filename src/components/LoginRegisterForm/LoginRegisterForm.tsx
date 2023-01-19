@@ -30,7 +30,6 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
             <div className={s.logo}>
               <img src={logo} alt="logo" />
             </div>
-            <h1>Blog</h1>
           </div>
           <p>Here could be your advertisement😁</p>
         </div>

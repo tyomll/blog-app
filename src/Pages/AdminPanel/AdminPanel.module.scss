@@ -27,5 +27,12 @@
     .content {
       width: calc(100vw - 15%);
     }
+    @media (max-width: 900px) {
+      flex-direction: column;
+
+      .content {
+        width: 100vw;
+      }
+    }
   }
 }

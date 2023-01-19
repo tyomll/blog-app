@@ -2,5 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 100px);
+  margin: 20px 0 20px 0;
 }

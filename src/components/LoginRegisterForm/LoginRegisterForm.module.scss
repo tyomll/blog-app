@@ -4,6 +4,9 @@
   justify-content: space-between;
   max-width: 1000px;
   gap: 20px;
+  @media (max-width: 1050px) {
+    flex-direction: column;
+  }
 }
 .texts {
   flex: 1;
@@ -22,15 +25,24 @@
           height: 90px;
         }
       }
-
-      h1 {
-        font-size: 60px;
-      }
     }
     p {
       font-size: 40px;
       font-weight: 0;
     }
+    @media (max-width: 1050px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  @media (max-width: 1050px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
   }
 }
 .loginForm {
@@ -96,5 +108,8 @@
       color: #fe9344;
       text-decoration: none;
     }
+  }
+  @media (max-width: 1050px) {
+    width: 90%;
   }
 }
