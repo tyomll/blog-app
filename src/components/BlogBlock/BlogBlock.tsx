@@ -17,7 +17,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
   const [snackbar, setSnackbar] = React.useState<SnackbarType>({
     show: false,
     text: '',
-    status: 'success' as any,
+    status: 'success',
   });
   const { deletePost } = useDeletePosts(id, setSnackbar);
   const location = useLocation();

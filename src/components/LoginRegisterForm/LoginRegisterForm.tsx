@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './LoginRegisterForm.module.scss';
-
+import logo from '../../images/logo.png';
 type contentType = {
   type: string;
   formHeading: string;
@@ -28,9 +28,7 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
         <div className={s.textsContainer}>
           <div className={s.heading}>
             <div className={s.logo}>
-              TY
-              <br />
-              OM
+              <img src={logo} alt="logo" />
             </div>
             <h1>Blog</h1>
           </div>
@@ -39,9 +37,7 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
       </div>
       <div className={s.loginForm}>
         <div className={s.logo}>
-          TY
-          <br />
-          OM
+          <img src={logo} alt="logo" />
         </div>
         <div className={s.heading}>
           <h1>{content.formHeading}</h1>

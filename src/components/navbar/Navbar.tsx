@@ -3,7 +3,7 @@ import styles from './Navbar.module.scss';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use-auth';
 import { getAuth } from 'firebase/auth';
-
+import logoHorizontal from '../../images/logo-horizontal.png';
 const Navbar: React.FC = () => {
   const { isAuth } = useAuth();
   const location = useLocation();
@@ -21,7 +21,9 @@ const Navbar: React.FC = () => {
       style={{ display: location.pathname === '/admin' ? 'none' : 'flex' }}>
       <nav>
         <div className={styles.logo}>
-          <Link to="/">HOME</Link>
+          <Link to="/">
+            <img src={logoHorizontal} alt="logo" />
+          </Link>
         </div>
         <div className={styles.navLinks}>
           <Link to="/blogs">Blogs</Link>

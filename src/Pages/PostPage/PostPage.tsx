@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import s from './PostPage.module.scss';
 import { getPostById } from '../../utils/fetchFromRedux';
 import { addComment } from '../../utils/postFunctions';
@@ -13,6 +13,7 @@ import { getUserAvatar } from '../../utils/userProfileFunctions';
 import { format } from 'date-fns';
 import { setCategory } from '../../redux/postsSlice/slice';
 import { CommentType } from '../../types/comment.type';
+import { SnackbarType } from '../../types/snackbar.type';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
@@ -21,24 +22,24 @@ const PostPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [authorAvatar, setAuthorAvatar] = React.useState('');
-  const [snackbar, showSnackbar] = React.useState<boolean>(false);
-  const [snackbarText, setSnackbarText] = React.useState<string>(
-    'Your comment added successfully!',
-  );
+  const [snackbar, setSnackbar] = React.useState<SnackbarType>({
+    show: false,
+    text: '',
+    status: 'success',
+  });
   const [comment, setComment] = React.useState<CommentType>({
     postId: id as string,
     text: '',
   });
+  const commmentsDiv = React.useRef<null | HTMLDivElement>(null);
 
   const handleCommentAdd = () => {
     setComment({ ...comment, text: '' });
     if (comment.text?.trim() !== '') {
       const userId = auth.currentUser?.uid;
-      if (comment)
-        addComment(comment.text!, comment.postId!, userId, showSnackbar, setSnackbarText);
+      if (comment) addComment(comment.text!, comment.postId!, userId, snackbar, setSnackbar);
     } else {
-      showSnackbar(true);
-      setSnackbarText('Please fill text field.');
+      setSnackbar({ ...snackbar, show: true, text: 'Please fill text field.', status: 'error' });
     }
   };
 
@@ -54,6 +55,9 @@ const PostPage: React.FC = () => {
       getUserAvatar(post.author?.id, setAuthorAvatar);
     }
   }, [post]);
+  useEffect(() => {
+    commmentsDiv.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [comment]);
 
   return (
     <div className={s.root}>
@@ -90,15 +94,9 @@ const PostPage: React.FC = () => {
       <div className={s.commentsWrapper}>
         <h1>Comments</h1>
         <div className={s.comments}>
-          {id && (
-            <CommentsList
-              postId={id}
-              showSnackbar={showSnackbar}
-              setSnackbarText={setSnackbarText}
-            />
-          )}
+          {id && <CommentsList postId={id} snackbar={snackbar} setSnackbar={setSnackbar} />}
         </div>
-        <div className={s.commentInput}>
+        <div className={s.commentInput} ref={commmentsDiv}>
           <textarea
             placeholder="Leave your thoughts..."
             value={comment.text}
@@ -109,20 +107,13 @@ const PostPage: React.FC = () => {
       </div>
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={snackbar}
-        onClose={() => showSnackbar(false)}
-        message={snackbarText}
+        open={snackbar.show}
+        onClose={() => setSnackbar({ ...snackbar, show: false })}
+        message={snackbar.text}
         TransitionComponent={Slide}
         autoHideDuration={3000}
         key={'bottom' + 'center'}>
-        <Alert
-          severity={
-            snackbarText === 'Your comment added successfully!' || 'Comment deleted successfully!'
-              ? 'success'
-              : 'error'
-          }>
-          {snackbarText}
-        </Alert>
+        <Alert severity={snackbar.status}>{snackbar.text}</Alert>
       </Snackbar>
     </div>
   );

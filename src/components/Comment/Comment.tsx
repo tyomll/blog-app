@@ -8,20 +8,21 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { getAuth } from 'firebase/auth';
 import { deleteComment } from '../../utils/postFunctions';
 import { CommentType } from '../../types/comment.type';
+import { SnackbarType } from '../../types/snackbar.type';
 
 interface CommentProps {
   comment: CommentType;
-  showSnackbar: (arg: boolean) => void;
-  setSnackbarText: (arg: string) => void;
+  snackbar: SnackbarType;
+  setSnackbar: (arg: SnackbarType) => void;
 }
-const Comment: React.FC<CommentProps> = ({ comment, showSnackbar, setSnackbarText }) => {
+const Comment: React.FC<CommentProps> = ({ comment, snackbar, setSnackbar }) => {
   const auth = getAuth();
   const currentUser = auth.currentUser;
   const { text, uid, date, id } = comment as CommentType;
   const [avatar, setAvatar] = React.useState('');
   const [author, setAuthor] = React.useState<any>('');
   function onDeleteComment() {
-    deleteComment(id!, showSnackbar, setSnackbarText);
+    deleteComment(id!, snackbar, setSnackbar);
   }
   React.useEffect(() => {
     fetchUserDataById(uid!, setAuthor, setAvatar);

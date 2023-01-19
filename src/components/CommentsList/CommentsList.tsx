@@ -1,14 +1,15 @@
 import { DocumentData } from 'firebase/firestore';
 import React from 'react';
 import { useComments } from '../../hooks/comments';
+import { SnackbarType } from '../../types/snackbar.type';
 import Comment from '../Comment/Comment';
 
 interface CommentsListType {
   postId: string;
-  showSnackbar: (arg: boolean) => void;
-  setSnackbarText: (arg: string) => void;
+  snackbar: SnackbarType;
+  setSnackbar: (arg: SnackbarType) => void;
 }
-const CommentsList: React.FC<CommentsListType> = ({ postId, showSnackbar, setSnackbarText }) => {
+const CommentsList: React.FC<CommentsListType> = ({ postId, snackbar, setSnackbar }) => {
   const { comments, isLoading } = useComments(postId);
 
   if (isLoading) return <>Loading...</>;
@@ -21,8 +22,8 @@ const CommentsList: React.FC<CommentsListType> = ({ postId, showSnackbar, setSna
             <Comment
               key={comment.id}
               comment={comment}
-              showSnackbar={showSnackbar}
-              setSnackbarText={setSnackbarText}
+              snackbar={snackbar}
+              setSnackbar={setSnackbar}
             />
           );
         })}

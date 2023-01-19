@@ -43,18 +43,16 @@ export const createPost = async (file: File | null, postData: PostDataType, navi
     showSnackbar(true)
   }
 };
-export const addComment = async (text: string, postId: string, uid: string | undefined, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
+export const addComment = async (text: string, postId: string, uid: string | undefined, snackbar: SnackbarType, setSnackbar: (arg: SnackbarType) => void,) => {
   const id = uuidv4()
   const date = Date.now()
   const docRef = doc(db, 'comments', id)
   await setDoc(docRef, { text, id, postId, date, uid })
     .then(() => {
-      setSnackbarText('Your comment added successfully!');
-      showSnackbar(true)
+      setSnackbar({ ...snackbar, show: true, text: 'Your comment added successfully!', status: 'success' })
     })
     .catch((e) => {
-      showSnackbar(true)
-      setSnackbarText("Something went wrong. Please try again.")
+      setSnackbar({ ...snackbar, show: true, text: 'Something went wrong. Please try again.', status: 'error' })
     })
 }
 
@@ -85,13 +83,11 @@ export async function updatePost(id: string, data: PostEditedDataType, setSnackb
     })
   })
 }
-export async function deleteComment(id: string, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) {
+export async function deleteComment(id: string, snackbar: SnackbarType, setSnackbar: (arg: SnackbarType) => void) {
   const docRef = doc(db, 'comments', id)
   await deleteDoc(docRef).then(() => {
-    showSnackbar(true)
-    setSnackbarText('Comment deleted successfully!')
+    setSnackbar({ ...snackbar, show: true, text: 'Comment deleted successfully!', status: 'success' })
   }).catch((e) => {
-    showSnackbar(true)
-    setSnackbarText(e.message)
+    setSnackbar({ ...snackbar, show: true, text: e.message, status: 'error' })
   })
 }
