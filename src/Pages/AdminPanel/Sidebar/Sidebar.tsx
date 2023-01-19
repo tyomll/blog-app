@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faUser, faMailBulk } from '@fortawesome/free-solid-svg-icons';
 import s from './Sidebar.module.scss';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import logoHorizontal from '../../../images/logo-horizontal.png';
+import { Link } from 'react-router-dom';
 
 interface PagesType {
   title: string;
@@ -17,11 +19,11 @@ const pages: PagesType[] = [
 ];
 
 interface SidebarProps {
-  pageIndex: number;
-  setPageIndex: (arg: number) => void;
+  page: string;
+  setPage: (arg: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ pageIndex, setPageIndex }) => {
+const Sidebar: React.FC<SidebarProps> = ({ page, setPage }) => {
   const currentUser = useAppSelector((state) => state.user);
   const [currentUserAvatar, setCurrentUserAvatar] = React.useState<string>('');
 
@@ -35,10 +37,9 @@ const Sidebar: React.FC<SidebarProps> = ({ pageIndex, setPageIndex }) => {
     <div className={s.root}>
       <div className={s.container}>
         <div className={s.logo}>
-          <img
-            src="https://snipstock.com/assets/cdn/png/3c72cc4f90c92b2afcab3c2a09195406.png"
-            alt="logo"
-          />
+          <Link to="/admin">
+            <img src={logoHorizontal} alt="logo" />
+          </Link>
         </div>
         <div className={s.user}>
           <div className={s.userAvatar}>
@@ -50,20 +51,21 @@ const Sidebar: React.FC<SidebarProps> = ({ pageIndex, setPageIndex }) => {
         </div>
         <div className={s.pages}>
           <ul className={s.pagesContainer}>
-            {pages.map((page: PagesType, i: number) => {
+            {pages.map((pagee: PagesType, i: number) => {
               return (
-                <div
-                  key={i}
-                  className={s.page}
-                  style={{
-                    backgroundColor: pageIndex === i ? 'rgba(145, 158, 171, 0.16)' : '',
-                  }}
-                  onClick={() => setPageIndex(i)}>
-                  <div className={s.pageIcon}>
-                    <FontAwesomeIcon icon={page.icon} />
+                <Link to={`${pagee.title}`} key={i} className={s.pageWrapper}>
+                  <div
+                    className={s.page}
+                    style={{
+                      backgroundColor: page === pagee.title ? 'rgba(145, 158, 171, 0.16)' : '',
+                    }}
+                    onClick={() => setPage(pagee.title)}>
+                    <div className={s.pageIcon}>
+                      <FontAwesomeIcon icon={pagee.icon} />
+                    </div>
+                    <span>{pagee.title}</span>
                   </div>
-                  <span>{page.title}</span>
-                </div>
+                </Link>
               );
             })}
           </ul>

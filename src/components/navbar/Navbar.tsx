@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
   return (
     <div
       className={styles.root}
-      style={{ display: location.pathname === '/admin' ? 'none' : 'flex' }}>
+      style={{ display: location.pathname.includes('/admin') ? 'none' : 'flex' }}>
       <nav>
         <div className={styles.logo}>
           <Link to="/">

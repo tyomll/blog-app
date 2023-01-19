@@ -22,6 +22,7 @@ const Posts: React.FC = () => {
   const [checkAll, setCheckAll] = React.useState<boolean>(false);
   const [checkedPosts, setCheckedPosts] = React.useState<string[]>([]);
   const [createPostMode, setCreatePostMode] = React.useState<boolean>(false);
+  const postCreatingRef = React.useRef<any>(null);
   const { deleteMultiplePost } = useDeletePosts();
 
   const [sort, setSort] = React.useState<SortBy>({
@@ -176,7 +177,7 @@ const Posts: React.FC = () => {
         </div>
       </div>
       {createPostMode && (
-        <div className={s.createPostModal}>
+        <div className={s.createPostModal} ref={postCreatingRef}>
           <PostCreatingPage />
         </div>
       )}
