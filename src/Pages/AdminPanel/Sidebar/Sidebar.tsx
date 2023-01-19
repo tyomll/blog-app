@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ page, setPage }) => {
     <div className={s.root}>
       <div className={s.container}>
         <div className={s.logo}>
-          <Link to="/admin">
+          <Link to="/">
             <img src={logoHorizontal} alt="logo" />
           </Link>
         </div>

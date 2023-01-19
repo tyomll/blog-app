@@ -25,11 +25,7 @@ const Navbar: React.FC = () => {
             <img src={logoHorizontal} alt="logo" />
           </Link>
         </div>
-        <div className={styles.navLinks}>
-          <Link to="/blogs">Blogs</Link>
-          <Link to="/contact">Contact Us</Link>
-          <Link to="/about">About Us</Link>
-        </div>
+        <div className={styles.navLinks}></div>
         {!isAuth ? (
           <div className={styles.loginLinks}>
             <Link to="/login">Log in</Link>

@@ -5,11 +5,11 @@ import Dashboard from './Dashboard/Dashboard';
 import Header from './Header/Header';
 import Users from './Users/Users';
 import Posts from './Posts/Posts';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 const AdminPanel: React.FC = () => {
   const [page, setPage] = React.useState<string>('');
-
+  const location = useLocation();
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -17,6 +17,18 @@ const AdminPanel: React.FC = () => {
           <Sidebar page={page} setPage={setPage} />
         </div>
         <div className={s.content}>
+          {location.pathname === '/admin' && (
+            <>
+              <Header />
+              <Dashboard />
+            </>
+          )}
+          {location.pathname === '/admin/' && (
+            <>
+              <Header />
+              <Dashboard />
+            </>
+          )}
           <Routes>
             <Route
               path={`/dashboard`}
