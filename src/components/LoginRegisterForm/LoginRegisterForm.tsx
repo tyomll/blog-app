@@ -149,14 +149,14 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
                     ...snackbar,
                     show: true,
                     text: 'You must fill all fields.',
-                    status: 'success',
+                    status: 'error',
                   });
                 } else {
                   setSnackbar({
                     ...snackbar,
                     show: true,
                     text: 'Email or password is incorrect.',
-                    status: 'success',
+                    status: 'error',
                   });
                 }
               }

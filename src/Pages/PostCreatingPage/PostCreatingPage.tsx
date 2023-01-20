@@ -106,8 +106,7 @@ const PostCreatingPage: React.FC = () => {
               onClick={() => {
                 setSnackbarText('Post added to blog successfully.');
                 showSnackbar(true);
-                createPost(photo, postData, navigate, showSnackbar, setSnackbarText);
-                setPostData({ title: '', text: '', category: '' });
+                createPost(photo, postData, setPostData, navigate, showSnackbar, setSnackbarText);
               }}>
               Post
             </Button>

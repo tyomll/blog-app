@@ -7,7 +7,7 @@ import { db } from '../firebase';
 import { uuidv4 } from '@firebase/util';
 import { PostEditedDataType } from '../components/EditModal/types/editModal.type';
 
-export const createPost = async (file: File | null, postData: PostDataType, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
+export const createPost = async (file: File | null, postData: PostDataType, setPostData: (arg: PostDataType) => void, navigate: (arg: string) => void, showSnackbar: (arg: boolean) => void, setSnackbarText: (arg: string) => void) => {
   const storage = getStorage()
   const fileRef = ref(storage, 'postImages/' + uuidv4() + '.png')
   if (file && postData.title.trim() !== '' && postData.text.trim() !== '' && postData.category.trim() !== '') {
@@ -33,6 +33,7 @@ export const createPost = async (file: File | null, postData: PostDataType, navi
       }).catch((e) => {
         console.log(e.message)
       })
+      setPostData({ title: '', text: '', category: '' });
       navigate('/')
     }).catch((e) => {
       console.log(e.message)

@@ -26,7 +26,8 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
       setNoPosts(false);
     }
   }, [posts]);
-  if (noPosts) {
+
+  if (!noPosts) {
     return <PostsNotFound />;
   }
 
