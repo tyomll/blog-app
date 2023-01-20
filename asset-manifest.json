@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/solo-blog-app/static/css/main.58bce5d3.css",
+    "main.js": "/solo-blog-app/static/js/main.645a5398.js",
+    "static/media/nothing-found.jpg": "/solo-blog-app/static/media/nothing-found.7b65ecfc2343b80dbf03.jpg",
+    "static/media/logo.png": "/solo-blog-app/static/media/logo.ac8e42fbe46edb443d46.png",
+    "static/media/logo-horizontal.png": "/solo-blog-app/static/media/logo-horizontal.418e799fe1a1e10a90a1.png",
+    "index.html": "/solo-blog-app/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.58bce5d3.css",
+    "static/js/main.645a5398.js"
+  ]
+}
