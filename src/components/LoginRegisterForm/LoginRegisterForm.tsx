@@ -4,6 +4,8 @@ import s from './LoginRegisterForm.module.scss';
 import logo from '../../images/logo.png';
 import { SnackbarType } from '../../types/snackbar.type';
 import { Alert, Slide, Snackbar } from '@mui/material';
+import HelmetTitle from '../../components/HelmetTitle/HelmetTitle';
+
 type contentType = {
   type: string;
   formHeading: string;
@@ -30,6 +32,7 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
   });
   return (
     <div className={s.wrapper}>
+      <HelmetTitle title={content.type === 'reg' ? 'Sign Up' : 'Sign In'} />
       <div className={s.texts}>
         <div className={s.textsContainer}>
           <div className={s.heading}>
@@ -136,7 +139,7 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
                   });
                 }
               } else {
-                if (email.trim() !== '' && passTwo.trim() !== '') {
+                if (email.trim() !== '' && pass.trim() !== '') {
                   setSnackbar({
                     ...snackbar,
                     show: true,
@@ -144,7 +147,7 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
                     status: 'success',
                   });
                   submitHandler(null, email, pass);
-                } else if (email.trim() === '' && passTwo.trim() === '') {
+                } else if (email.trim() === '' && pass.trim() === '') {
                   setSnackbar({
                     ...snackbar,
                     show: true,

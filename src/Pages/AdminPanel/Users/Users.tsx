@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import UserList from './UserList/UserList';
 import { useDeleteUsers } from '../../../hooks/useUsers';
+import HelmetTitle from '../../../components/HelmetTitle/HelmetTitle';
 
 export interface SortBy {
   order: string;
@@ -28,6 +29,7 @@ const Users: React.FC = () => {
 
   return (
     <div className={s.root}>
+      <HelmetTitle title="Users" />
       <div className={s.header}>
         <div>
           <h1>Users</h1>

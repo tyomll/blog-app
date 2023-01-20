@@ -6,5 +6,7 @@ declare module "*mui/icons-material/Publish";
 declare module "*@mui/material/styles";
 declare module '*.jpg';
 declare module '*.png';
+declare module '*react-helmet';
+
 
 declare module 'nivo';

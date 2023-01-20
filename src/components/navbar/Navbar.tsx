@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
               <span>My Profile</span>
             )}
 
-            {auth && <img src={auth.currentUser.photoURL} />}
+            {auth && <img src={auth.currentUser.photoURL} alt="avatar" />}
           </Link>
         )}
       </nav>

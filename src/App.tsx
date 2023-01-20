@@ -34,6 +34,7 @@ const App: React.FC = () => {
     });
     return unsubscribe;
   }, []);
+
   if (loading) return <Loader />;
 
   return (

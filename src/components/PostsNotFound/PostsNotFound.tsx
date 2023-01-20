@@ -16,7 +16,7 @@ const PostsNotFound: React.FC = () => {
             y="0px"
             width="100%"
             viewBox="0 0 4792 4167"
-            enable-background="new 0 0 4792 4167"
+            enableBackground="new 0 0 4792 4167"
             xmlSpace="preserve">
             <path
               fill="#FFFFFF"

@@ -14,7 +14,6 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   const posts = useAppSelector((state) => state.posts.items);
   const category = useAppSelector((state) => state.posts.category);
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [noPosts, setNoPosts] = React.useState<boolean>(false);
 
   async function fetchPosts() {
     setLoading(true);

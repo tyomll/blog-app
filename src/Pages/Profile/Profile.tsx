@@ -1,6 +1,6 @@
 import { getAuth } from 'firebase/auth';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BlogBlock from '../../components/BlogBlock/BlogBlock';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { getPostsFromPostSlice } from '../../utils/fetchFromRedux';
@@ -13,6 +13,7 @@ import Loader from '../../components/Loader/Loader';
 import Avatar from '@mui/joy/Avatar';
 import { toPng } from 'html-to-image';
 import { PostType } from '../../types/post.type';
+import HelmetTitle from '../../components/HelmetTitle/HelmetTitle';
 
 const Profile: React.FC = () => {
   const auth = getAuth();
@@ -65,6 +66,8 @@ const Profile: React.FC = () => {
   if (loading) return <Loader />;
   return (
     <div className={s.root} style={{ overflowY: uploadMode ? 'hidden' : 'initial' }}>
+      <HelmetTitle title="Profile" />
+
       {uploadMode && (
         <UploadimageModal
           setPhoto={setPhoto}
@@ -87,7 +90,7 @@ const Profile: React.FC = () => {
                   {user?.displayName?.slice(0, 1).toUpperCase()}
                 </Avatar>
               ) : (
-                <img src={photoURL} />
+                <img src={photoURL} alt="avatar" />
               )}
               <button id="uploadFile" onClick={() => setUploadMode(true)}>
                 <FontAwesomeIcon icon={faCamera} />

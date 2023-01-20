@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import PostList from './PostList/PostList';
 import { useDeletePosts } from '../../../hooks/posts';
+import HelmetTitle from '../../../components/HelmetTitle/HelmetTitle';
 
 export interface SortBy {
   order: string;
@@ -35,6 +36,7 @@ const Posts: React.FC = () => {
   }
   return (
     <div className={s.root}>
+      <HelmetTitle title="Posts" />
       <div className={s.header}>
         <div>
           <h1>Posts</h1>

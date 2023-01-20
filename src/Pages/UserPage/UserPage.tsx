@@ -7,6 +7,8 @@ import s from './UserPage.module.scss';
 import { auth } from '../../firebase';
 import { PostType } from '../../types/post.type';
 import { DocumentData } from 'firebase/firestore';
+import HelmetTitle from '../../components/HelmetTitle/HelmetTitle';
+import Loader from '../../components/Loader/Loader';
 
 const UserPage: React.FC = () => {
   const { id } = useParams();
@@ -34,14 +36,18 @@ const UserPage: React.FC = () => {
     getUserData();
   }, [id]);
 
+  if (!user) {
+    return <Loader />;
+  }
   return (
     <div className={s.root}>
+      <HelmetTitle title={'@' + user.username} />
       {loading ? (
         <div className="lds-dual-ring"></div>
       ) : (
         <div className={s.wrapper}>
           <div className={s.userInfo}>
-            <div className={s.image}>{imageURL && <img src={imageURL} />}</div>
+            <div className={s.image}>{imageURL && <img src={imageURL} alt="avatar" />}</div>
 
             {user && (
               <div className={s.details}>

@@ -14,6 +14,8 @@ import { format } from 'date-fns';
 import { setCategory } from '../../redux/postsSlice/slice';
 import { CommentType } from '../../types/comment.type';
 import { SnackbarType } from '../../types/snackbar.type';
+import HelmetTitle from '../../components/HelmetTitle/HelmetTitle';
+import Loader from '../../components/Loader/Loader';
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
@@ -59,11 +61,15 @@ const PostPage: React.FC = () => {
     commmentsDiv.current?.scrollIntoView({ behavior: 'smooth' });
   }, [comment]);
 
+  if (!post) {
+    return <Loader />;
+  }
   return (
     <div className={s.root}>
+      <HelmetTitle title={String(post.title)} />
       <div className={s.container}>
         <div className={s.postImage}>
-          <img src={post.image} />
+          <img src={post.image} alt="post" />
         </div>
         <div className={s.description}>
           <div className={s.postInfo}>

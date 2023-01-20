@@ -11,6 +11,7 @@ import { Alert, Slide, Snackbar } from '@mui/material';
 import { CssVarsProvider, Option, Select } from '@mui/joy';
 import useCategories from '../../hooks/useCategories';
 import { CategoriesType } from '../../types/categories.type';
+import HelmetTitle from '../../components/HelmetTitle/HelmetTitle';
 
 export interface PostDataType {
   title: string;
@@ -57,6 +58,7 @@ const PostCreatingPage: React.FC = () => {
   return (
     <>
       <div className={s.root} style={snackbar ? { pointerEvents: 'none', opacity: '0.3' } : {}}>
+        <HelmetTitle title="Create Post" />
         <div className={s.container}>
           <input
             type="text"
