@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './LoginRegisterForm.module.scss';
 import logo from '../../images/logo.png';
+import { SnackbarType } from '../../types/snackbar.type';
+import { Alert, Slide, Snackbar } from '@mui/material';
 type contentType = {
   type: string;
   formHeading: string;
@@ -18,10 +20,14 @@ const activeButtonStyle = 'linear-gradient(305deg, #fe9344, #fecd20)';
 
 const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHandler }) => {
   const [username, setUsername] = React.useState<string>('');
-  const [email, setEmail] = React.useState<string>('artyom123@gmail.com');
-  const [pass, setPass] = React.useState<string>('artyom123');
+  const [email, setEmail] = React.useState<string>('');
+  const [pass, setPass] = React.useState<string>('');
   const [passTwo, setPassTwo] = React.useState<string>('');
-
+  const [snackbar, setSnackbar] = React.useState<SnackbarType>({
+    show: false,
+    text: '',
+    status: 'success',
+  });
   return (
     <div className={s.wrapper}>
       <div className={s.texts}>
@@ -75,14 +81,84 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
         <div className={s.submitBtn}>
           <button
             style={{
-              backgroundImage: email && pass ? activeButtonStyle : '',
+              backgroundImage:
+                content.type === 'reg'
+                  ? username && email && pass && passTwo
+                    ? activeButtonStyle
+                    : ''
+                  : email && pass
+                  ? activeButtonStyle
+                  : '',
               color: email && pass ? 'white' : '',
             }}
             onClick={() => {
               if (content.type === 'reg') {
-                submitHandler(username, email, pass);
+                if (
+                  username.trim() !== '' &&
+                  email.trim() !== '' &&
+                  pass.trim() !== '' &&
+                  passTwo.trim() !== ''
+                ) {
+                  if (pass.trim() === passTwo.trim()) {
+                    setSnackbar({
+                      ...snackbar,
+                      show: true,
+                      text: 'You are registered successfully!',
+                      status: 'success',
+                    });
+                    submitHandler(username, email, pass);
+                  } else {
+                    setSnackbar({
+                      ...snackbar,
+                      show: true,
+                      text: 'Passwords do not match. Please try again.',
+                      status: 'error',
+                    });
+                  }
+                } else if (
+                  username.trim() === '' ||
+                  email.trim() === '' ||
+                  pass.trim() === '' ||
+                  passTwo.trim() === ''
+                ) {
+                  setSnackbar({
+                    ...snackbar,
+                    show: true,
+                    text: 'You must fill all fields.',
+                    status: 'error',
+                  });
+                } else {
+                  setSnackbar({
+                    ...snackbar,
+                    show: true,
+                    text: 'Email is already in use.',
+                    status: 'error',
+                  });
+                }
               } else {
-                submitHandler(null, email, pass);
+                if (email.trim() !== '' && passTwo.trim() !== '') {
+                  setSnackbar({
+                    ...snackbar,
+                    show: true,
+                    text: 'You are logged in successfully!',
+                    status: 'success',
+                  });
+                  submitHandler(null, email, pass);
+                } else if (email.trim() === '' && passTwo.trim() === '') {
+                  setSnackbar({
+                    ...snackbar,
+                    show: true,
+                    text: 'You must fill all fields.',
+                    status: 'success',
+                  });
+                } else {
+                  setSnackbar({
+                    ...snackbar,
+                    show: true,
+                    text: 'Email or password is incorrect.',
+                    status: 'success',
+                  });
+                }
               }
             }}>
             {content.buttonText}
@@ -97,6 +173,16 @@ const LoginRegisterForm: React.FC<LoginRegisterFormType> = ({ content, submitHan
           </p>
         </div>
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={snackbar.show}
+        onClose={() => setSnackbar({ ...snackbar, show: false })}
+        message={snackbar.text}
+        TransitionComponent={Slide}
+        autoHideDuration={3000}
+        key={'bottom' + 'center'}>
+        <Alert severity={snackbar.status}>{snackbar.text}</Alert>
+      </Snackbar>
     </div>
   );
 };
