@@ -11,7 +11,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
+      min-width: 50px;
       height: 50px;
 
       .checkboxContainer {
@@ -37,7 +37,7 @@
       }
     }
     .image {
-      width: fit-content;
+      min-width: fit-content;
       height: fit-content;
       img {
         width: 50px;
@@ -46,16 +46,16 @@
     }
     .title {
       margin-left: 6px;
-      width: 23%;
+      min-width: 19%;
     }
     .author {
-      width: 23%;
+      min-width: 19%;
     }
     .category {
-      width: 23%;
+      min-width: 19%;
     }
     .date {
-      width: 23%;
+      min-width: 19%;
     }
   }
 }

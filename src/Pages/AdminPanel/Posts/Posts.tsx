@@ -47,7 +47,7 @@ const Posts: React.FC = () => {
         </div>
       </div>
       <div className={s.container}>
-        <div className={s.content}>
+        <div className={s.content} style={{ overflowX: 'auto' }}>
           {checkedPosts.length > 0 && (
             <div className={s.contentHeaderSelected}>
               <div className={s.selected}>

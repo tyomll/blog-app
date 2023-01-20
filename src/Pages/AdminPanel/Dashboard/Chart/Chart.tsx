@@ -34,7 +34,7 @@ const Chart: React.FC = () => {
     return <Loader />;
   }
   return (
-    <div style={{ width: '90%' }}>
+    <div style={{ width: '100%' }}>
       <div style={{ height: '400px', minWidth: '0' }}>
         <ResponsiveLine
           data={data}
