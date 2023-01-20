@@ -16,28 +16,26 @@ const BlogList: React.FC<BlogListProps> = ({ searchValue }) => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [noPosts, setNoPosts] = React.useState<boolean>(false);
 
+  async function fetchPosts() {
+    setLoading(true);
+    await getPostsFromPostSlice(setLoading);
+    setLoading(false);
+  }
   React.useEffect(() => {
-    getPostsFromPostSlice(setLoading);
+    fetchPosts();
   }, []);
-  React.useEffect(() => {
-    if (!posts) {
-      setNoPosts(true);
-    } else {
-      setNoPosts(false);
-    }
-  }, [posts]);
 
-  if (!noPosts) {
+  if (loading) {
     return <PostsNotFound />;
   }
 
   return (
     <div className={styles.root}>
-      {noPosts &&
+      {loading &&
         posts.map((_: PostType, i: number) => {
           return <BlogBlockSkeleton key={i} />;
         })}
-      {!noPosts &&
+      {!loading &&
         posts
           .filter((post: PostType) => {
             if (category !== 'all') {
