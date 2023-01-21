@@ -60,6 +60,7 @@ const PostCreatingPage: React.FC = () => {
       <div className={s.root} style={snackbar ? { pointerEvents: 'none', opacity: '0.3' } : {}}>
         <HelmetTitle title="Create Post" />
         <div className={s.container}>
+          <h1>Create Post</h1>
           <input
             type="text"
             value={postData.title}
