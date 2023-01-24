@@ -20,6 +20,9 @@
 - Start the development server: npm start
 - Visit http://localhost:3000 in your browser to see the app.
 
+# Note:
+Your should add categories document to your Firebase Database, and it should have following [structure](https://imgur.com/a/NArzk9G)
+
 # Deployment
 This app can be easily deployed to a platform such as Github pages, Netlify and etc.
 
