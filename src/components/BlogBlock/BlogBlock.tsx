@@ -22,6 +22,9 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
   const { deletePost } = useDeletePosts(id, setSnackbar);
   const location = useLocation();
 
+  async function handleDeletePost() {
+    await deletePost();
+  }
   return (
     <div className={s.block}>
       <div className={s.image}>
@@ -36,7 +39,7 @@ const BlogBlock: React.FC<PostType> = ({ id, author, title, text, image, categor
           </div>
           {location.pathname === '/profile' && (
             <div className={s.delete}>
-              <FontAwesomeIcon icon={faTrashAlt} onClick={deletePost}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faTrashAlt} onClick={handleDeletePost}></FontAwesomeIcon>
             </div>
           )}
         </div>

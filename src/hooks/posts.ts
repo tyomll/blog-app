@@ -28,12 +28,7 @@ export const useTodaysPosts = () => {
 
 export function useDeletePosts(id?: string, setSnackbar?: (arg: SnackbarType) => void) {
   const refresh = () => window.location.reload();
-
   async function deletePost() {
-    let docId = null as any;
-    const q = query(collection(db, "posts"), where("id", "==", id))
-    const querySnapshot = await getDocs(q)
-    querySnapshot.forEach(async (doc) => docId = doc.id)
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this post!",
@@ -41,9 +36,9 @@ export function useDeletePosts(id?: string, setSnackbar?: (arg: SnackbarType) =>
       buttons: true as any,
       dangerMode: true as any,
     }).then(async (willDelete: boolean) => {
-      if (willDelete && docId) {
-        await deleteDoc(doc(db, 'posts', docId))
-        const q = query(collection(db, "comments"), where("postId", "==", docId))
+      if (willDelete && id) {
+        await deleteDoc(doc(db, 'posts', id))
+        const q = query(collection(db, "comments"), where("postId", "==", id))
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach(async (doc) => deleteDoc(doc.ref))
         if (setSnackbar) {
